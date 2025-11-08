@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Typewriter from 'typewriter-effect';
 import { 
   ArrowRight, 
   Download, 
@@ -28,7 +29,7 @@ export default function Home() {
   return (
     <>
       <Meta 
-        title={`${SITE.name} - ${SITE.role}`}
+        title={`${SITE.name} - ${SITE.roles[0]}`}
         description={SITE.hero.subtitle}
         path="/"
       />
@@ -78,9 +79,18 @@ export default function Home() {
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-4 font-light">
-              {SITE.role}
-            </p>
+            {/* Typewriter Roles */}
+            <div className="text-xl md:text-2xl text-brand-500 mb-4 font-medium h-12 flex items-center">
+              <Typewriter
+                options={{
+                  strings: SITE.roles,
+                  autoStart: true,
+                  loop: true,
+                  deleteSpeed: 50,
+                  delay: 80,
+                }}
+              />
+            </div>
 
             <p className="text-base md:text-lg text-gray-500 dark:text-gray-500 mb-8 leading-relaxed max-w-xl">
               {SITE.hero.subtitle}
@@ -214,27 +224,6 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-
-        {/* Stats Section */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex gap-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold gradient-text">3+</div>
-            <div className="text-sm text-gray-500 dark:text-gray-500">Years Exp</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold gradient-text">50+</div>
-            <div className="text-sm text-gray-500 dark:text-gray-500">Projects</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold gradient-text">10+</div>
-            <div className="text-sm text-gray-500 dark:text-gray-500">Tech Stack</div>
-          </div>
-        </motion.div>
       </Section>
     </>
   );

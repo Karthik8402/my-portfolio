@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 
@@ -34,16 +34,17 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 glass shadow-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
+        {/* Logo with Favicon */}
         <Link 
           to="/" 
-          className="group flex items-center gap-2 text-2xl font-bold relative z-50"
+          className="group flex items-center gap-3 text-2xl font-bold relative z-50"
           onClick={() => setMobileOpen(false)}
         >
-          <div className="relative">
-            <Sparkles className="text-brand-500" size={24} />
-          </div>
-          <span className="gradient-text">&lt;KK/&gt;</span>
+          <img 
+            src="/favicon.svg" 
+            alt="Logo" 
+            className="w-10 h-10 transition-transform group-hover:scale-110"
+          />
         </Link>
 
         {/* Desktop Nav */}

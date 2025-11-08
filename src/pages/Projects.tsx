@@ -57,7 +57,7 @@ export default function Projects() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + idx * 0.1 }}
                 >
-                  <ProjectCard {...project} featured={true} />
+                  <ProjectCard {...project} />
                 </motion.div>
               ))}
             </div>
@@ -83,7 +83,7 @@ export default function Projects() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + idx * 0.1 }}
                 >
-                  <ProjectCard {...project} featured={false} />
+                  <ProjectCard {...project} />
                 </motion.div>
               ))}
             </div>

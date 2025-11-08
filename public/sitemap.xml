@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://karthikumar-portfolio.vercel.app/</loc>
+    <loc>https://my-portfolio-one-sigma-35.vercel.app/</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://karthikumar-portfolio.vercel.app/about</loc>
+    <loc>https://my-portfolio-one-sigma-35.vercel.app/about</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://karthikumar-portfolio.vercel.app/projects</loc>
+    <loc>https://my-portfolio-one-sigma-35.vercel.app/projects</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://karthikumar-portfolio.vercel.app/contact</loc>
+    <loc>https://my-portfolio-one-sigma-35.vercel.app/contact</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
