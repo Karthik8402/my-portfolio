@@ -1,13 +1,24 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Mail, MapPin, Phone, Send, MessageCircle, CheckCircle2, Github, Linkedin, Twitter } from 'lucide-react';
+import { 
+  Mail, 
+  MapPin, 
+  Phone, 
+  Send, 
+  MessageCircle, 
+  CheckCircle2, 
+  Github, 
+  Linkedin, 
+  Twitter,
+  type LucideIcon 
+} from 'lucide-react';
 import Section from '../components/Section';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 
 // Icon mapping for social media
-const socialIconMap: Record<string, any> = {
+const socialIconMap: Record<string, LucideIcon> = {
   Github,
   Linkedin,
   Twitter,

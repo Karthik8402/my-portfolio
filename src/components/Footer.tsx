@@ -1,7 +1,7 @@
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, type LucideIcon } from 'lucide-react';
 import { SITE } from '../data/site';
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, LucideIcon> = {
   Github,
   Linkedin,
   Twitter,
@@ -38,7 +38,7 @@ export default function Footer() {
             <div className="flex gap-4">
               {SITE.socials.map(social => {
                 const Icon = iconMap[social.icon];
-                return (
+                return Icon ? (
                   <a
                     key={social.label}
                     href={social.href}
@@ -49,7 +49,7 @@ export default function Footer() {
                   >
                     <Icon size={20} />
                   </a>
-                );
+                ) : null;
               })}
             </div>
           </div>
