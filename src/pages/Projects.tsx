@@ -1,14 +1,14 @@
-import { motion } from 'framer-motion';
-import { FolderGit2, Star, Sparkles } from 'lucide-react';
-import Section from '../components/Section';
-import ProjectCard from '../components/ProjectCard';
-import { PROJECTS } from '../data/projects';
-import { SITE } from '../data/site';
-import { Meta } from '../seo/Meta';
+import { motion } from "framer-motion";
+import { FolderGit2, Star, Sparkles } from "lucide-react";
+import Section from "../components/Section";
+import ProjectCard from "../components/ProjectCard";
+import { PROJECTS } from "../data/projects";
+import { SITE } from "../data/site";
+import { Meta } from "../seo/Meta";
 
 export default function Projects() {
-  const featured = PROJECTS.filter(p => p.featured);
-  const other = PROJECTS.filter(p => !p.featured);
+  const featured = PROJECTS.filter((p) => p.featured);
+  const other = PROJECTS.filter((p) => !p.featured);
 
   return (
     <>
@@ -32,13 +32,14 @@ export default function Projects() {
           </div>
           <div className="w-20 h-1 bg-gradient-to-r from-brand-500 to-purple-500 mb-4" />
           <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
-            A curated selection of projects showcasing my expertise in modern web development
+            A curated selection of projects showcasing my expertise in modern
+            web development
           </p>
         </motion.div>
 
         {/* Featured Projects */}
         {featured.length > 0 && (
-          <motion.div 
+          <motion.div
             className="mb-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -57,7 +58,13 @@ export default function Projects() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + idx * 0.1 }}
                 >
-                  <ProjectCard {...project} />
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="rounded-2xl"
+                  >
+                    <ProjectCard {...project} />
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -83,7 +90,14 @@ export default function Projects() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + idx * 0.1 }}
                 >
-                  <ProjectCard {...project} />
+                  {" "}
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="rounded-2xl"
+                  >
+                    <ProjectCard {...project} />
+                  </motion.div>
                 </motion.div>
               ))}
             </div>

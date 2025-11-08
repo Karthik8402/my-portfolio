@@ -1,48 +1,42 @@
-import { 
-  Code2, 
-  FileCode, 
-  Palette, 
-  Triangle, 
-  RefreshCw,
-  Box,
-  Boxes,
+import {
+  Atom,        
+  Paintbrush,  
+  Server,      
+  Coffee,
+  FileCode,
   Database,
-  Layers,
   GitBranch,
-  Container,
+  Github,
   Cloud,
-  Workflow
-} from 'lucide-react';
+  Workflow,
+  Rocket,       
+} from "lucide-react";
 
 export const SKILLS = [
   {
     category: "Frontend",
     items: [
-      { name: "React", level: 95, icon: Code2 },
-      { name: "TypeScript", level: 90, icon: FileCode },
-      { name: "Tailwind CSS", level: 90, icon: Palette },
-      { name: "Next.js", level: 85, icon: Triangle },
-      { name: "Redux", level: 80, icon: RefreshCw }
+      { name: "React", level: 90, icon: Atom },
+      { name: "Tailwind CSS", level: 85, icon: Paintbrush }
     ]
   },
   {
     category: "Backend",
     items: [
-      { name: "Node.js", level: 90, icon: Box },
-      { name: "Express", level: 85, icon: Boxes },
-      { name: "MongoDB", level: 80, icon: Database },
-      { name: "PostgreSQL", level: 75, icon: Database },
-      { name: "GraphQL", level: 70, icon: Layers }
+      { name: "Node.js", level: 80, icon: Server },
+      { name: "Java", level: 85, icon: Coffee },
+      { name: "Python", level: 80, icon: FileCode },
+      { name: "SQL", level: 75, icon: Database }
     ]
   },
   {
     category: "Tools & DevOps",
     items: [
-      { name: "Git", level: 95, icon: GitBranch },
-      { name: "Docker", level: 80, icon: Container },
-      { name: "AWS", level: 75, icon: Cloud },
-      { name: "Vercel", level: 90, icon: Triangle },
-      { name: "CI/CD", level: 80, icon: Workflow }
+      { name: "Git", level: 80, icon: GitBranch },
+      { name: "GitHub", level: 80, icon: Github },
+      { name: "AWS (Basics)", level: 70, icon: Cloud },
+      { name: "Vercel", level: 85, icon: Rocket },
+      { name: "CI/CD", level: 75, icon: Workflow }
     ]
   }
 ];

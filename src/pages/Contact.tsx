@@ -1,28 +1,28 @@
-import { useState, type FormEvent } from 'react';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { 
-  Mail, 
-  MapPin, 
-  Phone, 
-  Send, 
-  MessageCircle, 
-  CheckCircle2, 
-  Github, 
-  Linkedin, 
+import { useState, type FormEvent } from "react";
+import { motion, easeInOut, easeOut, easeIn } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import {
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  MessageCircle,
+  CheckCircle2,
+  Github,
+  Linkedin,
   Twitter,
-  type LucideIcon 
-} from 'lucide-react';
-import Section from '../components/Section';
-import { SITE } from '../data/site';
-import { Meta } from '../seo/Meta';
+  type LucideIcon,
+} from "lucide-react";
+import Section from "../components/Section";
+import { SITE } from "../data/site";
+import { Meta } from "../seo/Meta";
 
 // Icon mapping for social media
 const socialIconMap: Record<string, LucideIcon> = {
   Github,
   Linkedin,
   Twitter,
-  Mail
+  Mail,
 };
 
 // EmailJS Configuration from environment variables
@@ -30,28 +30,114 @@ const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+
 export default function Contact() {
+  // Unique hover animation variants for contact info boxes
+  const contactHoverVariants = {
+    email: {
+      scale: 1.05,
+      x: -5,
+      rotate: -3,
+      boxShadow: "0 10px 20px rgba(124, 58, 237, 0.4)",
+      transition: { duration: 0.3, ease: easeInOut },
+    },
+    phone: {
+      scale: 1.05,
+      x: 5,
+      rotate: 3,
+      boxShadow: "0 10px 20px rgba(128, 90, 213, 0.4)",
+      transition: { duration: 0.4, ease: easeInOut },
+    },
+    location: {
+      scale: 1.05,
+      x: -5,
+      rotate: -3,
+      boxShadow: "0 10px 20px rgba(219, 39, 119, 0.4)",
+      transition: { duration: 0.4, ease: easeInOut },
+    },
+  };
+
+  // Unique hover animation variants for social icons
+  const socialHoverVariants = [
+    {
+      scale: 1.2,
+      rotate: 15,
+      x: 3,
+      transition: { duration: 0.08, ease: easeOut },
+    },
+    {
+      scale: 1.2,
+      rotate: -15,
+      y: 3,
+      transition: { duration: 0.1, ease: easeOut },
+    },
+    {
+      scale: 1.2,
+      rotate: 15,
+      x: 3,
+      transition: { duration: 0.1, ease: easeOut },
+    },
+    {
+      scale: 1.2,
+      rotate: -15,
+      y: -3,
+      transition: { duration: 0.1, ease: easeOut },
+    },
+  ];
+
+  const successVariant = {
+    initial: { scale: 0.8, opacity: 0, rotate: -10 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      rotate: 0,
+      transition: { duration: 0.5, ease: easeOut },
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+      rotate: 10,
+      transition: { duration: 0.3, ease: easeIn },
+    },
+  };
+
+  const errorVariant = {
+    initial: { scale: 0.8, opacity: 0, rotate: 10 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      rotate: 0,
+      transition: { duration: 0.5, ease: easeOut },
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+      rotate: -10,
+      transition: { duration: 0.3, ease: easeIn },
+    },
+  };
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (formData.name.length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
+      newErrors.name = "Name must be at least 2 characters";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
+      newErrors.email = "Invalid email address";
     }
     if (formData.message.length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+      newErrors.message = "Message must be at least 10 characters";
     }
 
     setErrors(newErrors);
@@ -60,20 +146,20 @@ export default function Contact() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setErrorMessage('');
+    setErrorMessage("");
 
     try {
       // Get current time formatted
-      const currentTime = new Date().toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      const currentTime = new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
 
       // Send email using EmailJS with template variables
@@ -92,11 +178,13 @@ export default function Contact() {
       );
 
       setIsSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: "", email: "", message: "" });
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
-      console.error('Failed to send email:', error);
-      setErrorMessage('Failed to send message. Please try again or email directly.');
+      console.error("Failed to send email:", error);
+      setErrorMessage(
+        "Failed to send message. Please try again or email directly."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -137,18 +225,22 @@ export default function Contact() {
             transition={{ delay: 0.2 }}
           >
             <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
-            
+
             {/* Email Card */}
             <motion.a
               href={`mailto:${SITE.email}`}
+              initial={{ scale: 1, x: 0, rotate: 0 }}
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800 hover:border-brand-500/50 transition-all group"
-              whileHover={{ scale: 1.02, x: 5 }}
+              whileHover={contactHoverVariants.email}
+              aria-label="Email"
             >
               <div className="p-3 bg-brand-500/10 rounded-lg group-hover:bg-brand-500/20 transition-colors">
                 <Mail className="text-brand-500" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Email</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Email
+                </p>
                 <p className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-brand-500 transition-colors">
                   {SITE.email}
                 </p>
@@ -158,13 +250,16 @@ export default function Contact() {
             {/* Phone Card */}
             <motion.div
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
-              whileHover={{ scale: 1.02, x: 5 }}
+              whileHover={contactHoverVariants.phone}
+              aria-label="Phone"
             >
               <div className="p-3 bg-purple-500/10 rounded-lg">
                 <Phone className="text-purple-500" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Phone</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Phone
+                </p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">
                   {SITE.phone}
                 </p>
@@ -174,13 +269,16 @@ export default function Contact() {
             {/* Location Card */}
             <motion.div
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
-              whileHover={{ scale: 1.02, x: 5 }}
+              whileHover={contactHoverVariants.location}
+              aria-label="Location"
             >
               <div className="p-3 bg-pink-500/10 rounded-lg">
                 <MapPin className="text-pink-500" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Location</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Location
+                </p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">
                   {SITE.location}
                 </p>
@@ -200,18 +298,13 @@ export default function Contact() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 glass rounded-lg hover:bg-brand-500/10 transition-all border border-gray-200 dark:border-gray-800 hover:border-brand-500/50"
-                      whileHover={{ 
-                        scale: 1.15,
-                        rotate: 5,
-                        transition: { duration: 0.2 }
-                      }}
+                      whileHover={
+                        socialHoverVariants[idx % socialHoverVariants.length]
+                      }
+                      transition={{ duration: 0.2, ease: easeInOut }}
                       whileTap={{ scale: 0.9 }}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ 
-                        delay: idx * 0.05,
-                        duration: 0.3
-                      }}
                       aria-label={social.label}
                     >
                       <IconComponent size={22} className="text-brand-500" />
@@ -224,24 +317,35 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div
+              whileHover={{ scale: 1.03, }}
+              transition={{ duration: 0.3, ease: "easeInOut", }}
+              className="rounded-2xl"
+            >
+          <motion.div
             className="glass rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
             
+            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name Input */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium mb-2"
+                >
                   Your Name
                 </label>
                 <input
                   id="name"
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="John Doe"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
                 />
@@ -254,14 +358,19 @@ export default function Contact() {
 
               {/* Email Input */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium mb-2"
+                >
                   Your Email
                 </label>
                 <input
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="john@example.com"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
                 />
@@ -274,13 +383,18 @@ export default function Contact() {
 
               {/* Message Input */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium mb-2"
+                >
                   Your Message
                 </label>
                 <textarea
                   id="message"
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   rows={5}
                   placeholder="Tell me about your project..."
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none resize-none transition-all"
@@ -293,10 +407,16 @@ export default function Contact() {
               </div>
 
               {/* Submit Button */}
-              <button
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-all shadow-lg hover:shadow-xl"
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium disabled:opacity-50 transition-all shadow-lg"
+                whileHover={{
+                  scale: 1.05,
+                  y: -3,
+                  boxShadow: "0 6px 12px rgba(124, 58, 237, 0.6)",
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 {isSubmitting ? (
                   <>
@@ -309,32 +429,38 @@ export default function Contact() {
                     <span>Send Message</span>
                   </>
                 )}
-              </button>
+              </motion.button>
 
               {/* Success Message */}
               {isSuccess && (
                 <motion.div
                   className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-600 dark:text-green-400"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={successVariant}
                 >
                   <CheckCircle2 size={20} />
-                  <span className="font-medium">Message sent successfully!</span>
+                  <span className="font-medium">
+                    Message sent successfully!
+                  </span>
                 </motion.div>
               )}
 
-              {/* Error Message */}
               {errorMessage && (
                 <motion.div
                   className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 dark:text-red-400"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={errorVariant}
                 >
                   <span>⚠</span>
                   <span className="text-sm">{errorMessage}</span>
                 </motion.div>
               )}
-            </form>
+              </form>
+              </motion.div>
           </motion.div>
         </div>
       </Section>
