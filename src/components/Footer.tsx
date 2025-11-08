@@ -17,7 +17,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-3">{SITE.name}</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {SITE.role} based in {SITE.location}
+              {SITE.roles[0]} based in {SITE.location}
             </p>
           </div>
 
