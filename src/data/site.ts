@@ -10,7 +10,7 @@ export const SITE = {
   location: "Salem, Tamil Nadu, India",
   email: "karthikumar8402@gmail.com",
   phone: "+91 91594 47517",
-  resumeUrl: "/assets/resume.pdf",
+  resumeUrl: "/assets/Resume.pdf",
   
   socials: [
     { label: "GitHub", href: "https://github.com/Karthik8402", icon: "Github" },
