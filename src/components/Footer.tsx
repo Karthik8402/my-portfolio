@@ -5,7 +5,7 @@ import { motion, type Transition } from "framer-motion";
 const iconMap: Record<string, LucideIcon> = { Github, Linkedin, Twitter, Mail };
 
 const linkHoverAnimation: {
-  whileHover: Record<string, any>;
+  whileHover: Record<string, string | number>;
   transition: Transition;
 } = {
   whileHover: { scale: 1.1, color: "#7c3aed", letterSpacing: "0.05em" },
@@ -45,7 +45,7 @@ export default function Footer() {
                       whileHover: linkHoverAnimation.whileHover,
                       initial: {
                         scale: 1,
-                        color: "inherit",
+                        color: "rgb(107, 114, 128)",
                         letterSpacing: "normal",
                       },
                     }}
