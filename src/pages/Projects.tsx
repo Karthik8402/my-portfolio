@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FolderGit2, Star, Sparkles } from "lucide-react";
+import { FolderGit2, Sparkles } from "lucide-react";
 import Section from "../components/Section";
 import ProjectCard from "../components/ProjectCard";
 import { PROJECTS } from "../data/projects";
@@ -46,7 +46,6 @@ export default function Projects() {
             transition={{ delay: 0.2 }}
           >
             <div className="flex items-center gap-2 mb-8">
-              <Star className="text-yellow-500 fill-yellow-500" size={24} />
               <h2 className="text-2xl font-semibold">Featured Projects</h2>
               <Sparkles className="text-yellow-500" size={20} />
             </div>

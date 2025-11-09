@@ -1,6 +1,7 @@
 export const SITE = {
   name: "Karthik Kumar",
   url: "https://my-portfolio-one-sigma-35.vercel.app",
+  experience: "Fresher",
   roles: [
     "Java Backend Developer",
     "Frontend Developer",

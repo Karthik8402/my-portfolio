@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { User, BookOpen, Award, TrendingUp, Star } from "lucide-react"; // Updated icons
+import { User, BookOpen, Award, TrendingUp, Star } from "lucide-react";
 import Section from "../components/Section";
 import { SITE } from "../data/site";
 import { SKILLS } from "../data/skills";
@@ -48,8 +48,7 @@ export default function About() {
             >
               <div className="glass rounded-2xl p-6 mb-8 border border-gray-200 dark:border-gray-800">
                 <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="text-brand-500" size={20} />{" "}
-                  {/* Changed icon */}
+                  <BookOpen className="text-brand-500" size={20} />
                   <h3 className="text-xl font-semibold">Background</h3>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 text-justify leading-loose px-0">
@@ -66,15 +65,14 @@ export default function About() {
             >
               <div className="glass rounded-2xl p-6 border border-gray-200 dark:border-gray-800">
                 <div className="flex items-center gap-2 mb-4">
-                  <Star className="text-pink-500" size={20} />{" "}
-                  {/* Changed icon */}
+                  <Star className="text-pink-500" size={20} />
                   <h3 className="text-xl font-semibold">Interests</h3>
                 </div>
                 <ul className="space-y-1">
                   {SITE.about.interests.map((interest, idx) => (
                     <motion.li
                       key={interest}
-                      className="flex items-center gap-3 group py-1 ml-4" // Added margin and padding
+                      className="flex items-center gap-3 group py-1 ml-4"
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + idx * 0.1 }}
@@ -105,12 +103,12 @@ export default function About() {
             <div className="space-y-8">
               {SKILLS.map((category, catIdx) => (
                 <motion.div
+                  key={category.category}
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="rounded-2xl"
                 >
                   <motion.div
-                    key={category.category}
                     className="glass rounded-2xl p-6 border border-gray-200 dark:border-gray-800"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

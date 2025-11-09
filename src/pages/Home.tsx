@@ -120,17 +120,22 @@ export default function Home() {
               <span className="gradient-text block">{SITE.name}</span>
             </motion.h1>
 
-            {/* Typewriter Roles */}
-            <div className="text-xl md:text-2xl text-brand-500 mb-4 font-medium h-12 flex items-center">
-              <Typewriter
-                options={{
-                  strings: SITE.roles,
-                  autoStart: true,
-                  loop: true,
-                  deleteSpeed: 50,
-                  delay: 80,
-                }}
-              />
+            {/* Typewriter Roles with Experience */}
+            <div className="text-xl md:text-2xl mb-4 font-medium h-12 flex items-center gap-2">
+              <span className="text-gray-600 dark:text-gray-400">
+                {SITE.experience} |
+              </span>
+              <span className="text-brand-500">
+                <Typewriter
+                  options={{
+                    strings: SITE.roles,
+                    autoStart: true,
+                    loop: true,
+                    deleteSpeed: 50,
+                    delay: 80,
+                  }}
+                />
+              </span>
             </div>
 
             {/* Paragraph with light scale glow on hover */}

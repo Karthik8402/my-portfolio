@@ -396,7 +396,7 @@ export default function Contact() {
                     setFormData({ ...formData, message: e.target.value })
                   }
                   rows={5}
-                  placeholder="Tell me about your project..."
+                  placeholder="Leave The Message..."
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none resize-none transition-all"
                 />
                 {errors.message && (
