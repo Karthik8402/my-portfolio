@@ -105,7 +105,7 @@ export const PROJECTS = [
     id: "atm-machine-project",
     title: "ATM Machine Simulator",
     description: "Console-based ATM machine simulation with account management, transactions, and banking operations",
-    image: "/assets/projects/atm.jpg",
+    image: "",
     tags: ["Java", "OOP", "Console Application"],
     metrics: [
       "Complete banking operations simulation",

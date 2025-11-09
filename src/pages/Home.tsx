@@ -171,7 +171,7 @@ export default function Home() {
 
             {/* Social Links with y bounce and scale loop */}
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500 dark:text-gray-500">
+              <span className="text-base text-gray-500 dark:text-gray-500">
                 Connect:
               </span>
               {SITE.socials.slice(0, 3).map((social) => {
