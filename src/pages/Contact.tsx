@@ -16,6 +16,7 @@ import {
 import Section from "../components/Section";
 import { SITE } from "../data/site";
 import { Meta } from "../seo/Meta";
+import { useMobile } from "../hooks/useMobile";
 
 // Icon mapping for social media
 const socialIconMap: Record<string, LucideIcon> = {
@@ -30,60 +31,27 @@ const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-
 export default function Contact() {
+  const isMobile = useMobile();
+
   // Unique hover animation variants for contact info boxes
   const contactHoverVariants = {
-    email: {
-      scale: 1.05,
-      x: -5,
-      rotate: -3,
-      boxShadow: "0 10px 20px rgba(124, 58, 237, 0.4)",
+    hover: isMobile ? {} : {
+      scale: 1.02,
+      y: -5,
+      boxShadow: "0 10px 30px -10px rgba(99, 102, 241, 0.3)",
       transition: { duration: 0.3, ease: easeInOut },
-    },
-    phone: {
-      scale: 1.05,
-      x: 5,
-      rotate: 3,
-      boxShadow: "0 10px 20px rgba(128, 90, 213, 0.4)",
-      transition: { duration: 0.4, ease: easeInOut },
-    },
-    location: {
-      scale: 1.05,
-      x: -5,
-      rotate: -3,
-      boxShadow: "0 10px 20px rgba(219, 39, 119, 0.4)",
-      transition: { duration: 0.4, ease: easeInOut },
     },
   };
 
   // Unique hover animation variants for social icons
-  const socialHoverVariants = [
-    {
-      scale: 1.2,
-      rotate: 15,
-      x: 3,
-      transition: { duration: 0.08, ease: easeOut },
+  const socialHoverVariants = {
+    hover: isMobile ? {} : {
+      scale: 1.1,
+      rotate: 5,
+      transition: { duration: 0.2, ease: easeOut },
     },
-    {
-      scale: 1.2,
-      rotate: -15,
-      y: 3,
-      transition: { duration: 0.1, ease: easeOut },
-    },
-    {
-      scale: 1.2,
-      rotate: 15,
-      x: 3,
-      transition: { duration: 0.1, ease: easeOut },
-    },
-    {
-      scale: 1.2,
-      rotate: -15,
-      y: -3,
-      transition: { duration: 0.1, ease: easeOut },
-    },
-  ];
+  };
 
   const successVariant = {
     initial: { scale: 0.8, opacity: 0, rotate: -10 },
@@ -231,7 +199,8 @@ export default function Contact() {
               href={`mailto:${SITE.email}`}
               initial={{ scale: 1, x: 0, rotate: 0 }}
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800 hover:border-brand-500/50 transition-all group"
-              whileHover={contactHoverVariants.email}
+              whileHover="hover"
+              variants={contactHoverVariants}
               aria-label="Email"
             >
               <div className="p-3 bg-brand-500/10 rounded-lg group-hover:bg-brand-500/20 transition-colors">
@@ -250,7 +219,8 @@ export default function Contact() {
             {/* Phone Card */}
             <motion.div
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
-              whileHover={contactHoverVariants.phone}
+              whileHover="hover"
+              variants={contactHoverVariants}
               aria-label="Phone"
             >
               <div className="p-3 bg-purple-500/10 rounded-lg">
@@ -269,7 +239,8 @@ export default function Contact() {
             {/* Location Card */}
             <motion.div
               className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
-              whileHover={contactHoverVariants.location}
+              whileHover="hover"
+              variants={contactHoverVariants}
               aria-label="Location"
             >
               <div className="p-3 bg-pink-500/10 rounded-lg">
@@ -289,7 +260,7 @@ export default function Contact() {
             <div className="pt-6">
               <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
               <div className="flex flex-wrap gap-3">
-                {SITE.socials.map((social, idx) => {
+                {SITE.socials.map((social) => {
                   const IconComponent = socialIconMap[social.icon];
                   return IconComponent ? (
                     <motion.a
@@ -298,11 +269,10 @@ export default function Contact() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 glass rounded-lg hover:bg-brand-500/10 transition-all border border-gray-200 dark:border-gray-800 hover:border-brand-500/50"
-                      whileHover={
-                        socialHoverVariants[idx % socialHoverVariants.length]
-                      }
+                      whileHover="hover"
+                      variants={socialHoverVariants}
                       transition={{ duration: 0.2, ease: easeInOut }}
-                      whileTap={{ scale: 0.9 }}
+                      whileTap={isMobile ? {} : { scale: 0.9 }}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       aria-label={social.label}
@@ -316,11 +286,6 @@ export default function Contact() {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div
-              whileHover={{ scale: 1.03, }}
-              transition={{ duration: 0.3, ease: "easeInOut", }}
-              className="rounded-2xl"
-            >
           <motion.div
             className="glass rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
             initial={{ opacity: 0, x: 20 }}
@@ -339,7 +304,8 @@ export default function Contact() {
                 >
                   Your Name
                 </label>
-                <input
+                <motion.input
+                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
                   id="name"
                   type="text"
                   value={formData.name}
@@ -347,7 +313,7 @@ export default function Contact() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all"
                 />
                 {errors.name && (
                   <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
@@ -364,7 +330,8 @@ export default function Contact() {
                 >
                   Your Email
                 </label>
-                <input
+                <motion.input
+                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
                   id="email"
                   type="email"
                   value={formData.email}
@@ -372,7 +339,7 @@ export default function Contact() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   placeholder="john@example.com"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all"
                 />
                 {errors.email && (
                   <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
@@ -389,7 +356,8 @@ export default function Contact() {
                 >
                   Your Message
                 </label>
-                <textarea
+                <motion.textarea
+                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
                   id="message"
                   value={formData.message}
                   onChange={(e) =>
@@ -397,7 +365,7 @@ export default function Contact() {
                   }
                   rows={5}
                   placeholder="Leave The Message..."
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none resize-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none resize-none transition-all"
                 />
                 {errors.message && (
                   <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
@@ -410,23 +378,25 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium disabled:opacity-50 transition-all shadow-lg"
-                whileHover={{
-                  scale: 1.05,
-                  y: -3,
-                  boxShadow: "0 6px 12px rgba(124, 58, 237, 0.6)",
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium disabled:opacity-50 transition-all shadow-lg relative overflow-hidden group"
+                whileHover={isMobile ? {} : {
+                  scale: 1.02,
+                  y: -2,
+                  boxShadow: "0 15px 30px -5px rgba(99, 102, 241, 0.4)",
                 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                whileTap={isMobile ? {} : { scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Sending...</span>
+                    <span className="relative z-10">Sending...</span>
                   </>
                 ) : (
                   <>
-                    <Send size={20} />
-                    <span>Send Message</span>
+                    <Send size={20} className="relative z-10" />
+                    <span className="relative z-10">Send Message</span>
                   </>
                 )}
               </motion.button>
@@ -459,9 +429,9 @@ export default function Contact() {
                   <span className="text-sm">{errorMessage}</span>
                 </motion.div>
               )}
-              </form>
-              </motion.div>
+            </form>
           </motion.div>
+
         </div>
       </Section>
     </>

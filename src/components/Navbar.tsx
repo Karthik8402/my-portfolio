@@ -32,8 +32,8 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 glass shadow-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-50 glass border-b border-gray-200/50 dark:border-gray-800/50 backdrop-blur-2xl">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         {/* Logo with Favicon */}
         <Link 
           to="/" 

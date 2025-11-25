@@ -7,6 +7,10 @@ export default {
   darkMode: 'class', // This enables dark mode
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        heading: ['Outfit', 'sans-serif'],
+      },
       colors: {
         brand: {
           DEFAULT: "#6366f1",
@@ -19,7 +23,8 @@ export default {
           600: "#4f46e5",
           700: "#4338ca",
           800: "#3730a3",
-          900: "#312e81"
+          900: "#312e81",
+          950: "#1e1b4b",
         }
       },
       animation: {

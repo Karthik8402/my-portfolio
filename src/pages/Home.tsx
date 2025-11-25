@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { motion, easeInOut } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 import {
@@ -9,16 +8,17 @@ import {
   Linkedin,
   Mail,
   Code2,
-  Rocket,
-  Zap,
   Sparkles,
-  Terminal,
   Database,
-  Globe,
+  Coffee,
+  Layout,
+  FileCode,
+  Atom,
 } from "lucide-react";
 import Section from "../components/Section";
 import { SITE } from "../data/site";
 import { Meta } from "../seo/Meta";
+import { useMobile } from "../hooks/useMobile";
 
 const socialIcons = {
   Github,
@@ -27,26 +27,7 @@ const socialIcons = {
 };
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const floatVariants = {
-    animate: isMobile
-      ? {
-          y: [0, -6, 0],
-          transition: { duration: 2, repeat: Infinity, ease: easeInOut },
-        }
-      : {
-          y: [0, -12, 0],
-          transition: { duration: 3, repeat: Infinity, ease: easeInOut },
-        },
-  };
+  const isMobile = useMobile();
 
   return (
     <>
@@ -91,38 +72,41 @@ export default function Home() {
           >
             {/* Badge with pop animation */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 mb-6 glass rounded-full border border-brand-500/20 cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 mb-8 glass rounded-full border border-brand-500/20 cursor-pointer hover:bg-white/50 dark:hover:bg-gray-800/50 transition-colors"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              whileHover={{
-                scale: 1.1,
-                boxShadow: "0 0 12px rgba(124, 58, 237, 0.6)",
+              whileHover={isMobile ? {} : {
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)",
               }}
               transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
             >
-              <Zap size={16} className="text-brand-500 fill-brand-500" />
-              <span className="text-sm font-medium bg-gradient-to-r from-brand-500 to-purple-500 bg-clip-text text-transparent">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
+              </span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
                 Available for work
               </span>
             </motion.div>
 
             {/* Headline with scale and glow on hover */}
             <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 cursor-pointer"
+              className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading leading-tight mb-8 cursor-pointer tracking-tight"
               initial={{ opacity: 1, scale: 0.95 }}
-              whileHover={{
-                scale: 1.05,
-                textShadow: "0 0 8px rgba(124, 58, 237, 0.0)",
+              whileHover={isMobile ? {} : {
+                scale: 1.02,
+                textShadow: "0 0 30px rgba(99, 102, 241, 0.3)",
               }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <span className="block mb-2">Hi, I'm</span>
+              <span className="block mb-2 text-gray-900 dark:text-white">Hi, I'm</span>
               <span className="gradient-text block">{SITE.name}</span>
             </motion.h1>
 
             {/* Typewriter Roles with Experience */}
-            <div className="text-xl md:text-2xl mb-4 font-medium h-12 flex items-center gap-2">
-              <span className="text-gray-600 dark:text-gray-400">
+            <div className="text-xl md:text-3xl mb-8 font-medium h-12 flex items-center gap-3 font-heading">
+              <span className="text-gray-500 dark:text-gray-400">
                 {SITE.experience} |
               </span>
               <span className="text-brand-500">
@@ -140,18 +124,18 @@ export default function Home() {
 
             {/* Paragraph with light scale glow on hover */}
             <motion.p
-              className="text-base md:text-lg text-gray-500 dark:text-gray-500 mb-8 leading-relaxed max-w-xl cursor-pointer"
-              whileHover={{ scale: 1.03 }}
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 leading-relaxed max-w-xl cursor-pointer"
+              whileHover={isMobile ? {} : { scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               {SITE.hero.subtitle}
             </motion.p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-4 mb-10 w-full sm:w-auto">
               <Link
                 to={SITE.hero.ctaPrimary.href}
-                className="group flex items-center gap-2 px-8 py-4 gradient-bg text-white rounded-xl font-medium shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/40 transition-all hover:scale-105"
+                className="group flex items-center justify-center gap-2 px-8 h-14 gradient-bg text-white rounded-xl font-medium shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/40 transition-all hover:scale-105 w-full sm:w-auto min-w-[160px]"
               >
                 {SITE.hero.ctaPrimary.label}
                 <ArrowRight
@@ -162,14 +146,14 @@ export default function Home() {
               <a
                 href={SITE.resumeUrl}
                 download
-                className="flex items-center gap-2 px-8 py-4 glass rounded-xl font-medium hover:scale-105 transition-all border border-gray-200 dark:border-gray-800"
+                className="flex items-center justify-center gap-2 px-8 h-14 glass rounded-xl font-medium hover:scale-105 transition-all border border-gray-200 dark:border-gray-800 w-full sm:w-auto min-w-[160px]"
               >
                 <Download size={20} />
                 Resume
               </a>
             </div>
 
-            {/* Social Links with y bounce and scale loop */}
+            {/* Social Links with pop animation */}
             <div className="flex items-center gap-4">
               <span className="text-base text-gray-500 dark:text-gray-500">
                 Connect:
@@ -183,12 +167,14 @@ export default function Home() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 glass rounded-xl border border-transparent hover:border-brand-500/20 cursor-pointer"
+                    className="p-3 glass rounded-xl border border-transparent hover:border-brand-500/20 cursor-pointer transition-colors hover:bg-white dark:hover:bg-gray-800"
                     initial={{ scale: 1 }}
-                    whileHover={{
-                      scale: [1, 1.2, 1],
-                      transition: { duration: 0.8, ease: easeInOut },
+                    whileHover={isMobile ? {} : {
+                      scale: 1.1,
+                      rotate: 5,
+                      boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)",
                     }}
+                    transition={{ duration: 0.2 }}
                     aria-label={social.label}
                   >
                     <Icon size={20} className="text-brand-500" />
@@ -198,100 +184,83 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* 3D Visual Section */}
+          {/* 3D Visual Section - Tech Galaxy */}
           <motion.div
             initial={{ opacity: 0, scale: isMobile ? 0.95 : 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative hidden lg:flex items-center justify-center"
           >
-            <div className="relative aspect-square max-w-[500px] mx-auto">
-              {/* Main Circle with Gradient Border */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500 p-1 animate-glow">
-                <div className="w-full h-full glass rounded-full flex items-center justify-center relative overflow-hidden">
-                  {/* Center Icon */}
-                  <div className="relative z-10">
-                    <Code2
-                      size={120}
-                      className="text-brand-500"
-                      strokeWidth={1.5}
-                    />
-                  </div>
+            <div className="relative w-[500px] h-[500px] flex items-center justify-center">
+              {/* Central Core */}
+              <div className="absolute z-20 w-24 h-24 bg-gradient-to-br from-brand-500 to-purple-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(99,102,241,0.5)] animate-pulse">
+                <Atom size={48} className="text-white animate-spin-slow" />
+              </div>
 
-                  {/* Concentric Circles */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-3/4 h-3/4 border border-brand-500/20 rounded-full animate-pulse" />
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div
-                      className="w-1/2 h-1/2 border border-purple-500/20 rounded-full animate-pulse"
-                      style={{ animationDelay: "0.5s" }}
-                    />
-                  </div>
+              {/* Orbit 1 - React & Frontend */}
+              <div className="absolute w-[200px] h-[200px] border border-brand-500/30 rounded-full animate-spin-slow">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-900 p-2 rounded-full border border-cyan-500/20 dark:border-cyan-500/50 shadow-lg dark:shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+                  <Code2 size={20} className="text-cyan-600 dark:text-cyan-400" />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-900 p-2 rounded-full border border-purple-500/20 dark:border-purple-500/50 shadow-lg dark:shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+                  <Layout size={20} className="text-purple-600 dark:text-purple-500" />
                 </div>
               </div>
 
-              {/* Floating Tech Icons - Top Right */}
-              <motion.div
-                className="absolute -top-4 -right-4 glass rounded-2xl p-4 shadow-xl border border-brand-500/20"
-                animate={floatVariants.animate}
-              >
-                <Rocket size={32} className="text-brand-500" />
-              </motion.div>
+              {/* Orbit 2 - Backend & Data */}
+              <div className="absolute w-[350px] h-[350px] border border-purple-500/20 rounded-full animate-reverse-spin">
+                <div className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white dark:bg-gray-900 p-3 rounded-full border border-red-500/20 dark:border-red-500/50 shadow-lg dark:shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+                  <Coffee size={24} className="text-red-600 dark:text-red-500" />
+                </div>
+                <div className="absolute top-1/2 -left-4 -translate-y-1/2 bg-white dark:bg-gray-900 p-3 rounded-full border border-pink-500/20 dark:border-pink-500/50 shadow-lg dark:shadow-[0_0_15px_rgba(236,72,153,0.3)]">
+                  <Database size={24} className="text-pink-600 dark:text-pink-500" />
+                </div>
+              </div>
 
-              {/* Floating Tech Icons - Bottom Left */}
-              <motion.div
-                className="absolute -bottom-4 -left-4 glass rounded-2xl p-4 shadow-xl border border-purple-500/20"
-                animate={floatVariants.animate}
-                style={{ animationDelay: "0.5s" }}
-              >
-                <Terminal size={32} className="text-purple-500" />
-              </motion.div>
+              {/* Orbit 3 - Tools & Languages */}
+              <div className="absolute w-[500px] h-[500px] border border-cyan-500/10 rounded-full animate-spin-slower">
+                <div className="absolute top-10 right-20 bg-white dark:bg-gray-900 p-3 rounded-full border border-yellow-500/20 dark:border-yellow-500/50 shadow-lg dark:shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+                  <FileCode size={24} className="text-yellow-600 dark:text-yellow-500" />
+                </div>
+                <div className="absolute bottom-10 left-20 bg-white dark:bg-gray-900 p-3 rounded-full border border-gray-200 dark:border-white/50 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                  <Github size={24} className="text-gray-900 dark:text-white" />
+                </div>
+              </div>
 
-              {/* Floating Tech Icons - Right Center */}
+              {/* Floating Particles */}
               <motion.div
-                className="absolute top-1/2 -right-8 -translate-y-1/2 glass rounded-2xl p-4 shadow-xl border border-pink-500/20"
-                animate={floatVariants.animate}
-                style={{ animationDelay: "0.7s" }}
+                className="absolute top-0 right-0 text-brand-500"
+                animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
               >
-                <Database size={32} className="text-pink-500" />
+                <Sparkles size={24} />
               </motion.div>
-
-              {/* Floating Tech Icons - Left Center */}
               <motion.div
-                className="absolute top-1/3 -left-8 glass rounded-2xl p-4 shadow-xl border border-cyan-500/20"
-                animate={floatVariants.animate}
-                style={{ animationDelay: "0.6s" }}
+                className="absolute bottom-0 left-0 text-purple-500"
+                animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
               >
-                <Globe size={32} className="text-cyan-500" />
-              </motion.div>
-
-              {/* Floating Sparkles */}
-              <motion.div
-                className="absolute top-10 right-20"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <Sparkles
-                  size={20}
-                  className="text-yellow-500 fill-yellow-500"
-                />
-              </motion.div>
-
-              <motion.div
-                className="absolute bottom-16 left-16"
-                animate={{
-                  scale: [1, 1.3, 1],
-                  rotate: [0, -180, -360],
-                }}
-                transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-              >
-                <Sparkles size={16} className="text-brand-500 fill-brand-500" />
+                <Sparkles size={24} />
               </motion.div>
             </div>
+
+            <style>{`
+              @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
+              @keyframes reverse-spin {
+                from { transform: rotate(360deg); }
+                to { transform: rotate(0deg); }
+              }
+              @keyframes spin-slower {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
+              .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+              .animate-reverse-spin { animation: reverse-spin 25s linear infinite; }
+              .animate-spin-slower { animation: spin-slower 30s linear infinite; }
+            `}</style>
           </motion.div>
         </div>
       </Section>

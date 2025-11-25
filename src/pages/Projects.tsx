@@ -56,11 +56,12 @@ export default function Projects() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + idx * 0.1 }}
+                  className="h-full"
                 >
                   <motion.div
                     whileHover={{ scale: 1.03 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="rounded-2xl"
+                    className="rounded-2xl h-full"
                   >
                     <ProjectCard {...project} />
                   </motion.div>
@@ -88,12 +89,13 @@ export default function Projects() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + idx * 0.1 }}
+                  className="h-full"
                 >
                   {" "}
                   <motion.div
                     whileHover={{ scale: 1.03 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="rounded-2xl"
+                    className="rounded-2xl h-full"
                   >
                     <ProjectCard {...project} />
                   </motion.div>

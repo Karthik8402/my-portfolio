@@ -8,7 +8,7 @@ export const SITE = {
     "Python Backend Developer",
     "Full-Stack Web Developer",
     "Web Application Developer",
-    "Software Developer / Software Engineer"
+    "Software Engineer"
   ],
   location: "Salem, Tamil Nadu, India",
   email: "karthikumar8402@gmail.com",
@@ -41,6 +41,32 @@ export const SITE = {
       "Database Design & Optimization",
       "Modern UI Engineering with React & Tailwind",
       "Automation & Scripting with Python"
+    ],
+    timeline: [
+      {
+        year: "2024 - Present",
+        title: "Master of Computer Applications (MCA)",
+        institution: "College of Engineering",
+        description: "Pursuing advanced studies in Computer Applications, focusing on full-stack development and software engineering."
+      },
+      {
+        year: "2022 - 2024",
+        title: "Java Full Stack Development",
+        institution: "J Spider, Chennai",
+        description: "Built a strong foundation in programming, database management, and web technologies."
+      },
+      {
+        year: "2019 - 2022",
+        title: "Bachelor of Computer Applications (BCA)",
+        institution: "Arts & Science College",
+        description: "Built a strong foundation in programming, database management, and web technologies."
+      },
+      {
+        year: "Present",
+        title: "Open to Work",
+        institution: "Searching for Opportunities",
+        description: "Actively looking for Full-Stack Developer or Software Engineer roles to apply my skills in a professional environment."
+      }
     ]
   }
 };

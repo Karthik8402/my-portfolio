@@ -14,13 +14,13 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ title, description, image, tags, links, featured = false }: ProjectCardProps) {
   return (
-    <div className="group relative glass rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-brand-500/50 transition-all hover:shadow-xl">
+    <div className="group relative glass rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 md:hover:border-brand-500/50 transition-all md:hover:shadow-xl h-full flex flex-col">
       {/* Image Section */}
-      <div className="relative h-52 overflow-hidden bg-gradient-to-br from-brand-500/10 to-purple-500/10">
+      <div className="relative h-52 overflow-hidden bg-gradient-to-br from-brand-500/10 to-purple-500/10 flex-shrink-0">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
           onError={(e) => {
             e.currentTarget.src = 'https://placehold.co/600x400/6366f1/ffffff?text=' + title.split(' ').join('+');
           }}
@@ -30,7 +30,7 @@ export default function ProjectCard({ title, description, image, tags, links, fe
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         
         {/* Desktop Hover Buttons (hidden on mobile) */}
-        <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
           {links.live && (
             <a
               href={links.live}
@@ -67,15 +67,15 @@ export default function ProjectCard({ title, description, image, tags, links, fe
       </div>
 
       {/* Content Section */}
-      <div className="p-6">
+      <div className="p-6 flex-1 flex flex-col">
         {/* Title and Link Icons */}
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold group-hover:text-brand-500 transition-colors line-clamp-1 flex-1">
+          <h3 className="text-xl font-bold font-heading md:group-hover:text-brand-500 transition-colors line-clamp-1 flex-1">
             {title}
           </h3>
           
           {/* Link Icons (visible on mobile) */}
-          <div className="flex items-center gap-2 ml-2">
+          <div className="flex items-center gap-2 ml-2 md:hidden">
             {links.live && (
               <a
                 href={links.live}
@@ -102,12 +102,12 @@ export default function ProjectCard({ title, description, image, tags, links, fe
         </div>
         
         {/* Description */}
-        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-2 leading-relaxed">
           {description}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-auto">
           {tags.slice(0, 4).map(tag => (
             <span
               key={tag}
@@ -125,7 +125,7 @@ export default function ProjectCard({ title, description, image, tags, links, fe
       </div>
 
       {/* Bottom Accent Line */}
-      <div className="h-1 bg-gradient-to-r from-brand-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="h-1 bg-gradient-to-r from-brand-500 via-purple-500 to-pink-500 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
     </div>
   );
 }
