@@ -11,7 +11,7 @@ export const PROJECTS = [
       "Multi-role system with JWT authentication"
     ],
     links: {
-      live: "https://gen-ai-education-platform.vercel.app",
+      live: "http://13.61.24.96/",
       github: "https://github.com/Karthik8402/Gen-AI-Education-Platform"
     },
     featured: true
