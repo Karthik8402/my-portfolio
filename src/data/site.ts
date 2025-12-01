@@ -46,19 +46,19 @@ export const SITE = {
       {
         year: "2024 - Present",
         title: "Master of Computer Applications (MCA)",
-        institution: "College of Engineering",
+        institution: "Sona College of Technology",
         description: "Pursuing advanced studies in Computer Applications, focusing on full-stack development and software engineering."
       },
       {
         year: "2022 - 2024",
         title: "Java Full Stack Development",
-        institution: "J Spider, Chennai",
+        institution: "J Spider,Velachery, Chennai",
         description: "Built a strong foundation in programming, database management, and web technologies."
       },
       {
         year: "2019 - 2022",
         title: "Bachelor of Computer Applications (BCA)",
-        institution: "Arts & Science College",
+        institution: "Vysya College",
         description: "Built a strong foundation in programming, database management, and web technologies."
       },
       {
