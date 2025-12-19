@@ -110,8 +110,8 @@ export default function About() {
                     key={idx}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.2 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 }}
                     className="relative"
                   >
                     <span className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 bg-brand-500" />

@@ -44,6 +44,12 @@ export const SITE = {
     ],
     timeline: [
       {
+        year: "Present",
+        title: "Open to Work",
+        institution: "Searching for Opportunities",
+        description: "Actively looking for Full-Stack Developer or Software Engineer roles to apply my skills in a professional environment."
+      },
+      {
         year: "2024 - Present",
         title: "Master of Computer Applications (MCA)",
         institution: "Sona College of Technology",
@@ -60,12 +66,6 @@ export const SITE = {
         title: "Bachelor of Computer Applications (BCA)",
         institution: "Vysya College",
         description: "Built a strong foundation in programming, database management, and web technologies."
-      },
-      {
-        year: "Present",
-        title: "Open to Work",
-        institution: "Searching for Opportunities",
-        description: "Actively looking for Full-Stack Developer or Software Engineer roles to apply my skills in a professional environment."
       }
     ]
   }
