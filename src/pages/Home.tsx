@@ -16,7 +16,7 @@ import {
   Atom,
 } from "lucide-react";
 import Section from "../components/Section";
-import { SITE } from "../data/site";
+import { SITE } from "../data/SITE.1";
 import { Meta } from "../seo/Meta";
 import { useMobile } from "../hooks/useMobile";
 

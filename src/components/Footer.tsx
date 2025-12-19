@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Github, Linkedin, Twitter, Mail, type LucideIcon } from "lucide-react";
-import { SITE } from "../data/site";
+import { SITE } from "../data/SITE.1";
 import { motion } from "framer-motion";
 import { useLocation, Link } from "react-router-dom";
 import { useMobile } from "../hooks/useMobile";

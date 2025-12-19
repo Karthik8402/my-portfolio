@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { User, BookOpen, Award, TrendingUp, Star } from "lucide-react";
 import Section from "../components/Section";
-import { SITE } from "../data/site";
+import { SITE } from "../data/SITE.1";
 import { SKILLS } from "../data/skills";
 import { Meta } from "../seo/Meta";
 import { useMobile } from "../hooks/useMobile";
