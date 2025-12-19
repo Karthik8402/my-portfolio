@@ -16,7 +16,7 @@ import {
   Atom,
 } from "lucide-react";
 import Section from "../components/Section";
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 import { Meta } from "../seo/Meta";
 import { useMobile } from "../hooks/useMobile";
 
@@ -158,7 +158,7 @@ export default function Home() {
               <span className="text-base text-gray-500 dark:text-gray-500">
                 Connect:
               </span>
-              {SITE.socials.slice(0, 3).map((social) => {
+              {SITE.socials.slice(0, 3).map((social: { icon: string; label: string; href: string }) => {
                 const Icon =
                   socialIcons[social.icon as keyof typeof socialIcons];
                 return Icon ? (

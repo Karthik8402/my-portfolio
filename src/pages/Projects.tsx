@@ -3,7 +3,7 @@ import { FolderGit2, Sparkles } from "lucide-react";
 import Section from "../components/Section";
 import ProjectCard from "../components/ProjectCard";
 import { PROJECTS } from "../data/projects";
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 import { Meta } from "../seo/Meta";
 
 export default function Projects() {

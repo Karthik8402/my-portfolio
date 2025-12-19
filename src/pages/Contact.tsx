@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Section from "../components/Section";
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 import { Meta } from "../seo/Meta";
 import { useMobile } from "../hooks/useMobile";
 
@@ -142,7 +142,9 @@ export default function Contact() {
           message: formData.message,
           email: formData.email,
         },
-        EMAILJS_PUBLIC_KEY
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }
       );
 
       setIsSuccess(true);
@@ -260,7 +262,7 @@ export default function Contact() {
             <div className="pt-6">
               <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
               <div className="flex flex-wrap gap-3">
-                {SITE.socials.map((social) => {
+                {SITE.socials.map((social: { icon: string; label: string; href: string }) => {
                   const IconComponent = socialIconMap[social.icon];
                   return IconComponent ? (
                     <motion.a

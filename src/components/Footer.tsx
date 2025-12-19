@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Github, Linkedin, Twitter, Mail, type LucideIcon } from "lucide-react";
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 import { motion } from "framer-motion";
 import { useLocation, Link } from "react-router-dom";
 import { useMobile } from "../hooks/useMobile";
@@ -85,7 +85,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 font-heading">Connect</h4>
             <div className="flex gap-4">
-              {SITE.socials.map((social, idx) => {
+              {SITE.socials.map((social: { icon: string; label: string; href: string }, idx: number) => {
                 const Icon = iconMap[social.icon];
                 const colors = socialColors[social.icon];
                 return colors ? (

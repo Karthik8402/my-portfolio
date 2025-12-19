@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { User, BookOpen, Award, TrendingUp, Star } from "lucide-react";
 import Section from "../components/Section";
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 import { SKILLS } from "../data/skills";
 import { Meta } from "../seo/Meta";
 import { useMobile } from "../hooks/useMobile";
@@ -72,7 +72,7 @@ export default function About() {
                   <h3 className="text-xl font-semibold">Interests</h3>
                 </div>
                 <ul className="space-y-1">
-                  {SITE.about.interests.map((interest, idx) => (
+                  {SITE.about.interests.map((interest: string, idx: number) => (
                     <motion.li
                       key={interest}
                       className="flex items-center gap-3 group py-1 ml-4"
@@ -105,7 +105,7 @@ export default function About() {
                 <h3 className="text-2xl font-semibold">Journey</h3>
               </div>
               <div className="space-y-8 border-l-2 border-gray-200 dark:border-gray-800 ml-3 pl-8 relative">
-                {SITE.about.timeline?.map((item, idx) => (
+                {SITE.about.timeline?.map((item: { year: string; title: string; institution: string; description: string }, idx: number) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, x: -20 }}

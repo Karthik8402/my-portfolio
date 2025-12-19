@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { SITE } from "../data/SITE.1";
+import { SITE } from "../data/site";
 
 interface MetaProps {
   title?: string;
