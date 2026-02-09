@@ -1,5 +1,22 @@
 export const PROJECTS = [
   {
+    id: "family-ledger",
+    title: "Family Ledger",
+    description: "A shared family expense tracker built with Flutter and Firebase. This application helps families manage their finances by tracking contributions, expenses, and a shared family pool.",
+    image: "/family-ledger.png",
+    tags: ["Flutter", "Dart", "Firebase", "Provider", "Google Sign-In"],
+    metrics: [
+      "Secure user authentication with Google",
+      "Real-time shared transaction tracking",
+      "Visual financial statistics & animations"
+    ],
+    links: {
+      live: "https://familyledger.me/",
+      github: "https://github.com/Karthik8402/family_ledger"
+    },
+    featured: true
+  },
+  {
     id: "gen-ai-education-platform",
     title: "Gen-AI Education Platform",
     description: "AI-powered personalized education platform with Flask backend and React frontend, featuring intelligent content generation, skill assessments, and real-time analytics",
@@ -33,6 +50,41 @@ export const PROJECTS = [
     },
     featured: true
   },
+  {
+    id: "smart-study-notes",
+    title: "Smart Study Notes Generator",
+    description: "AI-powered study notes generator using RAG and MCP integration, featuring multi-format uploads, auto-generated notes, MCQs, and campus recruitment training tools",
+    image: "/smart-notes.png",
+    tags: ["React", "Python", "Flask", "RAG", "MCP", "Google Gemini AI"],
+    metrics: [
+      "Multi-format upload (PDF, PPT, Images, YouTube)",
+      "MCP integration with Calendar & Drive",
+      "Campus Recruitment Training suite"
+    ],
+    links: {
+      live: "https://smart-study-frontend-zsa4.onrender.com",
+      github: "https://github.com/Karthik8402/smart-study-notes-generator"
+    },
+    featured: true
+  },
+  {
+    id: "estar-project-tracker",
+    title: "eSTAR - Student Internship & Project Tracker",
+    description: "AI-powered internship and project management system with multi-student projects, team collaboration, task management, and smart AI assistant for task suggestions",
+    image: "/estar.png",
+    tags: ["PHP", "MySQL", "JavaScript", "MVC Architecture", "AI Assistant"],
+    metrics: [
+      "Role-based access control system",
+      "AI-powered task suggestions",
+      "Glassmorphism UI design"
+    ],
+    links: {
+      live: "https://student-tracker-jk9n.onrender.com",
+      github: "https://github.com/Karthik8402/AI-Powered-Student-Internship-Project-Tracker"
+    },
+    featured: true
+  },
+
   {
     id: "hostel-vms",
     title: "Hostel Visitor Management System",
