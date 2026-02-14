@@ -103,6 +103,23 @@ export const PROJECTS = [
     featured: false
   },
   {
+    id: "valentine-terminal",
+    title: "Valentine's Terminal Animation",
+    description: "A retro-style terminal animation that transforms into a stunning Valentine's Day surprise with realistic rose petals, sparkle effects, and an animated heartbeat cursor.",
+    image: "/valentine-terminal.jpg",
+    tags: ["HTML5 Canvas", "Vanilla JavaScript", "CSS3", "Google Fonts"],
+    metrics: [
+      "Retro terminal hacking aesthetic",
+      "Procedural rose petal animation",
+      "Interactive spotlight and heartbeat cursor"
+    ],
+    links: {
+      live: "https://karthik8402.github.io/valentine-terminal-animation/",
+      github: "https://github.com/Karthik8402/valentine-terminal-animation"
+    },
+    featured: false
+  },
+  {
     id: "parallax-website",
     title: "Parallax Website",
     description: "Creative parallax scrolling website with smooth animations and modern design effects",
