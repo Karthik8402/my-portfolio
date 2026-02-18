@@ -1,5 +1,39 @@
 export const PROJECTS = [
   {
+    id: "smart-study-notes",
+    title: "Smart Study Notes Generator",
+    description: "AI-powered study notes generator using RAG and MCP integration, featuring multi-format uploads, auto-generated notes, MCQs, and campus recruitment training tools",
+    image: "/smart-notes.png",
+    tags: ["React", "TypeScript", "Python", "Flask", "RAG", "MCP", "Google Gemini AI"],
+    metrics: [
+      "Multi-format upload (PDF, PPT, Images, YouTube)",
+      "MCP integration with Calendar & Drive",
+      "Campus Recruitment Training suite"
+    ],
+    links: {
+      live: "https://smart-study-frontend-zsa4.onrender.com",
+      github: "https://github.com/Karthik8402/smart-study-notes-generator"
+    },
+    featured: true
+  },
+  {
+    id: "gen-ai-education-platform",
+    title: "Gen-AI Education Platform",
+    description: "AI-powered personalized education platform with Flask backend and React frontend, featuring intelligent content generation, skill assessments, and real-time analytics",
+    image: "/gen-ai.png",
+    tags: ["React", "TypeScript", "Flask", "MongoDB", "Google Gemini AI", "PyTorch", "spaCy"],
+    metrics: [
+      "ML-powered skill level prediction",
+      "Dynamic quiz generation with NLP",
+      "Multi-role system with JWT authentication"
+    ],
+    links: {
+      live: "http://13.61.24.96/",
+      github: "https://github.com/Karthik8402/Gen-AI-Education-Platform"
+    },
+    featured: true
+  },
+  {
     id: "family-ledger",
     title: "Family Ledger",
     description: "A shared family expense tracker built with Flutter and Firebase. This application helps families manage their finances by tracking contributions, expenses, and a shared family pool.",
@@ -13,23 +47,6 @@ export const PROJECTS = [
     links: {
       live: "https://familyledger.me/",
       github: "https://github.com/Karthik8402/family_ledger"
-    },
-    featured: true
-  },
-  {
-    id: "gen-ai-education-platform",
-    title: "Gen-AI Education Platform",
-    description: "AI-powered personalized education platform with Flask backend and React frontend, featuring intelligent content generation, skill assessments, and real-time analytics",
-    image: "/gen-ai.png",
-    tags: ["React", "Flask", "MongoDB", "Google Gemini AI", "PyTorch", "spaCy"],
-    metrics: [
-      "ML-powered skill level prediction",
-      "Dynamic quiz generation with NLP",
-      "Multi-role system with JWT authentication"
-    ],
-    links: {
-      live: "http://13.61.24.96/",
-      github: "https://github.com/Karthik8402/Gen-AI-Education-Platform"
     },
     featured: true
   },
@@ -51,23 +68,6 @@ export const PROJECTS = [
     featured: true
   },
   {
-    id: "smart-study-notes",
-    title: "Smart Study Notes Generator",
-    description: "AI-powered study notes generator using RAG and MCP integration, featuring multi-format uploads, auto-generated notes, MCQs, and campus recruitment training tools",
-    image: "/smart-notes.png",
-    tags: ["React", "Python", "Flask", "RAG", "MCP", "Google Gemini AI"],
-    metrics: [
-      "Multi-format upload (PDF, PPT, Images, YouTube)",
-      "MCP integration with Calendar & Drive",
-      "Campus Recruitment Training suite"
-    ],
-    links: {
-      live: "https://smart-study-frontend-zsa4.onrender.com",
-      github: "https://github.com/Karthik8402/smart-study-notes-generator"
-    },
-    featured: true
-  },
-  {
     id: "estar-project-tracker",
     title: "eSTAR - Student Internship & Project Tracker",
     description: "AI-powered internship and project management system with multi-student projects, team collaboration, task management, and smart AI assistant for task suggestions",
@@ -84,7 +84,6 @@ export const PROJECTS = [
     },
     featured: true
   },
-
   {
     id: "hostel-vms",
     title: "Hostel Visitor Management System",

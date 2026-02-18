@@ -4,33 +4,43 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class', // This enables dark mode
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Outfit', 'sans-serif'],
+        sans: ['"DM Sans"', 'sans-serif'],
+        heading: ['"Clash Display"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
-        brand: {
-          DEFAULT: "#6366f1",
-          50: "#eef2ff",
-          100: "#e0e7ff",
-          200: "#c7d2fe",
-          300: "#a5b4fc",
-          400: "#818cf8",
-          500: "#6366f1",
-          600: "#4f46e5",
-          700: "#4338ca",
-          800: "#3730a3",
-          900: "#312e81",
-          950: "#1e1b4b",
-        }
+        bg: {
+          DEFAULT: '#080C14',
+          surface: '#0F1629',
+        },
+        border: '#1E2D4A',
+        accent: {
+          DEFAULT: '#38BDF8',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38BDF8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+        },
+        text: {
+          primary: '#F1F5F9',
+          secondary: '#94A3B8',
+          muted: '#475569',
+        },
       },
       animation: {
         'gradient': 'gradient 8s linear infinite',
         'float': 'float 3s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'shimmer': 'shimmer 2s infinite',
       },
       keyframes: {
         gradient: {
@@ -42,10 +52,14 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 5px rgba(99, 102, 241, 0.5)' },
-          '100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.8)' },
-        }
-      }
+          '0%': { boxShadow: '0 0 5px rgba(56, 189, 248, 0.5)' },
+          '100%': { boxShadow: '0 0 20px rgba(56, 189, 248, 0.8)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
     },
   },
   plugins: [],

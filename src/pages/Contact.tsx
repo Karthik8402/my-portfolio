@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from "react";
-import { motion, easeInOut, easeOut, easeIn } from "framer-motion";
-import emailjs from "@emailjs/browser";
+import { useState, type FormEvent } from 'react';
+import { motion, easeInOut, easeOut, easeIn } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import {
   Mail,
   MapPin,
@@ -12,21 +12,15 @@ import {
   Linkedin,
   Twitter,
   type LucideIcon,
-} from "lucide-react";
-import Section from "../components/Section";
-import { SITE } from "../data/site";
-import { Meta } from "../seo/Meta";
-import { useMobile } from "../hooks/useMobile";
+} from 'lucide-react';
+import Section from '../components/Section';
+import { SITE } from '../data/site';
+import { Meta } from '../seo/Meta';
+import { useMobile } from '../hooks/useMobile';
+import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight, pageTransition } from '../utils/motionVariants';
 
-// Icon mapping for social media
-const socialIconMap: Record<string, LucideIcon> = {
-  Github,
-  Linkedin,
-  Twitter,
-  Mail,
-};
+const socialIconMap: Record<string, LucideIcon> = { Github, Linkedin, Twitter, Mail };
 
-// EmailJS Configuration from environment variables
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -34,185 +28,119 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 export default function Contact() {
   const isMobile = useMobile();
 
-  // Unique hover animation variants for contact info boxes
   const contactHoverVariants = {
     hover: isMobile ? {} : {
       scale: 1.02,
-      y: -5,
-      boxShadow: "0 10px 30px -10px rgba(99, 102, 241, 0.3)",
+      y: -4,
       transition: { duration: 0.3, ease: easeInOut },
     },
   };
 
-  // Unique hover animation variants for social icons
   const socialHoverVariants = {
     hover: isMobile ? {} : {
       scale: 1.1,
-      rotate: 5,
+      y: -2,
       transition: { duration: 0.2, ease: easeOut },
     },
   };
 
   const successVariant = {
-    initial: { scale: 0.8, opacity: 0, rotate: -10 },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      rotate: 0,
-      transition: { duration: 0.5, ease: easeOut },
-    },
-    exit: {
-      scale: 0.8,
-      opacity: 0,
-      rotate: 10,
-      transition: { duration: 0.3, ease: easeIn },
-    },
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { scale: 1, opacity: 1, transition: { duration: 0.5, ease: easeOut } },
+    exit: { scale: 0.8, opacity: 0, transition: { duration: 0.3, ease: easeIn } },
   };
 
   const errorVariant = {
-    initial: { scale: 0.8, opacity: 0, rotate: 10 },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      rotate: 0,
-      transition: { duration: 0.5, ease: easeOut },
-    },
-    exit: {
-      scale: 0.8,
-      opacity: 0,
-      rotate: -10,
-      transition: { duration: 0.3, ease: easeIn },
-    },
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { scale: 1, opacity: 1, transition: { duration: 0.5, ease: easeOut } },
+    exit: { scale: 0.8, opacity: 0, transition: { duration: 0.3, ease: easeIn } },
   };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-
-    if (formData.name.length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Invalid email address";
-    }
-    if (formData.message.length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    }
-
+    if (formData.name.length < 2) newErrors.name = 'Name must be at least 2 characters';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email address';
+    if (formData.message.length < 10) newErrors.message = 'Message must be at least 10 characters';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setIsSubmitting(true);
-    setErrorMessage("");
+    setErrorMessage('');
 
     try {
-      // Get current time formatted
-      const currentTime = new Date().toLocaleString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
+      const currentTime = new Date().toLocaleString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit',
       });
 
-      // Send email using EmailJS with template variables
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          name: formData.name,
-          time: currentTime,
-          from_email: formData.email,
-          message: formData.message,
-          email: formData.email,
+          from_name: formData.name, name: formData.name, time: currentTime,
+          from_email: formData.email, message: formData.message, email: formData.email,
         },
-        {
-          publicKey: EMAILJS_PUBLIC_KEY,
-        }
+        { publicKey: EMAILJS_PUBLIC_KEY }
       );
 
       setIsSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
-      console.error("Failed to send email:", error);
-      setErrorMessage(
-        "Failed to send message. Please try again or email directly."
-      );
+      console.error('Failed to send email:', error);
+      setErrorMessage('Failed to send message. Please try again or email directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <Meta
-        title={`Contact - ${SITE.name}`}
-        description="Get in touch with me"
-        path="/contact"
-      />
+    <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
+      <Meta title={`Contact - ${SITE.name}`} description="Get in touch with me" path="/contact" />
 
       <Section>
         {/* Header */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <MessageCircle className="text-brand-500" size={32} />
-            <h1 className="text-4xl md:text-5xl font-bold">Get In Touch</h1>
-          </div>
-          <div className="w-20 h-1 bg-gradient-to-r from-brand-500 to-purple-500 mb-4" />
-          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
-            Have a question or want to work together? I'd love to hear from you!
-          </p>
+        <motion.div className="mb-16" variants={staggerContainer} initial="hidden" animate="visible">
+          <motion.div variants={fadeInUp}>
+            <div className="flex items-center gap-3 mb-4">
+              <MessageCircle className="text-accent" size={32} />
+              <h1 className="text-h1 font-bold font-heading">Get In Touch</h1>
+            </div>
+            <div className="w-20 h-1 gradient-bg mb-4" />
+            <p className="text-lg text-text-secondary max-w-2xl">
+              Have a question or want to work together? I'd love to hear from you!
+            </p>
+          </motion.div>
         </motion.div>
 
         <div className="grid gap-12 lg:grid-cols-2">
-          {/* Contact Information Cards */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
+          {/* Contact Info */}
+          <motion.div className="space-y-6" variants={fadeInLeft} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <h3 className="text-2xl font-semibold mb-6 font-heading">Contact Information</h3>
 
             {/* Email Card */}
             <motion.a
               href={`mailto:${SITE.email}`}
-              initial={{ scale: 1, x: 0, rotate: 0 }}
-              className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800 hover:border-brand-500/50 transition-all group"
+              className="flex items-center gap-4 p-6 glass rounded-xl hover:border-accent/30 transition-all group"
               whileHover="hover"
               variants={contactHoverVariants}
               aria-label="Email"
             >
-              <div className="p-3 bg-brand-500/10 rounded-lg group-hover:bg-brand-500/20 transition-colors">
-                <Mail className="text-brand-500" size={24} />
+              <div className="p-3 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                <Mail className="text-accent" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  Email
-                </p>
-                <p className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-brand-500 transition-colors">
+                <p className="text-sm text-text-muted mb-1">Email</p>
+                <p className="font-medium text-text-primary group-hover:text-accent transition-colors">
                   {SITE.email}
                 </p>
               </div>
@@ -220,47 +148,39 @@ export default function Contact() {
 
             {/* Phone Card */}
             <motion.div
-              className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
+              className="flex items-center gap-4 p-6 glass rounded-xl"
               whileHover="hover"
               variants={contactHoverVariants}
               aria-label="Phone"
             >
-              <div className="p-3 bg-purple-500/10 rounded-lg">
-                <Phone className="text-purple-500" size={24} />
+              <div className="p-3 bg-violet-500/10 rounded-lg">
+                <Phone className="text-violet-400" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  Phone
-                </p>
-                <p className="font-medium text-gray-900 dark:text-gray-100">
-                  {SITE.phone}
-                </p>
+                <p className="text-sm text-text-muted mb-1">Phone</p>
+                <p className="font-medium text-text-primary">{SITE.phone}</p>
               </div>
             </motion.div>
 
             {/* Location Card */}
             <motion.div
-              className="flex items-center gap-4 p-6 glass rounded-xl border border-gray-200 dark:border-gray-800"
+              className="flex items-center gap-4 p-6 glass rounded-xl"
               whileHover="hover"
               variants={contactHoverVariants}
               aria-label="Location"
             >
-              <div className="p-3 bg-pink-500/10 rounded-lg">
-                <MapPin className="text-pink-500" size={24} />
+              <div className="p-3 bg-emerald-500/10 rounded-lg">
+                <MapPin className="text-emerald-400" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  Location
-                </p>
-                <p className="font-medium text-gray-900 dark:text-gray-100">
-                  {SITE.location}
-                </p>
+                <p className="text-sm text-text-muted mb-1">Location</p>
+                <p className="font-medium text-text-primary">{SITE.location}</p>
               </div>
             </motion.div>
 
-            {/* Social Links - Icons Only */}
+            {/* Social Links */}
             <div className="pt-6">
-              <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
+              <h4 className="text-lg font-semibold mb-4 font-heading">Follow Me</h4>
               <div className="flex flex-wrap gap-3">
                 {SITE.socials.map((social: { icon: string; label: string; href: string }) => {
                   const IconComponent = socialIconMap[social.icon];
@@ -270,16 +190,13 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 glass rounded-lg hover:bg-brand-500/10 transition-all border border-gray-200 dark:border-gray-800 hover:border-brand-500/50"
+                      className="p-3 glass rounded-lg hover:border-accent/30 transition-all"
                       whileHover="hover"
                       variants={socialHoverVariants}
-                      transition={{ duration: 0.2, ease: easeInOut }}
-                      whileTap={isMobile ? {} : { scale: 0.9 }}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      whileTap={isMobile ? {} : { scale: 0.95 }}
                       aria-label={social.label}
                     >
-                      <IconComponent size={22} className="text-brand-500" />
+                      <IconComponent size={20} className="text-accent" />
                     </motion.a>
                   ) : null;
                 })}
@@ -289,107 +206,81 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div
-            className="glass rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            className="glass rounded-2xl p-8"
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
-            
-            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+            <h3 className="text-2xl font-semibold mb-6 font-heading">Send a Message</h3>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Name Input */}
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
+                <label htmlFor="name" className="block text-sm font-medium mb-2 text-text-secondary">
                   Your Name
                 </label>
-                <motion.input
-                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
+                <input
                   id="name"
                   type="text"
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-bg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-text-primary placeholder:text-text-muted"
                 />
                 {errors.name && (
-                  <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  <p className="mt-2 text-sm text-red-400 flex items-center gap-1">
                     <span>⚠</span> {errors.name}
                   </p>
                 )}
               </div>
 
-              {/* Email Input */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
+                <label htmlFor="email" className="block text-sm font-medium mb-2 text-text-secondary">
                   Your Email
                 </label>
-                <motion.input
-                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
+                <input
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="john@example.com"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-bg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-text-primary placeholder:text-text-muted"
                 />
                 {errors.email && (
-                  <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  <p className="mt-2 text-sm text-red-400 flex items-center gap-1">
                     <span>⚠</span> {errors.email}
                   </p>
                 )}
               </div>
 
-              {/* Message Input */}
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-2"
-                >
+                <label htmlFor="message" className="block text-sm font-medium mb-2 text-text-secondary">
                   Your Message
                 </label>
-                <motion.textarea
-                  whileFocus={{ scale: 1.01, borderColor: "#6366f1" }}
+                <textarea
                   id="message"
                   value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={5}
-                  placeholder="Leave The Message..."
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none resize-none transition-all"
+                  placeholder="Leave your message..."
+                  className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-bg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none resize-none transition-all text-text-primary placeholder:text-text-muted"
                 />
                 {errors.message && (
-                  <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  <p className="mt-2 text-sm text-red-400 flex items-center gap-1">
                     <span>⚠</span> {errors.message}
                   </p>
                 )}
               </div>
 
-              {/* Submit Button */}
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium disabled:opacity-50 transition-all shadow-lg relative overflow-hidden group"
-                whileHover={isMobile ? {} : {
-                  scale: 1.02,
-                  y: -2,
-                  boxShadow: "0 15px 30px -5px rgba(99, 102, 241, 0.4)",
-                }}
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white rounded-lg font-medium disabled:opacity-50 transition-all shadow-lg shadow-accent/20 relative overflow-hidden group"
+                whileHover={isMobile ? {} : { scale: 1.02, y: -2 }}
                 whileTap={isMobile ? {} : { scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -403,28 +294,21 @@ export default function Contact() {
                 )}
               </motion.button>
 
-              {/* Success Message */}
               {isSuccess && (
                 <motion.div
-                  className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-600 dark:text-green-400"
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
+                  className="flex items-center gap-2 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400"
+                  initial="initial" animate="animate" exit="exit"
                   variants={successVariant}
                 >
                   <CheckCircle2 size={20} />
-                  <span className="font-medium">
-                    Message sent successfully!
-                  </span>
+                  <span className="font-medium">Message sent successfully!</span>
                 </motion.div>
               )}
 
               {errorMessage && (
                 <motion.div
-                  className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 dark:text-red-400"
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
+                  className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400"
+                  initial="initial" animate="animate" exit="exit"
                   variants={errorVariant}
                 >
                   <span>⚠</span>
@@ -433,9 +317,8 @@ export default function Contact() {
               )}
             </form>
           </motion.div>
-
         </div>
       </Section>
-    </>
+    </motion.div>
   );
 }

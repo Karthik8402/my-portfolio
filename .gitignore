@@ -28,3 +28,6 @@ dist-ssr
 .env.local
 .env.production
 
+#skills
+SKILL.md
+CONTENT-SKILL.md

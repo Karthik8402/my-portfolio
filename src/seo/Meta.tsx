@@ -8,7 +8,7 @@ interface MetaProps {
   image?: string;
 }
 
-const BASE_URL = "https://my-portfolio-one-sigma-35.vercel.app";
+const BASE_URL = "https://www.karthikdev.app";
 
 export function Meta({ 
   title, 

@@ -1,13 +1,11 @@
 export const SITE = {
   name: "Karthik Kumar",
-  url: "https://my-portfolio-one-sigma-35.vercel.app",
+  url: "https://www.karthikdev.app",
   experience: "Fresher",
   roles: [
+    "Full-Stack Developer",
     "Java Backend Developer",
-    "Frontend Developer",
-    "Python Backend Developer",
-    "Full-Stack Web Developer",
-    "Web Application Developer",
+    "React Frontend Developer",
     "Software Engineer"
   ],
   location: "Salem, Tamil Nadu, India",
@@ -23,10 +21,10 @@ export const SITE = {
   ],
 
   hero: {
-    headline: "Crafting Modern, Efficient Digital Solutions",
-    subtitle: "Developer skilled in Java, Python, SQL, and React-based web design, building clean, performant applications",
+    headline: "Building Things That Actually Work",
+    subtitle: "MCA student from Salem, TN — shipping full-stack apps with React, Java, Python, and a Firebase obsession.",
     ctaPrimary: { label: "View Projects", href: "/projects" },
-    ctaSecondary: { label: "Download Resume", href: "/assets/resume.pdf" }
+    ctaSecondary: { label: "Download Resume", href: "/Resume.pdf" }
   },
 
   about: {
@@ -38,6 +36,7 @@ export const SITE = {
 
     interests: [
       "Full-Stack Application Development",
+      "AI-Powered Application Development",
       "Database Design & Optimization",
       "Modern UI Engineering with React & Tailwind",
       "Automation & Scripting with Python"
@@ -47,7 +46,7 @@ export const SITE = {
         year: "Present",
         title: "Open to Work",
         institution: "Searching for Opportunities",
-        description: "Actively looking for Full-Stack Developer or Software Engineer roles to apply my skills in a professional environment."
+        description: "Available for full-time roles in Full-Stack Development or Software Engineering to apply my skills in a professional environment."
       },
       {
         year: "2024 - Present",
@@ -58,7 +57,7 @@ export const SITE = {
       {
         year: "2022 - 2024",
         title: "Java Full Stack Development",
-        institution: "J Spider,Velachery, Chennai",
+        institution: "J Spider, Velachery, Chennai",
         description: "Built a strong foundation in programming, database management, and web technologies."
       },
       {

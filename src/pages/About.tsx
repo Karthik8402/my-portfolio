@@ -1,134 +1,148 @@
-import { motion } from "framer-motion";
-import { User, BookOpen, Award, TrendingUp, Star } from "lucide-react";
-import Section from "../components/Section";
-import { SITE } from "../data/site";
-import { SKILLS } from "../data/skills";
-import { Meta } from "../seo/Meta";
-import { useMobile } from "../hooks/useMobile";
+import { motion } from 'framer-motion';
+import { User, BookOpen, Award, TrendingUp, Star, Code2, Briefcase, GraduationCap } from 'lucide-react';
+import Section from '../components/Section';
+import { SITE } from '../data/site';
+import { SKILLS } from '../data/skills';
+import { Meta } from '../seo/Meta';
+import { useMobile } from '../hooks/useMobile';
+import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight, pageTransition } from '../utils/motionVariants';
+
+// Stat cards data
+const stats = [
+  { icon: Code2, label: 'Tech Stacks', value: '10+', color: 'text-accent' },
+  { icon: Briefcase, label: 'Projects Built', value: '11+', color: 'text-emerald-400' },
+  { icon: GraduationCap, label: 'Education', value: 'MCA', color: 'text-violet-400' },
+];
 
 export default function About() {
   const isMobile = useMobile();
 
   return (
-    <>
-      <Meta
-        title={`About - ${SITE.name}`}
-        description={SITE.about.bio}
-        path="/about"
-      />
+    <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
+      <Meta title={`About - ${SITE.name}`} description={SITE.about.bio} path="/about" />
 
       <Section>
         {/* Header */}
-        <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+        <motion.div className="mb-16" variants={staggerContainer} initial="hidden" animate="visible">
+          <motion.div variants={fadeInUp}>
             <div className="flex items-center gap-3 mb-4">
-              <User className="text-brand-500" size={32} />
-              <h1 className="text-4xl md:text-5xl font-bold">About Me</h1>
+              <User className="text-accent" size={32} />
+              <h1 className="text-h1 font-bold font-heading">About Me</h1>
             </div>
-            <div className="w-20 h-1 bg-gradient-to-r from-brand-500 to-purple-500 mb-4" />
-            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
+            <div className="w-20 h-1 gradient-bg mb-4" />
+            <p className="text-lg text-text-secondary max-w-2xl">
               Get to know more about my journey, skills, and what drives me.
             </p>
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-5">
-          {/* Left Column - Bio & Interests */}
+        {/* Stats Row */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
+          {stats.map((stat) => (
+            <motion.div
+              key={stat.label}
+              variants={fadeInUp}
+              className="glass rounded-2xl p-6 text-center group hover:border-accent/30 transition-colors"
+            >
+              <stat.icon size={28} className={`mx-auto mb-3 ${stat.color}`} />
+              <div className="text-3xl font-bold font-heading text-text-primary mb-1">{stat.value}</div>
+              <div className="text-sm text-text-muted">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Main Content — Split Layout */}
+        <div className="grid gap-12 lg:grid-cols-5">
+          {/* Left Column — Bio & Interests */}
           <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            className="lg:col-span-2 space-y-6"
+            variants={fadeInLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
           >
             {/* Bio Card */}
             <motion.div
-              whileHover={isMobile ? {} : { scale: 1.03 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="rounded-2xl"
+              className="glass rounded-2xl p-6"
+              whileHover={isMobile ? {} : { scale: 1.02, y: -4 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="glass rounded-2xl p-6 mb-6 border border-gray-200 dark:border-gray-800">
-                <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="text-brand-500" size={20} />
-                  <h3 className="text-xl font-semibold">Background</h3>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 text-justify leading-loose px-0">
-                  {SITE.about.bio}
-                </p>
+              <div className="flex items-center gap-2 mb-4">
+                <BookOpen className="text-accent" size={20} />
+                <h3 className="text-xl font-semibold text-text-primary">Background</h3>
               </div>
+              <p className="text-text-secondary text-justify leading-loose">
+                {SITE.about.bio}
+              </p>
             </motion.div>
 
             {/* Interests Card */}
             <motion.div
-              whileHover={isMobile ? {} : { scale: 1.03 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="rounded-2xl"
+              className="glass rounded-2xl p-6"
+              whileHover={isMobile ? {} : { scale: 1.02, y: -4 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="glass rounded-2xl p-6 border border-gray-200 dark:border-gray-800">
-                <div className="flex items-center gap-2 mb-4">
-                  <Star className="text-pink-500" size={20} />
-                  <h3 className="text-xl font-semibold">Interests</h3>
-                </div>
-                <ul className="space-y-1">
-                  {SITE.about.interests.map((interest: string, idx: number) => (
-                    <motion.li
-                      key={interest}
-                      className="flex items-center gap-3 group py-1 ml-4"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + idx * 0.1 }}
-                    >
-                      <span className="w-3 h-3 bg-brand-500 rounded-full flex-shrink-0 group-hover:scale-150 transition-transform" />
-                      <span className="text-gray-700 dark:text-gray-300">
-                        {interest}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
+              <div className="flex items-center gap-2 mb-4">
+                <Star className="text-amber-400" size={20} />
+                <h3 className="text-xl font-semibold text-text-primary">Interests</h3>
               </div>
+              <ul className="space-y-2">
+                {SITE.about.interests.map((interest: string, idx: number) => (
+                  <motion.li
+                    key={interest}
+                    className="flex items-center gap-3 group py-1 ml-2"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                  >
+                    <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 group-hover:scale-150 transition-transform" />
+                    <span className="text-text-secondary">{interest}</span>
+                  </motion.li>
+                ))}
+              </ul>
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Skills & Timeline */}
+          {/* Right Column — Timeline & Skills */}
           <motion.div
-            className="lg:col-span-3 space-y-8"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            className="lg:col-span-3 space-y-12"
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
           >
-            {/* Timeline Section */}
+            {/* Timeline */}
             <div>
-              <div className="flex items-center gap-2 mb-6">
-                <TrendingUp className="text-brand-500" size={24} />
-                <h3 className="text-2xl font-semibold">Journey</h3>
+              <div className="flex items-center gap-2 mb-8">
+                <TrendingUp className="text-accent" size={24} />
+                <h3 className="text-2xl font-semibold font-heading">Journey</h3>
               </div>
-              <div className="space-y-8 border-l-2 border-gray-200 dark:border-gray-800 ml-3 pl-8 relative">
+              <div className="space-y-8 border-l-2 border-[var(--color-border)] ml-3 pl-8 relative">
                 {SITE.about.timeline?.map((item: { year: string; title: string; institution: string; description: string }, idx: number) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
+                    viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1 }}
                     className="relative"
                   >
-                    <span className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 bg-brand-500" />
+                    <span className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 border-bg bg-accent" />
                     <div className="mb-1 flex items-center gap-2">
-                      <span className="text-sm font-bold text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full">
+                      <span className="text-sm font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">
                         {item.year}
                       </span>
                     </div>
-                    <h4 className="text-lg font-bold text-gray-900 dark:text-white">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                      {item.institution}
-                    </p>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {item.description}
-                    </p>
+                    <h4 className="text-lg font-bold text-text-primary">{item.title}</h4>
+                    <p className="text-sm font-medium text-text-muted mb-2">{item.institution}</p>
+                    <p className="text-text-secondary leading-relaxed">{item.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -136,86 +150,73 @@ export default function About() {
 
             {/* Technical Skills */}
             <div>
-              <div className="flex items-center gap-2 mb-6">
-                <Award className="text-purple-500" size={24} />
-                <h3 className="text-2xl font-semibold">Technical Skills</h3>
+              <div className="flex items-center gap-2 mb-8">
+                <Award className="text-violet-400" size={24} />
+                <h3 className="text-2xl font-semibold font-heading">Technical Skills</h3>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {SKILLS.map((category, catIdx) => (
                   <motion.div
                     key={category.category}
-                    whileHover={isMobile ? {} : { scale: 1.02 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="rounded-2xl"
+                    className="glass rounded-2xl p-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ delay: catIdx * 0.1 }}
+                    whileHover={isMobile ? {} : { scale: 1.01 }}
                   >
-                    <motion.div
-                      className="glass rounded-2xl p-6 border border-gray-200 dark:border-gray-800"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + catIdx * 0.1 }}
-                    >
-                      <div className="flex items-center gap-2 mb-5">
-                        <Award className="text-purple-500" size={18} />
-                        <h4 className="font-semibold text-lg gradient-text">
-                          {category.category}
-                        </h4>
-                      </div>
+                    <div className="flex items-center gap-2 mb-5">
+                      <h4 className="font-semibold text-lg gradient-text">
+                        {category.category}
+                      </h4>
+                    </div>
 
-                      <div className="space-y-5">
-                        {category.items.map((skill, skillIdx) => {
-                          const IconComponent = skill.icon;
-                          return (
-                            <motion.div
-                              key={skill.name}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                delay: 0.4 + catIdx * 0.1 + skillIdx * 0.05,
-                              }}
-                            >
-                              <div className="flex justify-between items-center mb-2">
-                                <span className="text-sm font-medium flex items-center gap-2">
-                                  <IconComponent
-                                    size={18}
-                                    className="text-brand-500"
-                                  />
-                                  <span className="text-gray-900 dark:text-gray-100">
-                                    {skill.name}
-                                  </span>
-                                </span>
-                                <span className="text-sm font-semibold text-brand-500">
-                                  {skill.level}%
-                                </span>
-                              </div>
-
-                              {/* Progress Bar */}
-                              <div className="relative w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
-                                <motion.div
-                                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-brand-500 via-purple-500 to-pink-500 rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${skill.level}%` }}
-                                  transition={{
-                                    duration: 1,
-                                    delay: 0.5 + catIdx * 0.1 + skillIdx * 0.05,
-                                    ease: "easeOut",
+                    <div className="space-y-4">
+                      {category.items.map((skill, skillIdx) => {
+                        const IconComponent = skill.icon;
+                        return (
+                          <motion.div
+                            key={skill.name}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: catIdx * 0.1 + skillIdx * 0.05 }}
+                          >
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="text-sm font-medium flex items-center gap-2">
+                                <IconComponent size={16} className="text-accent" />
+                                <span className="text-text-primary">{skill.name}</span>
+                              </span>
+                              <span className="text-sm font-semibold text-accent">
+                                {skill.level}%
+                              </span>
+                            </div>
+                            <div className="relative w-full bg-bg rounded-full h-1.5 overflow-hidden">
+                              <motion.div
+                                className="absolute top-0 left-0 h-full rounded-full gradient-bg"
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                viewport={{ once: true }}
+                                transition={{
+                                  duration: 1,
+                                  delay: catIdx * 0.1 + skillIdx * 0.05,
+                                  ease: 'easeOut',
+                                }}
+                              >
+                                <div
+                                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                                  style={{
+                                    backgroundSize: '200% 100%',
+                                    animation: 'shimmer 2s infinite',
                                   }}
-                                >
-                                  {/* Shimmer Effect */}
-                                  <div
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                                    style={{
-                                      backgroundSize: "200% 100%",
-                                      animation: "shimmer 2s infinite",
-                                    }}
-                                  />
-                                </motion.div>
-                              </div>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-                    </motion.div>
+                                />
+                              </motion.div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -223,14 +224,6 @@ export default function About() {
           </motion.div>
         </div>
       </Section>
-
-      {/* Add shimmer animation */}
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}</style>
-    </>
+    </motion.div>
   );
 }
