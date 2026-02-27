@@ -17,7 +17,7 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
-export default function ProjectCard({ id, title, description, image, tags, featured = false }: ProjectCardProps) {
+export default function ProjectCard({ id, title, description, image, tags, links, featured = false }: ProjectCardProps) {
   const isMobile = useMobile();
 
   return (
