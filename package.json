@@ -12,6 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.2.2",
+    "@stitches/react": "^1.2.8",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",

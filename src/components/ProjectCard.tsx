@@ -1,6 +1,7 @@
 import { ExternalLink, Github, Eye, Code2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useMobile } from '../hooks/useMobile';
+import Button from './Button';
 
 interface ProjectCardProps {
   title: string;
@@ -47,26 +48,28 @@ export default function ProjectCard({ title, description, image, tags, links, fe
         {/* Desktop Hover Buttons */}
         <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
           {links.live && (
-            <a
+            <Button
               href={links.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-accent text-bg rounded-lg font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all text-sm"
+              variant="primary"
+              size="medium"
             >
               <Eye size={16} />
               View Live
-            </a>
+            </Button>
           )}
           {links.github && (
-            <a
+            <Button
               href={links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-bg-surface/90 backdrop-blur-sm text-text-primary rounded-lg font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all border border-[var(--color-border)] text-sm"
+              variant="outline"
+              size="medium"
             >
               <Code2 size={16} />
               Code
-            </a>
+            </Button>
           )}
         </div>
 
