@@ -1,4 +1,41 @@
-export const PROJECTS = [
+export interface ProjectDetail {
+  about: string[];
+  features: { icon: string; title: string; description: string }[];
+  challenges: { problem: string; solution: string }[];
+  duration: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  metrics: string[];
+  links: { live: string; github: string };
+  featured: boolean;
+  detail: ProjectDetail;
+}
+
+const defaultDetail: ProjectDetail = {
+  about: [
+    "This project was conceived to solve a real-world problem by providing a modern, scalable web solution. It leverages cutting-edge technologies to deliver a seamless user experience.",
+    "The application aggregates data from multiple sources into a cohesive interface, allowing users to interact with complex workflows through an intuitive design. It was architected with scalability and maintainability as core priorities."
+  ],
+  features: [
+    { icon: "monitoring", title: "Real-time Analytics", description: "Live visualization of key metrics and data insights using modern state management." },
+    { icon: "inventory_2", title: "Data Synchronization", description: "Automatic synchronization across multiple sources, preventing data inconsistencies." },
+    { icon: "dark_mode", title: "Dark Mode Support", description: "Fully responsive UI with a meticulously crafted dark theme for comfortable usage." },
+    { icon: "picture_as_pdf", title: "Report Generation", description: "Generate and export detailed reports for tracking performance and outcomes." }
+  ],
+  challenges: [
+    { problem: "Handling complex state across many components caused prop-drilling and UI lag.", solution: "Implemented centralized state management with context and memoization for optimal re-renders." },
+    { problem: "Initial load times were slow due to large bundle sizes from third-party libraries.", solution: "Applied code splitting, lazy loading, and tree-shaking to reduce the bundle size by 60%." }
+  ],
+  duration: "3 Months"
+};
+
+export const PROJECTS: Project[] = [
   {
     id: "smart-study-notes",
     title: "Smart Study Notes Generator",
@@ -14,7 +51,24 @@ export const PROJECTS = [
       live: "https://smart-study-frontend-zsa4.onrender.com",
       github: "https://github.com/Karthik8402/smart-study-notes-generator"
     },
-    featured: true
+    featured: true,
+    detail: {
+      about: [
+        "Smart Study Notes Generator is an AI-powered platform that transforms the way students prepare for exams. Using Retrieval-Augmented Generation (RAG) and Model Context Protocol (MCP) integration, it processes study materials in multiple formats.",
+        "The platform automatically generates comprehensive study notes, MCQs, and summaries. It also includes a Campus Recruitment Training suite with aptitude questions, HR interview prep, and coding challenges."
+      ],
+      features: [
+        { icon: "upload_file", title: "Multi-Format Upload", description: "Supports PDF, PPT, Images, and YouTube links for diverse study material input." },
+        { icon: "auto_awesome", title: "AI-Powered Notes", description: "Uses Google Gemini AI with RAG to generate contextual, accurate study notes." },
+        { icon: "quiz", title: "Auto MCQ Generation", description: "Generates multiple-choice questions with explanations from uploaded content." },
+        { icon: "integration_instructions", title: "MCP Integration", description: "Connects with Google Calendar and Drive for seamless workflow management." }
+      ],
+      challenges: [
+        { problem: "Processing large PDF files caused timeout errors and memory issues on the server.", solution: "Implemented chunked processing with async queues and streaming responses to handle large files efficiently." },
+        { problem: "Maintaining context accuracy across multiple document formats was challenging.", solution: "Used RAG pipelines with vector embeddings to maintain semantic accuracy across all input formats." }
+      ],
+      duration: "4 Months"
+    }
   },
   {
     id: "gen-ai-education-platform",
@@ -31,7 +85,24 @@ export const PROJECTS = [
       live: "http://13.61.24.96/",
       github: "https://github.com/Karthik8402/Gen-AI-Education-Platform"
     },
-    featured: true
+    featured: true,
+    detail: {
+      about: [
+        "The Gen-AI Education Platform is a comprehensive learning system that leverages artificial intelligence to personalize the educational experience for each student.",
+        "It uses PyTorch for ML-based skill prediction, spaCy for natural language processing in quiz generation, and Google Gemini AI for content creation. The multi-role authentication system supports students, teachers, and administrators."
+      ],
+      features: [
+        { icon: "psychology", title: "ML Skill Prediction", description: "Uses PyTorch models to predict student skill levels and recommend personalized learning paths." },
+        { icon: "smart_toy", title: "Dynamic Quiz Generation", description: "NLP-powered quiz creation using spaCy for intelligent question formulation." },
+        { icon: "admin_panel_settings", title: "Multi-Role System", description: "JWT-based authentication supporting students, teachers, and admin roles." },
+        { icon: "analytics", title: "Real-Time Analytics", description: "Live dashboard showing student progress, engagement metrics, and performance trends." }
+      ],
+      challenges: [
+        { problem: "Training ML models for skill prediction required large, labeled datasets that weren't available.", solution: "Used transfer learning with pre-trained models and synthetic data generation to bootstrap the training process." },
+        { problem: "Real-time analytics caused database bottlenecks during peak usage hours.", solution: "Implemented Redis caching layer and optimized MongoDB aggregation pipelines for efficient data retrieval." }
+      ],
+      duration: "5 Months"
+    }
   },
   {
     id: "family-ledger",
@@ -48,7 +119,15 @@ export const PROJECTS = [
       live: "https://familyledger.me/",
       github: "https://github.com/Karthik8402/family_ledger"
     },
-    featured: true
+    featured: true,
+    detail: {
+      ...defaultDetail,
+      about: [
+        "Family Ledger is a cross-platform mobile application designed to simplify shared family finances. Built with Flutter for a native-like experience on both iOS and Android.",
+        "The app uses Firebase for real-time data synchronization so all family members see updates instantly. The Provider state management pattern ensures smooth UI performance with beautiful animations."
+      ],
+      duration: "2 Months"
+    }
   },
   {
     id: "sharebox-marketplace",
@@ -65,7 +144,15 @@ export const PROJECTS = [
       live: "https://sharebox-app-3dfe2.web.app/",
       github: "https://github.com/Karthik8402/sharebox-marketplace"
     },
-    featured: true
+    featured: true,
+    detail: {
+      ...defaultDetail,
+      about: [
+        "ShareBox Marketplace is a hybrid platform designed for college students to donate or sell items like IoT devices, accessories, and books.",
+        "Built with React and Vite for blazing-fast performance, it uses Firebase Firestore for real-time data sync and authentication. The modern UI is crafted with Tailwind CSS for responsive design."
+      ],
+      duration: "2 Months"
+    }
   },
   {
     id: "estar-project-tracker",
@@ -82,7 +169,15 @@ export const PROJECTS = [
       live: "https://student-tracker-jk9n.onrender.com",
       github: "https://github.com/Karthik8402/AI-Powered-Student-Internship-Project-Tracker"
     },
-    featured: true
+    featured: true,
+    detail: {
+      ...defaultDetail,
+      about: [
+        "eSTAR is an AI-powered internship and project management system designed for educational institutions. It supports multi-student projects with team collaboration features.",
+        "The system includes an AI assistant that provides smart task suggestions, helping students break down complex projects into manageable tasks. Built with PHP MVC architecture and a glassmorphism UI."
+      ],
+      duration: "3 Months"
+    }
   },
   {
     id: "hostel-vms",
@@ -99,7 +194,8 @@ export const PROJECTS = [
       live: "https://hostel-vsm.s3.eu-north-1.amazonaws.com/index.html",
       github: "https://github.com/Karthik8402/hostel-vms"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "1 Month" }
   },
   {
     id: "valentine-terminal",
@@ -116,7 +212,8 @@ export const PROJECTS = [
       live: "https://karthik8402.github.io/valentine-terminal-animation/",
       github: "https://github.com/Karthik8402/valentine-terminal-animation"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "1 Week" }
   },
   {
     id: "parallax-website",
@@ -133,7 +230,8 @@ export const PROJECTS = [
       live: "https://karthik8402.github.io/Parallax_Website",
       github: "https://github.com/Karthik8402/Parallax_Website"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "2 Weeks" }
   },
   {
     id: "animated-login-website",
@@ -150,7 +248,8 @@ export const PROJECTS = [
       live: "https://karthik8402.github.io/Animated_login_responsive_website",
       github: "https://github.com/Karthik8402/Animated_login_responsive_website"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "1 Week" }
   },
   {
     id: "webtech-portfolio",
@@ -167,7 +266,8 @@ export const PROJECTS = [
       live: "https://karthik8402.github.io/My_Portfolio_Website",
       github: "https://github.com/Karthik8402/WebTech"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "Ongoing" }
   },
   {
     id: "atm-machine-project",
@@ -184,6 +284,7 @@ export const PROJECTS = [
       live: "",
       github: "https://github.com/Karthik8402/ATM_Machine_Project"
     },
-    featured: false
+    featured: false,
+    detail: { ...defaultDetail, duration: "2 Weeks" }
   }
 ];

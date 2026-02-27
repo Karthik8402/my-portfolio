@@ -1,9 +1,11 @@
-import { ExternalLink, Github, Eye, Code2, Sparkles } from 'lucide-react';
+import { ArrowRight, Eye, Code2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useMobile } from '../hooks/useMobile';
 import Button from './Button';
 
 interface ProjectCardProps {
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -15,135 +17,99 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
-export default function ProjectCard({ title, description, image, tags, links, featured = false }: ProjectCardProps) {
+export default function ProjectCard({ id, title, description, image, tags, featured = false }: ProjectCardProps) {
   const isMobile = useMobile();
 
   return (
     <motion.div
-      className="group relative rounded-2xl overflow-hidden border border-[var(--color-border)] bg-bg-surface transition-all h-full flex flex-col"
-      whileHover={isMobile ? {} : {
-        scale: 1.02,
-        y: -4,
-        borderColor: 'rgba(56, 189, 248, 0.4)',
-      }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      style={{
-        boxShadow: 'none',
-      }}
+      className="h-full"
+      whileHover={isMobile ? {} : { y: -8 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Image Section */}
-      <div className="relative h-52 overflow-hidden bg-gradient-to-br from-accent/5 to-violet-500/5 flex-shrink-0">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
-          onError={(e) => {
-            e.currentTarget.src = 'https://placehold.co/600x400/0F1629/38BDF8?text=' + title.split(' ').join('+');
-          }}
-        />
+      <Link to={`/projects/${id}`} className="block h-full">
+        <div className="glass-card rounded-3xl overflow-hidden group h-full flex flex-col hover:shadow-glow hover:border-primary/30 transition-all duration-500 cursor-pointer">
+          {/* Image */}
+          <div className="relative h-56 overflow-hidden">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+              onError={(e) => {
+                e.currentTarget.src = `https://placehold.co/600x400/0f172a/38bdf8?text=${title.split(' ').join('+')}`;
+              }}
+            />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-bg/80 to-transparent" />
-
-        {/* Desktop Hover Buttons */}
-        <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-          {links.live && (
-            <Button
-              href={links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="primary"
-              size="medium"
-            >
-              <Eye size={16} />
-              View Live
-            </Button>
-          )}
-          {links.github && (
-            <Button
-              href={links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outline"
-              size="medium"
-            >
-              <Code2 size={16} />
-              Code
-            </Button>
-          )}
-        </div>
-
-        {/* Featured Badge */}
-        {featured && (
-          <div className="absolute top-4 right-4 z-10">
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-accent text-bg font-medium rounded-full text-xs shadow-lg shadow-accent/20">
-              <Sparkles size={12} fill="currentColor" />
-              <span>Featured</span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Content Section */}
-      <div className="p-6 flex-1 flex flex-col">
-        {/* Title and Link Icons */}
-        <div className="flex items-start justify-between mb-3">
-          <h3 className="text-lg font-bold font-heading text-text-primary md:group-hover:text-accent transition-colors line-clamp-1 flex-1">
-            {title}
-          </h3>
-
-          {/* Mobile link icons */}
-          <div className="flex items-center gap-2 ml-2 md:hidden">
+            {/* Featured badge */}
+            {featured && (
+              <div className="absolute top-4 right-4 z-10">
+                <span className="px-3 py-1 bg-white/90 dark:bg-slate-900/90 rounded-full text-xs font-bold text-primary shadow-sm">
+                  Featured
+                </span>
+              </div>
+            )}
+          {/* Desktop Hover Buttons */}
+          <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
             {links.live && (
-              <a
+              <Button
                 href={links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-bg rounded-lg transition-colors"
-                aria-label="View live project"
+                variant="primary"
+                size="medium"
               >
-                <ExternalLink size={16} className="text-accent" />
-              </a>
+                <Eye size={16} />
+                View Live
+              </Button>
             )}
             {links.github && (
-              <a
+              <Button
                 href={links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-bg rounded-lg transition-colors"
-                aria-label="View source code"
+                variant="outline"
+                size="medium"
               >
-                <Github size={16} className="text-accent" />
-              </a>
+                <Code2 size={16} />
+                Code
+              </Button>
             )}
           </div>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 lg:p-8 flex flex-col flex-grow">
+            {/* Title */}
+            <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors mb-2 line-clamp-1">
+              {title}
+            </h3>
+
+            {/* Description */}
+            <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed mb-4 flex-grow">
+              {description}
+            </p>
+
+            {/* Tech icons */}
+            <div className="flex flex-wrap gap-1.5 mb-5">
+              {tags.slice(0, 4).map((tag) => (
+                <span
+                  key={tag}
+                  className="tech-icon !w-auto !h-auto px-2 py-0.5 text-xs"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* View Project CTA */}
+            <div className="w-full px-5 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium flex items-center justify-between group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-300">
+              <span>View Project</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
         </div>
-
-        {/* Description */}
-        <p className="text-text-secondary text-sm mb-6 line-clamp-2 leading-relaxed">
-          {description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mt-auto">
-          {tags.slice(0, 4).map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1 text-xs font-medium bg-accent/5 text-accent/80 rounded-full border border-accent/10"
-            >
-              {tag}
-            </span>
-          ))}
-          {tags.length > 4 && (
-            <span className="px-3 py-1 text-xs font-medium text-text-muted">
-              +{tags.length - 4} more
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Bottom accent line */}
-      <div className="h-0.5 gradient-bg opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
+      </Link>
     </motion.div>
   );
 }

@@ -3,44 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-bg: #080C14;
-    --color-surface: #0F1629;
-    --color-border: #1E2D4A;
-    --color-accent: #38BDF8;
-    --color-text-primary: #F1F5F9;
-    --color-text-secondary: #94A3B8;
-    --color-text-muted: #475569;
-
-    /* Type Scale */
-    --text-hero: clamp(3rem, 8vw, 7rem);
-    --text-h1: clamp(2rem, 5vw, 4rem);
-    --text-h2: clamp(1.25rem, 3vw, 2rem);
-    --text-body: 1rem;
-    --text-small: 0.875rem;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
     @apply antialiased font-sans;
-    background-color: var(--color-bg);
-    color: var(--color-text-primary);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
-  }
-
-  * {
-    border-color: var(--color-border);
   }
 
   ::selection {
-    background-color: rgba(56, 189, 248, 0.3);
-    color: var(--color-accent);
+    @apply bg-primary text-white;
   }
 
   ::-webkit-scrollbar {
@@ -52,58 +24,192 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: var(--color-border);
-    border-radius: 9999px;
+    @apply bg-slate-300 dark:bg-slate-700 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-text-muted);
+    @apply bg-slate-400 dark:bg-slate-600;
   }
 }
 
-@layer utilities {
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, var(--color-accent), #7dd3fc);
+@layer components {
+
+  /* Particle floaters — CSS only, no canvas */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.3);
+    animation: particle-float 10s infinite ease-in-out;
   }
 
-  .gradient-bg {
-    background: linear-gradient(135deg, var(--color-accent), #0ea5e9);
+  .particle:nth-child(1) {
+    width: 4px;
+    height: 4px;
+    top: 20%;
+    left: 10%;
+    animation-duration: 8s;
   }
 
-  .glass {
-    background: rgba(15, 22, 41, 0.8);
+  .particle:nth-child(2) {
+    width: 6px;
+    height: 6px;
+    top: 40%;
+    left: 80%;
+    animation-duration: 12s;
+  }
+
+  .particle:nth-child(3) {
+    width: 3px;
+    height: 3px;
+    top: 70%;
+    left: 20%;
+    animation-duration: 6s;
+  }
+
+  .particle:nth-child(4) {
+    width: 5px;
+    height: 5px;
+    top: 10%;
+    left: 60%;
+    animation-duration: 15s;
+  }
+
+  .particle:nth-child(5) {
+    width: 2px;
+    height: 2px;
+    top: 80%;
+    left: 90%;
+    animation-duration: 9s;
+  }
+
+  @keyframes particle-float {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.3;
+    }
+
+    50% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.8;
+    }
+  }
+
+  /* Glass card — project cards, feature cards */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(255, 255, 255, 0.6);
   }
 
-  .card-hover {
-    @apply transition-all duration-300;
+  .dark .glass-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
-  .card-hover:hover {
-    transform: scale(1.02) translateY(-4px);
-    box-shadow: 0 20px 40px -12px rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.4);
+  /* Glass sidebar — project detail sidebar */
+  .glass-sidebar {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .text-hero {
-    font-size: var(--text-hero);
+  .dark .glass-sidebar {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(56, 189, 248, 0.05);
   }
 
-  .text-h1 {
-    font-size: var(--text-h1);
+  /* Nav glass */
+  .nav-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
   }
 
-  .text-h2 {
-    font-size: var(--text-h2);
+  .dark .nav-glass {
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+  }
+
+  /* Glass for contact form */
+  .glass-form {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass-form {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.1);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .gradient-text {
+    background: linear-gradient(135deg, #f8fafc 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Timeline line — centered through w-12 (48px) icons */
+  .timeline-line {
+    position: relative;
+  }
+
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 23px;
+    height: 100%;
+    width: 2px;
+    @apply bg-slate-200 dark:bg-slate-800;
+  }
+
+  /* Tech icon circle */
+  .tech-icon {
+    @apply flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 transition-colors duration-300;
+  }
+
+  .group:hover .tech-icon {
+    @apply border-primary/30 text-primary;
+  }
+
+  /* Form input focus lift */
+  .form-input {
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus {
+    transform: translateY(-2px);
   }
 }
 
 /* Accessibility: Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

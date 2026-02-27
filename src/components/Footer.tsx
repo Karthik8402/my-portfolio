@@ -12,7 +12,7 @@ export default function Footer() {
   const location = useLocation();
   const isMobile = useMobile();
 
-  const links = [
+  const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
     { path: '/projects', label: 'Projects' },
@@ -20,43 +20,36 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative border-t border-[var(--color-border)] pt-16 pb-8 overflow-hidden bg-bg">
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(to right, var(--color-border) 1px, transparent 1px),
-                            linear-gradient(to bottom, var(--color-border) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-          maskImage: 'linear-gradient(0deg, transparent, black)',
-          WebkitMaskImage: 'linear-gradient(0deg, transparent, black)',
-        }}
-      />
-
-      <div className="relative mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 md:grid-cols-3 mb-12">
+    <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12 lg:py-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold font-heading gradient-text inline-block">
-              {SITE.name}
+            <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-white">
+              Karthik <span className="text-primary">Kumar</span>
             </h3>
-            <p className="text-sm text-text-secondary leading-relaxed max-w-xs">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               {SITE.experience} | {SITE.roles[0]}
               <br />
               Based in {SITE.location}
             </p>
           </div>
 
+          {/* Spacer (hidden on smaller screens) */}
+          <div className="hidden lg:block" />
+
           {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4 font-heading text-text-primary">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              {links.map((link) => (
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+              Quick Links
+            </h4>
+            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              {navLinks.map((link) => (
                 <li key={link.path}>
                   <MotionLink
                     to={link.path}
                     key={`${link.path}-${location.pathname}`}
-                    className="inline-block text-text-secondary hover:text-accent transition-colors"
+                    className="hover:text-primary transition-colors"
                     whileHover={isMobile ? {} : { x: 5 }}
                   >
                     {link.label}
@@ -66,9 +59,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social Connect */}
-          <div>
-            <h4 className="font-semibold mb-4 font-heading text-text-primary">Connect</h4>
+          {/* Connect */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+              Connect
+            </h4>
             <div className="flex gap-3">
               {SITE.socials.map((social: { icon: string; label: string; href: string }) => {
                 const Icon = iconMap[social.icon];
@@ -79,8 +74,8 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="flex items-center justify-center w-10 h-10 rounded-xl cursor-pointer bg-bg-surface text-text-secondary border border-[var(--color-border)] hover:border-accent/50 hover:text-accent transition-colors"
-                    whileHover={isMobile ? {} : { scale: 1.1, y: -2 }}
+                    className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all"
+                    whileHover={isMobile ? {} : { y: -4 }}
                     transition={{ duration: 0.2 }}
                   >
                     <Icon size={18} />
@@ -91,19 +86,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="pt-8 border-t border-[var(--color-border)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text-muted">
+        {/* Bottom bar */}
+        <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-500">
           <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
-
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2">
-              Built with
-              <span className="flex gap-1">
-                <span className="w-2 h-2 rounded-full bg-accent" title="React" />
-                <span className="w-2 h-2 rounded-full bg-sky-500" title="Tailwind CSS" />
-                <span className="w-2 h-2 rounded-full bg-violet-500" title="Vite" />
-              </span>
-            </span>
+          <div className="flex items-center gap-2">
+            <span>Built with</span>
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <span className="w-2 h-2 rounded-full bg-purple-500" />
+            <span className="w-2 h-2 rounded-full bg-accent-cyan" />
           </div>
         </div>
       </div>

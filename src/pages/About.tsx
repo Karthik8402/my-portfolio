@@ -1,228 +1,267 @@
 import { motion } from 'framer-motion';
-import { User, BookOpen, Award, TrendingUp, Star, Code2, Briefcase, GraduationCap } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Section from '../components/Section';
 import { SITE } from '../data/site';
-import { SKILLS } from '../data/skills';
 import { Meta } from '../seo/Meta';
-import { useMobile } from '../hooks/useMobile';
-import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight, pageTransition } from '../utils/motionVariants';
-
-// Stat cards data
-const stats = [
-  { icon: Code2, label: 'Tech Stacks', value: '10+', color: 'text-accent' },
-  { icon: Briefcase, label: 'Projects Built', value: '11+', color: 'text-emerald-400' },
-  { icon: GraduationCap, label: 'Education', value: 'MCA', color: 'text-violet-400' },
-];
+import { staggerContainer, fadeInUp, pageTransition } from '../utils/motionVariants';
 
 export default function About() {
-  const isMobile = useMobile();
 
   return (
     <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta title={`About - ${SITE.name}`} description={SITE.about.bio} path="/about" />
 
       <Section>
-        {/* Header */}
+        {/* Page Header — NO pill badge, matching template */}
         <motion.div className="mb-16" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={fadeInUp}>
-            <div className="flex items-center gap-3 mb-4">
-              <User className="text-accent" size={32} />
-              <h1 className="text-h1 font-bold font-heading">About Me</h1>
-            </div>
-            <div className="w-20 h-1 gradient-bg mb-4" />
-            <p className="text-lg text-text-secondary max-w-2xl">
-              Get to know more about my journey, skills, and what drives me.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
+              <span className="text-slate-900 dark:text-white">About </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan">Me</span>
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+              Get to know the developer behind the code.
             </p>
           </motion.div>
         </motion.div>
 
-        {/* Stats Row */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-        >
-          {stats.map((stat) => (
-            <motion.div
-              key={stat.label}
-              variants={fadeInUp}
-              className="glass rounded-2xl p-6 text-center group hover:border-accent/30 transition-colors"
-            >
-              <stat.icon size={28} className={`mx-auto mb-3 ${stat.color}`} />
-              <div className="text-3xl font-bold font-heading text-text-primary mb-1">{stat.value}</div>
-              <div className="text-sm text-text-muted">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* Main Content — Split Layout */}
-        <div className="grid gap-12 lg:grid-cols-5">
-          {/* Left Column — Bio & Interests */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
+          {/* Left Column — Bio */}
           <motion.div
-            className="lg:col-span-2 space-y-6"
-            variants={fadeInLeft}
-            initial="hidden"
-            whileInView="visible"
+            className="lg:col-span-7 space-y-8"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Bio Card */}
-            <motion.div
-              className="glass rounded-2xl p-6"
-              whileHover={isMobile ? {} : { scale: 1.02, y: -4 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <BookOpen className="text-accent" size={20} />
-                <h3 className="text-xl font-semibold text-text-primary">Background</h3>
-              </div>
-              <p className="text-text-secondary text-justify leading-loose">
-                {SITE.about.bio}
+            <div className="space-y-6 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+              <p>
+                Hello! I'm <span className="font-semibold text-slate-900 dark:text-white">Karthik Kumar</span>, a passionate Full-Stack Developer currently
+                pursuing my MCA in Salem, TN. My journey into the world of technology
+                began with a curiosity about how things work on the web, which has since
+                evolved into a dedicated career path building robust and scalable
+                applications.
               </p>
-            </motion.div>
-
-            {/* Interests Card */}
-            <motion.div
-              className="glass rounded-2xl p-6"
-              whileHover={isMobile ? {} : { scale: 1.02, y: -4 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <Star className="text-amber-400" size={20} />
-                <h3 className="text-xl font-semibold text-text-primary">Interests</h3>
-              </div>
-              <ul className="space-y-2">
-                {SITE.about.interests.map((interest: string, idx: number) => (
-                  <motion.li
-                    key={interest}
-                    className="flex items-center gap-3 group py-1 ml-2"
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                  >
-                    <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 group-hover:scale-150 transition-transform" />
-                    <span className="text-text-secondary">{interest}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column — Timeline & Skills */}
-          <motion.div
-            className="lg:col-span-3 space-y-12"
-            variants={fadeInRight}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            {/* Timeline */}
-            <div>
-              <div className="flex items-center gap-2 mb-8">
-                <TrendingUp className="text-accent" size={24} />
-                <h3 className="text-2xl font-semibold font-heading">Journey</h3>
-              </div>
-              <div className="space-y-8 border-l-2 border-[var(--color-border)] ml-3 pl-8 relative">
-                {SITE.about.timeline?.map((item: { year: string; title: string; institution: string; description: string }, idx: number) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="relative"
-                  >
-                    <span className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 border-bg bg-accent" />
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="text-sm font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">
-                        {item.year}
-                      </span>
-                    </div>
-                    <h4 className="text-lg font-bold text-text-primary">{item.title}</h4>
-                    <p className="text-sm font-medium text-text-muted mb-2">{item.institution}</p>
-                    <p className="text-text-secondary leading-relaxed">{item.description}</p>
-                  </motion.div>
-                ))}
-              </div>
+              <p>
+                I specialize in creating seamless web experiences using{' '}
+                <span className="text-primary font-medium">React</span> for dynamic
+                front-ends and robust back-ends powered by{' '}
+                <span className="text-primary font-medium">Java</span> and{' '}
+                <span className="text-primary font-medium">Python</span>. I have a
+                particular fondness for{' '}
+                <span className="text-orange-500 font-medium">Firebase</span> for rapid prototyping and real-time
+                database needs.
+              </p>
+              <p>
+                When I'm not coding, I'm constantly learning new technologies, contributing
+                to open-source projects, or optimizing algorithms. I believe in writing clean,
+                maintainable code and designing user interfaces that are both intuitive and
+                accessible.
+              </p>
             </div>
 
-            {/* Technical Skills */}
-            <div>
-              <div className="flex items-center gap-2 mb-8">
-                <Award className="text-violet-400" size={24} />
-                <h3 className="text-2xl font-semibold font-heading">Technical Skills</h3>
-              </div>
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 hover:-translate-y-1"
+              >
+                Let's Talk
+                <ArrowRight size={18} />
+              </Link>
+              <a
+                href={SITE.resumeUrl}
+                download
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white rounded-xl font-bold shadow-sm hover:border-primary dark:hover:border-primary transition-all duration-200 hover:-translate-y-1"
+              >
+                <Download size={18} />
+                Download CV
+              </a>
+            </div>
+          </motion.div>
 
-              <div className="space-y-6">
-                {SKILLS.map((category, catIdx) => (
-                  <motion.div
-                    key={category.category}
-                    className="glass rounded-2xl p-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-30px' }}
-                    transition={{ delay: catIdx * 0.1 }}
-                    whileHover={isMobile ? {} : { scale: 1.01 }}
-                  >
-                    <div className="flex items-center gap-2 mb-5">
-                      <h4 className="font-semibold text-lg gradient-text">
-                        {category.category}
-                      </h4>
-                    </div>
+          {/* Right Column — Tech Stack Card (matching Stitch template pic 3/4 exactly) */}
+          <motion.div
+            className="lg:col-span-5"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="relative group sticky top-28">
+              {/* Glow border effect — matching the purple/cyan glow in template pic 3 */}
+              <div className="absolute -inset-[1px] bg-gradient-to-b from-primary/40 via-purple-500/30 to-accent-cyan/40 rounded-2xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative glass-card rounded-2xl overflow-hidden">
+                {/* macOS dots header */}
+                <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/50">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <span className="text-xs font-mono text-slate-500 dark:text-slate-400">tech-stack.json</span>
+                  <span className="text-xs text-slate-400">&lt;/&gt;</span>
+                </div>
 
-                    <div className="space-y-4">
-                      {category.items.map((skill, skillIdx) => {
-                        const IconComponent = skill.icon;
-                        return (
-                          <motion.div
-                            key={skill.name}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: catIdx * 0.1 + skillIdx * 0.05 }}
-                          >
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm font-medium flex items-center gap-2">
-                                <IconComponent size={16} className="text-accent" />
-                                <span className="text-text-primary">{skill.name}</span>
-                              </span>
-                              <span className="text-sm font-semibold text-accent">
-                                {skill.level}%
-                              </span>
-                            </div>
-                            <div className="relative w-full bg-bg rounded-full h-1.5 overflow-hidden">
-                              <motion.div
-                                className="absolute top-0 left-0 h-full rounded-full gradient-bg"
-                                initial={{ width: 0 }}
-                                whileInView={{ width: `${skill.level}%` }}
-                                viewport={{ once: true }}
-                                transition={{
-                                  duration: 1,
-                                  delay: catIdx * 0.1 + skillIdx * 0.05,
-                                  ease: 'easeOut',
-                                }}
-                              >
-                                <div
-                                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                  style={{
-                                    backgroundSize: '200% 100%',
-                                    animation: 'shimmer 2s infinite',
-                                  }}
-                                />
-                              </motion.div>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
+                {/* Content — 3 categories matching template: frontend, backend, database */}
+                <div className="p-6 space-y-6">
+                  {/* Frontend */}
+                  <div className="group/skill">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
+                        "frontend"
+                      </span>
+                      <span className="font-mono text-sm font-bold text-primary">
+                        90%
+                      </span>
                     </div>
-                  </motion.div>
-                ))}
+                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
+                      <motion.div
+                        className="h-full rounded-full bg-primary"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '90%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                      />
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['React', 'Tailwind', 'HTML/CSS'].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Backend */}
+                  <div className="group/skill">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
+                        "backend"
+                      </span>
+                      <span className="font-mono text-sm font-bold text-primary">
+                        85%
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
+                      <motion.div
+                        className="h-full rounded-full bg-purple-500"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '85%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+                      />
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Java', 'Python', 'Node.js'].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Database */}
+                  <div className="group/skill">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
+                        "database"
+                      </span>
+                      <span className="font-mono text-sm font-bold text-primary">
+                        80%
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
+                      <motion.div
+                        className="h-full rounded-full bg-accent-cyan"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '80%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+                      />
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Firebase', 'MySQL', 'MongoDB'].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+                    </span>
+                    Open to collaboration
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Education & Experience Timeline — matching dark template pic 1 */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="flex items-center gap-3 mb-10">
+            <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white">
+              Education & Experience
+            </h2>
+          </div>
+
+          <div className="timeline-line space-y-12 pl-16 relative">
+            {SITE.about.timeline?.map((item: { year: string; title: string; institution: string; description: string }, idx: number) => (
+              <motion.div
+                key={idx}
+                className="relative group"
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.35, delay: idx * 0.06 }}
+              >
+                {/* Circle icon — exactly aligns with line at left 23px */ }
+                <div className="absolute -left-16 top-0 w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center bg-white dark:bg-surface-dark group-hover:border-primary group-hover:bg-primary/5 transition-all duration-200 z-10">
+                  <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors duration-200 text-xl">
+                    {item.title.includes('Bachelor') || item.title.includes('Master') ? 'school' : item.title.includes('Open') ? 'search' : 'code'}
+                  </span>
+                </div>
+
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{item.institution}</p>
+                    <p className="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{item.description}</p>
+                  </div>
+                  <span className="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full text-slate-600 dark:text-slate-400 shrink-0 border border-slate-200 dark:border-slate-700">
+                    {item.year}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Section>
     </motion.div>
   );

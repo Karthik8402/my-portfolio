@@ -33,26 +33,35 @@ export default function Navbar() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [mobileOpen]);
 
+  // Theme toggle
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    }
+  };
+
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`fixed w-full z-50 top-0 left-0 transition-all duration-300 ${
         scrolled
-          ? 'glass border-b border-[var(--color-border)]'
-          : 'bg-transparent border-b border-transparent'
+          ? 'nav-glass'
+          : 'backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 bg-white/70 dark:bg-background-dark/70'
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        {/* Logo */}
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12 h-20">
+        {/* Logo — "K" letter box */}
         <Link
           to="/"
-          className="group flex items-center gap-3 text-2xl font-bold font-heading relative z-50"
+          className="flex-shrink-0 cursor-pointer group relative z-50"
           onClick={() => setMobileOpen(false)}
         >
-          <img
-            src="/favicon.svg"
-            alt="Logo"
-            className="w-10 h-10 transition-transform group-hover:scale-110"
-          />
+          <div className="w-10 h-10 rounded-lg bg-slate-900 dark:bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:border-primary transition-colors">
+            <span className="font-display font-bold text-xl text-primary">K</span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}
@@ -62,24 +71,34 @@ export default function Navbar() {
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `relative text-sm font-medium transition-all group ${
+                `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive
-                    ? 'text-accent'
-                    : 'text-text-secondary hover:text-text-primary'
+                    ? 'text-primary'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary'
                 }`
               }
             >
               {l.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
             </NavLink>
           ))}
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex items-center gap-4 md:hidden relative z-50">
+        {/* Right side: Theme Toggle + Mobile Menu */}
+        <div className="flex items-center gap-3 relative z-50">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+            aria-label="Toggle theme"
+          >
+            <span className="material-symbols-outlined text-xl block dark:hidden">dark_mode</span>
+            <span className="material-symbols-outlined text-xl hidden dark:block">light_mode</span>
+          </button>
+
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 hover:bg-bg-surface rounded-xl transition-colors text-text-primary"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors md:hidden text-slate-900 dark:text-white"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -93,7 +112,7 @@ export default function Navbar() {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden z-40"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm md:hidden z-40"
               onClick={() => setMobileOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -103,7 +122,7 @@ export default function Navbar() {
 
             {/* Drawer */}
             <motion.div
-              className="fixed top-[72px] left-0 right-0 md:hidden z-40 glass border-t border-[var(--color-border)] max-h-[calc(100vh-72px)] overflow-y-auto"
+              className="fixed top-20 left-0 right-0 md:hidden z-40 nav-glass max-h-[calc(100vh-80px)] overflow-y-auto"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -122,8 +141,8 @@ export default function Navbar() {
                       className={({ isActive }) =>
                         `block py-4 px-4 text-lg font-medium rounded-xl transition-all ${
                           isActive
-                            ? 'bg-accent/10 text-accent border border-accent/20'
-                            : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
+                            ? 'bg-primary/10 text-primary border border-primary/20'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                         }`
                       }
                     >
