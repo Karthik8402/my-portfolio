@@ -1,8 +1,7 @@
-import { ArrowRight, Eye, Code2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useMobile } from '../hooks/useMobile';
-import Button from './Button';
 
 interface ProjectCardProps {
   id: string;
@@ -17,7 +16,7 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
-export default function ProjectCard({ id, title, description, image, tags, links, featured = false }: ProjectCardProps) {
+export default function ProjectCard({ id, title, description, image, tags, featured = false }: ProjectCardProps) {
   const isMobile = useMobile();
 
   return (
@@ -27,13 +26,14 @@ export default function ProjectCard({ id, title, description, image, tags, links
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/projects/${id}`} className="block h-full">
-        <div className="glass-card rounded-3xl overflow-hidden group h-full flex flex-col hover:shadow-glow hover:border-primary/30 transition-all duration-500 cursor-pointer">
+        <div className="glass-card rounded-3xl overflow-hidden group h-full flex flex-col hover:shadow-glow hover:border-primary/30 cursor-pointer" style={{ transition: 'box-shadow 0.4s ease, border-color 0.4s ease', willChange: 'transform, box-shadow' }}>
           {/* Image */}
-          <div className="relative h-56 overflow-hidden">
+          <div className="relative h-72 overflow-hidden">
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+              className="w-full h-full object-cover group-hover:scale-105" 
+              style={{ transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)', willChange: 'transform' }}
               onError={(e) => {
                 e.currentTarget.src = `https://placehold.co/600x400/0f172a/38bdf8?text=${title.split(' ').join('+')}`;
               }}
@@ -49,33 +49,6 @@ export default function ProjectCard({ id, title, description, image, tags, links
                 </span>
               </div>
             )}
-          {/* Desktop Hover Buttons */}
-          <div className="hidden md:flex absolute inset-0 items-center justify-center gap-3 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-            {links.live && (
-              <Button
-                href={links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="primary"
-                size="medium"
-              >
-                <Eye size={16} />
-                View Live
-              </Button>
-            )}
-            {links.github && (
-              <Button
-                href={links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="outline"
-                size="medium"
-              >
-                <Code2 size={16} />
-                Code
-              </Button>
-            )}
-          </div>
           </div>
 
           {/* Content */}
@@ -103,9 +76,9 @@ export default function ProjectCard({ id, title, description, image, tags, links
             </div>
 
             {/* View Project CTA */}
-            <div className="w-full px-5 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium flex items-center justify-between group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-300">
+            <div className="w-full px-5 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium flex items-center justify-between group-hover:bg-primary group-hover:text-white group-hover:border-primary" style={{ transition: 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease' }}>
               <span>View Project</span>
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={16} className="group-hover:translate-x-1" style={{ transition: 'transform 0.3s ease' }} />
             </div>
           </div>
         </div>

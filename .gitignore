@@ -31,3 +31,12 @@ dist-ssr
 #skills
 SKILL.md
 CONTENT-SKILL.md
+
+#Stitch Template
+public/Stitch Template/*
+
+#get shit done(plug in)
+.gsd
+.gemini
+.agent
+gsd-template
