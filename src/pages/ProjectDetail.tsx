@@ -1,5 +1,5 @@
-import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+﻿import { useParams, Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { PROJECTS } from '../data/projects';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
@@ -7,6 +7,7 @@ import { pageTransition, fadeInUp, staggerContainer } from '../utils/motionVaria
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
+  const prefersReduced = useReducedMotion();
 
   const projectIndex = PROJECTS.findIndex((p) => p.id === id);
   const project = PROJECTS[projectIndex];
@@ -17,7 +18,7 @@ export default function ProjectDetail() {
         <div className="text-center">
           <span className="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4 block">folder_off</span>
           <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">Project not found</h2>
-          <Link to="/projects" className="text-primary hover:underline">← Back to Projects</Link>
+          <Link to="/projects" className="text-primary hover:underline">â† Back to Projects</Link>
         </div>
       </div>
     );
@@ -27,15 +28,22 @@ export default function ProjectDetail() {
   const nextProject = projectIndex < PROJECTS.length - 1 ? PROJECTS[projectIndex + 1] : null;
   const detail = project.detail;
 
+  // Respect prefers-reduced-motion for all hover/animation values
+  const hoverLift   = prefersReduced ? {} : { y: -6, scale: 1.02 };
+  const hoverTap    = prefersReduced ? {} : { scale: 0.97 };
+  const hoverSlide  = prefersReduced ? {} : { x: 6 };
+  const hoverScale  = prefersReduced ? {} : { scale: 1.08 };
+  const hoverGlow   = prefersReduced ? {} : { y: -3 };
+
   // Group technologies by category
   const techCategories: Record<string, { tags: string[]; color: string; bgClass: string }> = {
     Frontend: {
-      tags: project.tags.filter(t => ['React', 'TypeScript', 'HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Vite', 'HTML5 Canvas', 'Animations', 'Flutter', 'Dart', 'Framer Motion', 'Google Fonts', 'Provider', 'CSS3'].includes(t)),
+      tags: project.tags.filter(t => ['React', 'TypeScript', 'HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Vite', 'HTML5 Canvas', 'Animations', 'Flutter', 'Dart', 'Framer Motion', 'Google Fonts', 'Provider', 'CSS3', 'HTML5', 'Vanilla JavaScript', 'Parallax'].includes(t)),
       color: 'text-blue-600 dark:text-blue-300',
       bgClass: 'bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800',
     },
     Backend: {
-      tags: project.tags.filter(t => ['Flask', 'Python', 'Java', 'PHP', 'Node.js', 'AppScript', 'Express', 'MVC Architecture', 'Vanilla JavaScript'].includes(t)),
+      tags: project.tags.filter(t => ['Flask', 'Python', 'Java', 'PHP', 'Node.js', 'AppScript', 'Express', 'MVC Architecture', 'Vanilla JavaScript', 'HashMap', 'Scanner', 'DecimalFormat', 'Console Application'].includes(t)),
       color: 'text-green-600 dark:text-green-300',
       bgClass: 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-800',
     },
@@ -50,7 +58,7 @@ export default function ProjectDetail() {
       bgClass: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800',
     },
     Tools: {
-      tags: project.tags.filter(t => ['Console Application', 'Web Development'].includes(t)),
+      tags: project.tags.filter(t => ['Web Development'].includes(t)),
       color: 'text-slate-600 dark:text-slate-300',
       bgClass: 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700',
     },
@@ -67,6 +75,7 @@ export default function ProjectDetail() {
       />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8 lg:py-12 relative z-10">
+
         {/* Breadcrumb */}
         <motion.nav
           aria-label="Breadcrumb"
@@ -79,7 +88,7 @@ export default function ProjectDetail() {
             <li className="inline-flex items-center">
               <Link
                 to="/projects"
-                className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors"
+                className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors duration-200"
               >
                 Projects
               </Link>
@@ -112,28 +121,35 @@ export default function ProjectDetail() {
               {project.description}
             </p>
           </motion.div>
+
           <motion.div variants={fadeInUp} className="flex gap-4 shrink-0">
             {project.links.live && (
-              <a
+              <motion.a
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold shadow-lg transition-shadow duration-300 hover:shadow-primary/40 hover:shadow-xl will-change-transform"
+                whileHover={hoverGlow}
+                whileTap={hoverTap}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
                 <span className="material-symbols-outlined text-lg">rocket_launch</span>
                 Live Demo
-              </a>
+              </motion.a>
             )}
             {project.links.github && (
-              <a
+              <motion.a
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-bold shadow-sm hover:border-primary dark:hover:border-primary transition-all duration-200 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-bold shadow-sm hover:border-primary dark:hover:border-primary transition-[border-color,box-shadow] duration-200 hover:shadow-md will-change-transform"
+                whileHover={hoverGlow}
+                whileTap={hoverTap}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
                 <span className="material-symbols-outlined text-lg">code</span>
                 View Code
-              </a>
+              </motion.a>
             )}
           </motion.div>
         </motion.div>
@@ -145,33 +161,37 @@ export default function ProjectDetail() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
         >
-          <div className="absolute inset-0 bg-slate-900/10 dark:bg-slate-900/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+          {/* Gradient overlay â€” fades in on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+          {/* Subtle shimmer border on hover */}
+          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-2 group-hover:ring-primary/40 transition-all duration-500 z-20 pointer-events-none" />
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover will-change-transform transform group-hover:scale-105 transition-transform duration-700 ease-out"
             onError={(e) => {
               e.currentTarget.src = `https://placehold.co/1200x600/0f172a/38bdf8?text=${project.title.split(' ').join('+')}`;
             }}
           />
         </motion.div>
 
-        {/* Main Content — 2+1 Layout */}
+        {/* Main Content â€” 2+1 Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left Content */}
+
+          {/* â”€â”€ Left Content â”€â”€ */}
           <div className="lg:col-span-2 space-y-12">
+
             {/* About */}
             <motion.section
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
-                About the Project
-              </h2>
-              <div className="prose prose-slate dark:prose-invert max-w-none space-y-4">
+              <SectionHeading>About the Project</SectionHeading>
+              <div className="space-y-4">
                 {detail.about.map((paragraph, idx) => (
                   <p key={idx} className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {paragraph}
@@ -184,28 +204,39 @@ export default function ProjectDetail() {
             <motion.section
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.4, delay: 0.05 }}
             >
-              <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
-                Key Features
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <SectionHeading>Key Features</SectionHeading>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {detail.features.map((feature, idx) => (
                   <motion.div
                     key={idx}
-                    className="glass-card p-5 rounded-xl border-l-4 border-l-primary hover:translate-x-1 transition-transform duration-200"
-                    initial={{ opacity: 0, x: -10 }}
+                    className="group/card glass-card p-5 rounded-xl border-l-4 border-l-primary cursor-default will-change-transform"
+                    initial={{ opacity: 0, x: -12 }}
                     whileInView={{ opacity: 1, x: 0 }}
+                    whileHover={hoverLift}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.06 }}
+                    transition={{
+                      default: { delay: idx * 0.06, duration: 0.35 },
+                      y: { type: 'spring', stiffness: 350, damping: 22 },
+                      scale: { type: 'spring', stiffness: 350, damping: 22 },
+                    }}
+                    style={{ boxShadow: 'none' }}
                   >
                     <h3 className="font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-primary">{feature.icon}</span>
-                      {feature.title}
+                      <span className="material-symbols-outlined text-primary text-xl transition-transform duration-300 group-hover/card:rotate-12 group-hover/card:scale-110">
+                        {feature.icon}
+                      </span>
+                      <span className="group-hover/card:text-primary transition-colors duration-200">
+                        {feature.title}
+                      </span>
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">{feature.description}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {feature.description}
+                    </p>
+                    {/* Bottom accent line that grows on hover */}
+                    <div className="mt-3 h-px bg-gradient-to-r from-primary/60 to-accent-cyan/40 scale-x-0 group-hover/card:scale-x-100 origin-left transition-transform duration-300" />
                   </motion.div>
                 ))}
               </div>
@@ -215,60 +246,72 @@ export default function ProjectDetail() {
             <motion.section
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.15 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.4, delay: 0.05 }}
             >
-              <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
-                Challenges & Solutions
-              </h2>
-              <div className="space-y-6">
+              <SectionHeading>Challenges & Solutions</SectionHeading>
+              <div className="space-y-5">
                 {detail.challenges.map((challenge, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <div className="flex-shrink-0 mt-1">
-                      <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-500">
-                        <span className="material-symbols-outlined text-sm">priority_high</span>
-                      </div>
+                  <motion.div
+                    key={idx}
+                    className="group/ch challenge-card rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700/60 will-change-transform"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    whileHover={hoverSlide}
+                    viewport={{ once: true }}
+                    transition={{
+                      default: { delay: idx * 0.08, duration: 0.35 },
+                      x: { type: 'spring', stiffness: 350, damping: 28 },
+                    }}
+                  >
+                    {/* Problem row */}
+                    <div className="flex gap-3 items-start p-4 bg-red-50/60 dark:bg-red-900/10 border-b border-red-100 dark:border-red-900/20 group-hover/ch:bg-red-50 dark:group-hover/ch:bg-red-900/20 transition-colors duration-300">
+                      <span className="flex-shrink-0 mt-0.5 w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-red-500 text-sm">priority_high</span>
+                      </span>
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 leading-snug">
+                        {challenge.problem}
+                      </p>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white mb-1">{challenge.problem}</h4>
-                      <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/10 rounded-lg border border-green-100 dark:border-green-900/30">
-                        <p className="text-sm text-green-700 dark:text-green-300">
-                          <span className="font-semibold">Solution:</span> {challenge.solution}
-                        </p>
-                      </div>
+                    {/* Solution row */}
+                    <div className="flex gap-3 items-start p-4 bg-green-50/40 dark:bg-green-900/10 group-hover/ch:bg-green-50 dark:group-hover/ch:bg-green-900/20 transition-colors duration-300">
+                      <span className="flex-shrink-0 mt-0.5 w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">check_circle</span>
+                      </span>
+                      <p className="text-sm text-green-800 dark:text-green-300 leading-relaxed">
+                        <span className="font-semibold">Solution: </span>{challenge.solution}
+                      </p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.section>
 
-            {/* Technologies Used (inline for mobile) */}
+            {/* Technologies Used (mobile only) */}
             <motion.section
               className="lg:hidden"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4 }}
             >
-              <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
-                Technologies Used
-              </h2>
+              <SectionHeading>Technologies Used</SectionHeading>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <span
+                  <motion.span
                     key={tag}
-                    className="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700"
+                    className="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 cursor-default will-change-transform"
+                    whileHover={hoverScale}
+                    transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                   >
                     {tag}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.section>
           </div>
 
-          {/* Right Sidebar */}
+          {/* â”€â”€ Right Sidebar â”€â”€ */}
           <div className="hidden lg:block lg:col-span-1 space-y-8">
             <div className="glass-sidebar p-6 rounded-2xl sticky top-28">
               <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">
@@ -282,12 +325,14 @@ export default function ProjectDetail() {
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {tags.map((tag) => (
-                        <span
+                        <motion.span
                           key={tag}
-                          className={`px-3 py-1 rounded-md text-xs font-medium border ${color} ${bgClass}`}
+                          className={`px-3 py-1 rounded-md text-xs font-medium border cursor-default will-change-transform ${color} ${bgClass}`}
+                          whileHover={hoverScale}
+                          transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                         >
                           {tag}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
                   </div>
@@ -303,42 +348,46 @@ export default function ProjectDetail() {
           </div>
         </div>
 
-        {/* Prev / Next Navigation */}
-        <div className="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        {/* â”€â”€ Prev / Next Navigation â”€â”€ */}
+        <div className="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-4">
           {prevProject ? (
-            <Link
-              to={`/projects/${prevProject.id}`}
-              className="group flex items-center gap-4 text-left"
-            >
-              <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 group-hover:border-primary group-hover:text-primary transition-colors">
-                <span className="material-symbols-outlined">arrow_back</span>
-              </div>
-              <div>
-                <span className="block text-xs text-slate-500">Previous Project</span>
-                <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                  {prevProject.title}
-                </span>
-              </div>
-            </Link>
+            <motion.div whileHover={prefersReduced ? {} : { x: -3 }} transition={{ type: 'spring', stiffness: 300, damping: 25 }} className="will-change-transform">
+              <Link
+                to={`/projects/${prevProject.id}`}
+                className="group flex items-center gap-4 text-left"
+              >
+                <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-all duration-200">
+                  <span className="material-symbols-outlined transition-transform duration-200 group-hover:-translate-x-1">arrow_back</span>
+                </div>
+                <div>
+                  <span className="block text-xs text-slate-500">Previous Project</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200">
+                    {prevProject.title}
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
           ) : (
             <div />
           )}
 
           {nextProject ? (
-            <Link
-              to={`/projects/${nextProject.id}`}
-              className="group flex items-center gap-4 text-right"
-            >
-              <div>
-                <span className="block text-xs text-slate-500">Next Project</span>
-                <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                  {nextProject.title}
-                </span>
-              </div>
-              <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 group-hover:border-primary group-hover:text-primary transition-colors">
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </div>
-            </Link>
+            <motion.div whileHover={prefersReduced ? {} : { x: 3 }} transition={{ type: 'spring', stiffness: 300, damping: 25 }} className="will-change-transform">
+              <Link
+                to={`/projects/${nextProject.id}`}
+                className="group flex items-center gap-4 text-right"
+              >
+                <div>
+                  <span className="block text-xs text-slate-500">Next Project</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200">
+                    {nextProject.title}
+                  </span>
+                </div>
+                <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-all duration-200">
+                  <span className="material-symbols-outlined transition-transform duration-200 group-hover:translate-x-1">arrow_forward</span>
+                </div>
+              </Link>
+            </motion.div>
           ) : (
             <div />
           )}
@@ -347,3 +396,20 @@ export default function ProjectDetail() {
     </motion.div>
   );
 }
+
+// â”€â”€ Reusable animated section heading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+      <motion.span
+        className="block h-1 rounded-full bg-gradient-to-r from-primary to-accent-cyan"
+        initial={{ width: 0 }}
+        whileInView={{ width: 32 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      />
+      {children}
+    </h2>
+  );
+}
+
