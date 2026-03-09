@@ -17,24 +17,6 @@ export interface Project {
   detail: ProjectDetail;
 }
 
-const defaultDetail: ProjectDetail = {
-  about: [
-    "This project was conceived to solve a real-world problem by providing a modern, scalable web solution. It leverages cutting-edge technologies to deliver a seamless user experience.",
-    "The application aggregates data from multiple sources into a cohesive interface, allowing users to interact with complex workflows through an intuitive design. It was architected with scalability and maintainability as core priorities."
-  ],
-  features: [
-    { icon: "monitoring", title: "Real-time Analytics", description: "Live visualization of key metrics and data insights using modern state management." },
-    { icon: "inventory_2", title: "Data Synchronization", description: "Automatic synchronization across multiple sources, preventing data inconsistencies." },
-    { icon: "dark_mode", title: "Dark Mode Support", description: "Fully responsive UI with a meticulously crafted dark theme for comfortable usage." },
-    { icon: "picture_as_pdf", title: "Report Generation", description: "Generate and export detailed reports for tracking performance and outcomes." }
-  ],
-  challenges: [
-    { problem: "Handling complex state across many components caused prop-drilling and UI lag.", solution: "Implemented centralized state management with context and memoization for optimal re-renders." },
-    { problem: "Initial load times were slow due to large bundle sizes from third-party libraries.", solution: "Applied code splitting, lazy loading, and tree-shaking to reduce the bundle size by 60%." }
-  ],
-  duration: "3 Months"
-};
-
 export const PROJECTS: Project[] = [
   {
     id: "smart-study-notes",
