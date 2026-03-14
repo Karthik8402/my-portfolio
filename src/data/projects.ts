@@ -30,7 +30,7 @@ export const PROJECTS: Project[] = [
       "Campus Recruitment Training suite"
     ],
     links: {
-      live: "https://smart-study-frontend-zsa4.onrender.com",
+      live: "https://study.karthikdev.app/",
       github: "https://github.com/Karthik8402/smart-study-notes-generator"
     },
     featured: true,
@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
       "Multi-role system with JWT authentication"
     ],
     links: {
-      live: "http://13.61.24.96/",
+      live: "https://gen-ai-karthi8402.azurewebsites.net/",
       github: "https://github.com/Karthik8402/Gen-AI-Education-Platform"
     },
     featured: true,
