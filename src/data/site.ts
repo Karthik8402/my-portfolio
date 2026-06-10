@@ -3,14 +3,14 @@ export const SITE = {
   url: "https://www.karthikdev.app",
   experience: "Fresher",
   roles: [
-    "Full-Stack Developer",
     "Java Backend Developer",
-    "React Frontend Developer",
+    "Full-Stack Developer",
+    "AI Software Developer",
     "Software Engineer"
   ],
-  location: "Salem, Tamil Nadu, India",
+  location: "Salem, Tamil Nadu",
   email: "karthikumar8402@gmail.com",
-  phone: "+91 91594 47517",
+  phone: "+91 9149447517",
   resumeUrl: "/Resume.pdf",
 
   socials: [
@@ -21,50 +21,50 @@ export const SITE = {
   ],
 
   hero: {
-    headline: "Building Things That Actually Work",
-    subtitle: "MCA student from Salem, TN — shipping full-stack apps with React, Java, Python, and a Firebase obsession.",
+    headline: "Software Developer",
+    subtitle: "Motivated MCA student building full-stack and AI-integrated web apps with Java, Python, React, and FastAPI.",
     ctaPrimary: { label: "View Projects", href: "/projects" },
     ctaSecondary: { label: "Download Resume", href: "/Resume.pdf" }
   },
 
   about: {
-    bio: `I’m a dedicated developer focused on building reliable and user-centric applications. 
-  My expertise includes Java, Python, SQL, and modern frontend development using React and Tailwind CSS. 
-  I enjoy turning ideas into functional products, optimizing system performance, 
-  and creating intuitive web interfaces. Outside development, I spend time learning new frameworks 
-  and enhancing my problem-solving skills.`,
+    bio: `Hello! I'm Karthik Kumar, a Software Developer and MCA student focused on building clean, reliable, and scalable web applications. I work across the stack with Java, Python, and JavaScript, and I enjoy shipping fast, usable interfaces with React and TailwindCSS.
+
+  Recently, I've been building AI-integrated platforms with FastAPI and Python, including systems that automate compliance checks and deliver personalized learning experiences. I'm comfortable working in Agile teams, collaborating via Git/GitHub, and deploying services with Docker.
+
+  I care about writing maintainable code, clear documentation, and thoughtful UX. I'm eager to contribute to a professional engineering team while continuing to learn and grow.`,
 
     interests: [
-      "Full-Stack Application Development",
-      "AI-Powered Application Development",
-      "Database Design & Optimization",
-      "Modern UI Engineering with React & Tailwind",
-      "Automation & Scripting with Python"
+      "Full-Stack Web Applications",
+      "REST API Design",
+      "AI-Integrated Platforms",
+      "Microservices & Docker",
+      "Agile Collaboration & Code Reviews"
     ],
     timeline: [
       {
-        year: "Present",
-        title: "Open to Work",
-        institution: "Searching for Opportunities",
-        description: "Available for full-time roles in Full-Stack Development or Software Engineering to apply my skills in a professional environment."
+        year: "Dec 2025 - Present",
+        title: "AI Software Developer Intern",
+        institution: "EnviroApps Inc (Remote) — Florida, USA",
+        description: "Built FastAPI components for pharmaceutical data pipelines, resolved microservice issues, and contributed to Dockerized deployments and technical documentation."
       },
       {
-        year: "2024 - Present",
+        year: "2024 - 2026",
         title: "Master of Computer Applications (MCA)",
         institution: "Sona College of Technology",
-        description: "Pursuing advanced studies in Computer Applications, focusing on full-stack development and software engineering."
+        description: "Pursuing MCA with a current CGPA of 8.3, focused on full-stack development and software engineering."
       },
       {
-        year: "2022 - 2024",
-        title: "Java Full Stack Development",
-        institution: "J Spider, Velachery, Chennai",
-        description: "Built a strong foundation in programming, database management, and web technologies."
+        year: "Nov 2022 - Dec 2023",
+        title: "Java Full Stack Developer Training",
+        institution: "QSpiders, Chennai",
+        description: "Hands-on training in Java, web development, databases, and full-stack project workflows."
       },
       {
         year: "2019 - 2022",
-        title: "Bachelor of Computer Applications (BCA)",
-        institution: "Vysya College",
-        description: "Built a strong foundation in programming, database management, and web technologies."
+        title: "B.Sc. Computer Science",
+        institution: "Vysya College, Salem",
+        description: "Completed undergraduate studies with a CGPA of 7.4 and a strong foundation in programming and databases."
       }
     ]
   }

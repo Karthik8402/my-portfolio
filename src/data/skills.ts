@@ -14,7 +14,8 @@ import {
   TypeScriptIcon,
   FramerIcon,
   GeminiIcon,
-  PyTorchIcon
+  PyTorchIcon,
+  N8nIcon
 } from "../components/Icons";
 
 export const SKILLS = [
@@ -53,6 +54,16 @@ export const SKILLS = [
       { name: "AWS (Basics)", level: 70, icon: AWSIcon },
       { name: "Vercel", level: 90, icon: VercelIcon },
       { name: "CI/CD", level: 75, icon: CICDIcon }
+    ]
+  },
+  {
+    category: "Automation (n8n)",
+    items: [
+      { name: "Global Error Handler", level: 80, icon: N8nIcon },
+      { name: "Google Email Summarizer V2", level: 80, icon: N8nIcon },
+      { name: "Job Search AI - Daily Digest", level: 80, icon: N8nIcon },
+      { name: "Job Search AI - Fetcher", level: 80, icon: N8nIcon },
+      { name: "Job Search AI - Weekly Summary", level: 80, icon: N8nIcon }
     ]
   }
 ];

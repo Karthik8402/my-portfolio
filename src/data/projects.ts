@@ -19,6 +19,74 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: "estar-ai-platform",
+    title: "eSTAR AI Platform",
+    description: "Enterprise AI-powered audit trail monitoring platform for 21 CFR Part 11 compliance with multi-agent anomaly detection and automated reporting.",
+    image: "/estar.png",
+    tags: ["React", "FastAPI", "Python", "PostgreSQL", "Google Gemini", "Azure", "Docker", "APScheduler"],
+    metrics: [
+      "Multi-agent compliance monitoring",
+      "Integrity checks + automated reports",
+      "Azure Container Apps deployment"
+    ],
+    links: {
+      live: "https://estar.karthikdev.app/audit",
+      github: "https://github.com/Karthik8402/estar-ai-platform"
+    },
+    featured: true,
+    detail: {
+      about: [
+        "eSTAR AI Platform is an enterprise-grade audit trail monitoring system built for pharmaceutical manufacturing environments. It enforces 21 CFR Part 11 and related compliance standards through continuous analysis of electronic records and audit logs.",
+        "Three AI agents handle anomaly detection, integrity verification, and compliance reporting while a real-time dashboard surfaces health, activity, and metrics for operators."
+      ],
+      features: [
+        { icon: "policy", title: "Multi-Agent Compliance Monitoring", description: "Dedicated agents detect anomalies, validate integrity, and generate compliance reports aligned with 21 CFR Part 11." },
+        { icon: "gpp_good", title: "Integrity Verification", description: "Rule-based checks flag sequence gaps, timestamp anomalies, and field validation issues across audit trails." },
+        { icon: "assessment", title: "Automated Reporting", description: "AI-generated compliance summaries provide audit-ready documentation with configurable thresholds." },
+        { icon: "insights", title: "Real-Time Dashboard", description: "Live service health, activity feeds, and metrics help teams monitor systems continuously." }
+      ],
+      challenges: [
+        { problem: "Ensuring compliance checks stayed configurable across multiple regulations and environments.", solution: "Implemented threshold-driven rules and per-agent configurations so each deployment can tune detection sensitivity." },
+        { problem: "Keeping the audit pipeline reliable across distributed services.", solution: "Containerized the stack and deployed via Azure Container Apps with structured health checks and service monitoring." }
+      ],
+      duration: "Dec 2025 - Present"
+    }
+  },
+  {
+    id: "quick-knowledge",
+    title: "Quick Knowledge — Intelligent Knowledge Base",
+    description: "Production-minded RAG application for grounded document Q&A with streaming responses, citations, and multi-LLM support.",
+    image: "/smart-notes.png",
+    tags: ["React", "TypeScript", "FastAPI", "LangGraph", "Supabase", "RAG", "ChromaDB"],
+    metrics: [
+      "Self-RAG relevance grading",
+      "SSE streaming answers",
+      "Multi-provider LLM toggles"
+    ],
+    links: {
+      live: "",
+      github: ""
+    },
+    featured: true,
+    detail: {
+      about: [
+        "Quick Knowledge is a Retrieval-Augmented Generation platform that ingests documents, indexes them into a vector store, and delivers grounded answers with validated citations.",
+        "It supports streaming chat responses, runtime model switching, and secure defaults like rate limiting, CORS controls, and prompt injection detection."
+      ],
+      features: [
+        { icon: "upload_file", title: "Document Ingestion", description: "Uploads PDF, TXT, DOCX, and Markdown files with hash-based deduplication and chunked indexing." },
+        { icon: "stream", title: "Streaming Q&A", description: "Server-Sent Events stream answers in real time for a responsive chat UX." },
+        { icon: "hub", title: "Multi-LLM Support", description: "Switch between Gemini, OpenAI, NVIDIA, and Groq models at runtime." },
+        { icon: "verified", title: "Grounded Responses", description: "Self-RAG grading filters low-relevance chunks and enforces citation validation." }
+      ],
+      challenges: [
+        { problem: "Avoiding hallucinations when retrieval fails.", solution: "Implemented relevance grading and a controlled fallback response when no context passes the threshold." },
+        { problem: "Balancing local dev speed with production scalability.", solution: "Designed pluggable storage and vector backends (ChromaDB for dev, Supabase pgvector for prod)." }
+      ],
+      duration: "2025"
+    }
+  },
+  {
     id: "smart-study-notes",
     title: "Smart Study Notes Generator",
     description: "AI-powered study notes generator using RAG and MCP integration, featuring multi-format uploads, auto-generated notes, MCQs, and campus recruitment training tools",

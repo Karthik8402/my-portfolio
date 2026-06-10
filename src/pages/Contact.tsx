@@ -7,6 +7,9 @@ import {
   Github,
   Linkedin,
   Twitter,
+  Mail,
+  MapPin,
+  Sparkles,
   type LucideIcon,
 } from 'lucide-react';
 import Section from '../components/Section';
@@ -76,12 +79,15 @@ export default function Contact() {
       <Meta title={`Contact - ${SITE.name}`} description="Get in touch with me" path="/contact" />
 
       <Section>
-        {/* Header */}
-        <motion.div className="mb-16" variants={staggerContainer} initial="hidden" animate="visible">
+        <motion.div className="mb-12 lg:mb-16" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={fadeInUp}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/5 border border-primary/20 text-primary text-xs font-medium mb-4">
+              <Sparkles size={12} />
+              Contact
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
               <span className="text-slate-900 dark:text-white">Get In </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan">Touch</span>
+              <span className="gradient-text-duo">Touch</span>
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
               Have a project in mind or just want to say hi? I'm always open to
@@ -90,47 +96,45 @@ export default function Contact() {
           </motion.div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Column — Contact Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           <motion.div
-            className="lg:col-span-5 space-y-8"
+            className="lg:col-span-5 space-y-6"
             variants={fadeInLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {/* Email */}
-            <a
-              href={`mailto:${SITE.email}`}
-              className="flex items-start gap-4 group"
-            >
-              <div className="p-3 rounded-lg bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 text-primary group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-xl">mail</span>
-              </div>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white">Email Me</h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm group-hover:text-primary transition-colors">{SITE.email}</p>
-              </div>
-            </a>
+            <div className="space-y-6">
+              <a
+                href={`mailto:${SITE.email}`}
+                className="flex items-center gap-4 group p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+              >
+                <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                  <Mail size={20} />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-slate-900 dark:text-white text-sm">Email</h4>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">{SITE.email}</p>
+                </div>
+              </a>
 
-            {/* Location */}
-            <div className="flex items-start gap-4 group">
-              <div className="p-3 rounded-lg bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 text-primary group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-xl">location_on</span>
-              </div>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white">Location</h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">{SITE.location}</p>
+              <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan">
+                  <MapPin size={20} />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-slate-900 dark:text-white text-sm">Location</h4>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{SITE.location}</p>
+                </div>
               </div>
             </div>
 
-            {/* Social Profiles */}
             <div className="pt-4">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4">
                 Social Profiles
               </h4>
               <div className="flex flex-wrap gap-3">
-                {SITE.socials.filter((s: { icon: string }) => s.icon !== 'Mail').map((social: { icon: string; label: string; href: string }) => {
+                {SITE.socials.filter((s: { icon: string }) => s.icon !== 'Mail' && s.icon !== 'Email').map((social: { icon: string; label: string; href: string }) => {
                   const IconComponent = socialIconMap[social.icon];
                   return IconComponent ? (
                     <motion.a
@@ -138,10 +142,10 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary shadow-sm hover:shadow-md transition-all text-slate-700 dark:text-white text-sm font-medium"
-                      whileHover={isMobile ? {} : { y: -4 }}
+                      className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary shadow-sm hover:shadow-md transition-all text-slate-700 dark:text-white text-sm font-medium"
+                      whileHover={isMobile ? {} : { y: -2 }}
                     >
-                      <IconComponent size={18} className="text-primary" />
+                      <IconComponent size={16} className="text-primary" />
                       {social.label}
                     </motion.a>
                   ) : null;
@@ -150,7 +154,6 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right Column — Contact Form */}
           <motion.div
             className="lg:col-span-7"
             variants={fadeInRight}
@@ -158,16 +161,15 @@ export default function Contact() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <div className="glass-form p-8 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden">
-              {/* Send icon watermark */}
-              <div className="absolute top-6 right-6 opacity-[0.06] pointer-events-none">
+            <div className="glass-form p-6 md:p-8 rounded-2xl shadow-soft-lg relative overflow-hidden">
+              <div className="absolute top-6 right-6 opacity-[0.04] pointer-events-none">
                 <Send size={80} />
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label htmlFor="name" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">
                       Name
                     </label>
                     <input
@@ -176,16 +178,14 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="John Doe"
-                      className="form-input w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                      className="input-field"
                     />
                     {errors.name && (
-                      <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
-                        <span>⚠</span> {errors.name}
-                      </p>
+                      <p className="mt-1.5 text-xs text-red-500">{errors.name}</p>
                     )}
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">
                       Email
                     </label>
                     <input
@@ -194,18 +194,16 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="john@example.com"
-                      className="form-input w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                      className="input-field"
                     />
                     {errors.email && (
-                      <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
-                        <span>⚠</span> {errors.email}
-                      </p>
+                      <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                  <label htmlFor="subject" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">
                     Subject
                   </label>
                   <input
@@ -214,12 +212,12 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="Project Inquiry"
-                    className="form-input w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                    className="input-field"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                  <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">
                     Message
                   </label>
                   <textarea
@@ -228,57 +226,54 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={5}
                     placeholder="Tell me about your project..."
-                    className="form-input w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none resize-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                    className="input-field resize-none"
                   />
                   {errors.message && (
-                    <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
-                      <span>⚠</span> {errors.message}
-                    </p>
+                    <p className="mt-1.5 text-xs text-red-500">{errors.message}</p>
                   )}
                 </div>
 
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary text-white rounded-xl font-semibold shadow-lg shadow-primary/25 disabled:opacity-50 transition-all relative overflow-hidden group"
-                  whileHover={isMobile ? {} : { scale: 1.02 }}
-                  whileTap={isMobile ? {} : { scale: 0.98 }}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold shadow-lg disabled:opacity-50 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                  whileHover={isMobile ? {} : { scale: 1.01 }}
+                  whileTap={isMobile ? {} : { scale: 0.99 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer-btn" />
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span className="relative z-10">Sending...</span>
+                      <div className="w-4 h-4 border-2 border-white/30 dark:border-slate-900/30 border-t-white dark:border-t-slate-900 rounded-full animate-spin" />
+                      <span>Sending...</span>
                     </>
                   ) : (
                     <>
-                      <span className="relative z-10">Send Message</span>
-                      <Send size={18} className="relative z-10" />
+                      <span>Send Message</span>
+                      <Send size={16} />
                     </>
                   )}
                 </motion.button>
 
                 {isSuccess && (
                   <motion.div
-                    className="flex items-center gap-2 p-4 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl text-emerald-600 dark:text-emerald-400"
+                    className="flex items-center gap-2 p-3.5 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl text-emerald-600 dark:text-emerald-400 text-sm"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.5, ease: easeOut }}
                   >
-                    <CheckCircle2 size={20} />
+                    <CheckCircle2 size={18} />
                     <span className="font-medium">Message sent successfully!</span>
                   </motion.div>
                 )}
 
                 {errorMessage && (
                   <motion.div
-                    className="flex items-center gap-2 p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl text-red-600 dark:text-red-400"
+                    className="flex items-center gap-2 p-3.5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl text-red-600 dark:text-red-400 text-sm"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.5, ease: easeOut }}
                   >
                     <span>⚠</span>
-                    <span className="text-sm">{errorMessage}</span>
+                    <span>{errorMessage}</span>
                   </motion.div>
                 )}
               </form>

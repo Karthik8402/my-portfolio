@@ -10,13 +10,11 @@ import GlowCursor from './components/canvas/GlowCursor';
 import { BackgroundEffects } from './components/BackgroundEffects';
 import { useMobile } from './hooks/useMobile';
 
-// Lazy-load non-critical pages
 const About = lazy(() => import('./pages/About'));
 const Projects = lazy(() => import('./pages/Projects'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 
-// Initialize theme from localStorage or system preference
 (function initTheme() {
   if (typeof window !== 'undefined') {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -27,7 +25,6 @@ const Contact = lazy(() => import('./pages/Contact'));
   }
 })();
 
-// Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -36,11 +33,13 @@ function ScrollToTop() {
   return null;
 }
 
-// Loading fallback
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
-      <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <span className="text-sm text-slate-400">Loading...</span>
+      </div>
     </div>
   );
 }
@@ -75,7 +74,7 @@ export default function App() {
         <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 flex flex-col relative overflow-x-hidden">
           <BackgroundEffects />
           <Navbar />
-          <main className="flex-grow pt-20">
+          <main className="flex-grow pt-16 lg:pt-20">
             <AnimatedRoutes />
           </main>
           <Footer />

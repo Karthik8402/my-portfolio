@@ -1,235 +1,162 @@
-import { motion } from 'framer-motion';
-import { ArrowRight, Download } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Download, Code2, Briefcase, GraduationCap, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Section from '../components/Section';
 import { SITE } from '../data/site';
+import { SKILLS } from '../data/skills';
 import { Meta } from '../seo/Meta';
-import { staggerContainer, fadeInUp, pageTransition } from '../utils/motionVariants';
+import { staggerContainer, fadeInUp, pageTransition, customEase } from '../utils/motionVariants';
+
+function SkillBar({ name, level, delay = 0 }: { name: string; level: number; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-20px' });
+
+  return (
+    <div ref={ref} className="space-y-1.5">
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{name}</span>
+        <span className="text-xs font-mono text-primary">{level}%</span>
+      </div>
+      <div className="skill-bar">
+        <motion.div
+          className="skill-bar-fill"
+          initial={{ width: 0 }}
+          animate={isInView ? { width: `${level}%` } : { width: 0 }}
+          transition={{ duration: 1, delay, ease: customEase }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function SkillCategory({ category, items, index }: { category: string; items: { name: string; level: number; icon?: React.ComponentType<{ size?: number; className?: string }> }[]; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-30px' }}
+      transition={{ duration: 0.4, delay: index * 0.08, ease: customEase }}
+      className="glass-card rounded-2xl p-6 space-y-4"
+    >
+      <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
+        {category}
+      </h3>
+      <div className="space-y-3">
+        {items.map((skill) => (
+          <SkillBar key={skill.name} name={skill.name} level={skill.level} delay={index * 0.1} />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function About() {
+  const bioParagraphs = SITE.about.bio.split('\n\n');
 
   return (
     <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta title={`About - ${SITE.name}`} description={SITE.about.bio} path="/about" />
 
       <Section>
-        {/* Page Header — NO pill badge, matching template */}
-        <motion.div className="mb-16" variants={staggerContainer} initial="hidden" animate="visible">
+        <motion.div className="mb-12 lg:mb-16" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={fadeInUp}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/5 border border-primary/20 text-primary text-xs font-medium mb-4">
+              <Star size={12} />
+              About Me
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
-              <span className="text-slate-900 dark:text-white">About </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-cyan">Me</span>
+              <span className="text-slate-900 dark:text-white">Discover My </span>
+              <span className="gradient-text-duo">Journey</span>
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              Get to know the developer behind the code.
+              A quick snapshot of my experience, skills, and the work I love building.
             </p>
           </motion.div>
         </motion.div>
 
-        {/* Main Content — Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
-          {/* Left Column — Bio */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-20">
           <motion.div
             className="lg:col-span-7 space-y-8"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: customEase }}
           >
-            <div className="space-y-6 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-              <p>
-                Hello! I'm <span className="font-semibold text-slate-900 dark:text-white">Karthik Kumar</span>, a passionate Full-Stack Developer currently
-                pursuing my MCA in Salem, TN. My journey into the world of technology
-                began with a curiosity about how things work on the web, which has since
-                evolved into a dedicated career path building robust and scalable
-                applications.
-              </p>
-              <p>
-                I specialize in creating seamless web experiences using{' '}
-                <span className="text-primary font-medium">React</span> for dynamic
-                front-ends and robust back-ends powered by{' '}
-                <span className="text-primary font-medium">Java</span> and{' '}
-                <span className="text-primary font-medium">Python</span>. I have a
-                particular fondness for{' '}
-                <span className="text-orange-500 font-medium">Firebase</span> for rapid prototyping and real-time
-                database needs.
-              </p>
-              <p>
-                When I'm not coding, I'm constantly learning new technologies, contributing
-                to open-source projects, or optimizing algorithms. I believe in writing clean,
-                maintainable code and designing user interfaces that are both intuitive and
-                accessible.
-              </p>
+            <div className="space-y-5 text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+              {bioParagraphs.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-2">
+              {SITE.about.interests.map((interest) => (
+                <span
+                  key={interest}
+                  className="px-3 py-1.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                >
+                  {interest}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 text-sm"
               >
                 Let's Talk
-                <ArrowRight size={18} />
+                <ArrowRight size={16} />
               </Link>
               <a
                 href={SITE.resumeUrl}
                 download
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white rounded-xl font-bold shadow-sm hover:border-primary dark:hover:border-primary transition-all duration-200 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white rounded-xl font-semibold shadow-sm hover:border-primary dark:hover:border-primary transition-all duration-200 hover:-translate-y-0.5 text-sm"
               >
-                <Download size={18} />
+                <Download size={16} />
                 Download CV
               </a>
             </div>
           </motion.div>
 
-          {/* Right Column — Tech Stack Card (matching Stitch template pic 3/4 exactly) */}
           <motion.div
-            className="lg:col-span-5"
+            className="lg:col-span-5 space-y-4"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, delay: 0.15, ease: customEase }}
           >
-            <div className="relative group sticky top-28">
-              {/* Glow border effect — matching the purple/cyan glow in template pic 3 */}
-              <div className="absolute -inset-[1px] bg-gradient-to-b from-primary/40 via-purple-500/30 to-accent-cyan/40 rounded-2xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="relative glass-card rounded-2xl overflow-hidden">
-                {/* macOS dots header */}
-                <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/50">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
-                  </div>
-                  <span className="text-xs font-mono text-slate-500 dark:text-slate-400">tech-stack.json</span>
-                  <span className="text-xs text-slate-400">&lt;/&gt;</span>
-                </div>
-
-                {/* Content — 3 categories matching template: frontend, backend, database */}
-                <div className="p-6 space-y-6">
-                  {/* Frontend */}
-                  <div className="group/skill">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
-                        "frontend"
-                      </span>
-                      <span className="font-mono text-sm font-bold text-primary">
-                        90%
-                      </span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
-                      <motion.div
-                        className="h-full rounded-full bg-primary"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: '90%' }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: 'easeOut' }}
-                      />
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {['React', 'Tailwind', 'HTML/CSS'].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Backend */}
-                  <div className="group/skill">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
-                        "backend"
-                      </span>
-                      <span className="font-mono text-sm font-bold text-primary">
-                        85%
-                      </span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
-                      <motion.div
-                        className="h-full rounded-full bg-purple-500"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: '85%' }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-                      />
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {['Java', 'Python', 'Node.js'].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Database */}
-                  <div className="group/skill">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-mono text-sm text-slate-700 dark:text-slate-300">
-                        "database"
-                      </span>
-                      <span className="font-mono text-sm font-bold text-primary">
-                        80%
-                      </span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
-                      <motion.div
-                        className="h-full rounded-full bg-accent-cyan"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: '80%' }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-                      />
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {['Firebase', 'MySQL', 'MongoDB'].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2.5 py-0.5 text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded border border-slate-200 dark:border-slate-700 hover:border-primary/30 hover:text-primary transition-colors duration-200"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-                    </span>
-                    Open to collaboration
-                  </div>
-                </div>
+            <div className="glass-card rounded-2xl overflow-hidden sticky top-24 flex flex-col h-[520px] lg:h-[580px]">
+              <div className="flex items-center gap-1.5 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/50 shrink-0">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
+                <span className="ml-2 text-xs font-mono text-slate-500 dark:text-slate-400">skills.json</span>
+              </div>
+              <div className="p-5 space-y-4 overflow-y-auto skills-scrollbar flex-1">
+                {SKILLS.map((cat, idx) => (
+                  <SkillCategory key={cat.category} category={cat.category} items={cat.items} index={idx} />
+                ))}
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Education & Experience Timeline — matching dark template pic 1 */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: customEase }}
         >
           <div className="flex items-center gap-3 mb-10">
-            <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent-cyan rounded-full" />
+            <div className="w-8 h-1 rounded-full bg-gradient-to-r from-primary to-accent-cyan" />
             <h2 className="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white">
               Education & Experience
             </h2>
           </div>
 
-          <div className="timeline-line space-y-12 pl-16 relative">
+          <div className="relative pl-10 sm:pl-14 space-y-10">
+            <div className="absolute left-[19px] sm:left-[23px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-accent-cyan/50 to-transparent" />
             {SITE.about.timeline?.map((item: { year: string; title: string; institution: string; description: string }, idx: number) => (
               <motion.div
                 key={idx}
@@ -237,24 +164,27 @@ export default function About() {
                 initial={{ opacity: 0, x: -15 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.35, delay: idx * 0.06 }}
+                transition={{ duration: 0.35, delay: idx * 0.08, ease: customEase }}
               >
-                {/* Circle icon — exactly aligns with line at left 23px */ }
-                <div className="absolute -left-16 top-0 w-12 h-12 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center bg-white dark:bg-surface-dark group-hover:border-primary group-hover:bg-primary/5 transition-all duration-200 z-10">
-                  <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors duration-200 text-xl">
-                    {item.title.includes('Bachelor') || item.title.includes('Master') ? 'school' : item.title.includes('Open') ? 'search' : 'code'}
-                  </span>
+                <div className="absolute -left-10 sm:-left-14 top-0.5 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center bg-white dark:bg-surface-dark group-hover:border-primary group-hover:bg-primary/5 transition-all duration-200 z-10">
+                  {item.title.toLowerCase().includes('bachelor') || item.title.toLowerCase().includes('master') || item.title.toLowerCase().includes('mca') || item.title.toLowerCase().includes('b.sc') ? (
+                    <GraduationCap size={16} className="text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" />
+                  ) : item.title.toLowerCase().includes('training') ? (
+                    <Code2 size={16} className="text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" />
+                  ) : (
+                    <Briefcase size={16} className="text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" />
+                  )}
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">{item.institution}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{item.institution}</p>
                     <p className="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{item.description}</p>
                   </div>
-                  <span className="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full text-slate-600 dark:text-slate-400 shrink-0 border border-slate-200 dark:border-slate-700">
+                  <span className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full text-slate-600 dark:text-slate-400 shrink-0 border border-slate-200 dark:border-slate-700">
                     {item.year}
                   </span>
                 </div>
