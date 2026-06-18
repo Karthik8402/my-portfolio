@@ -50,9 +50,9 @@ export default function Navbar() {
           onClick={() => setMobileOpen(false)}
         >
           <div className="relative">
-            <div className="absolute inset-0 bg-primary/20 blur-lg rounded-lg group-hover:bg-primary/30 transition-all duration-300" />
-            <div className="relative w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-slate-900 dark:bg-white flex items-center justify-center border border-slate-700 dark:border-slate-200 group-hover:border-primary dark:group-hover:border-primary transition-colors">
-              <span className="font-display font-bold text-lg text-white dark:text-slate-900">K</span>
+            <div className="absolute inset-0 bg-primary/20 blur-xl rounded-lg" />
+            <div className="relative w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-zinc-900 dark:bg-white flex items-center justify-center border border-zinc-700 dark:border-zinc-200">
+              <span className="font-display font-bold text-lg text-white dark:text-zinc-900">K</span>
             </div>
           </div>
         </Link>
@@ -66,7 +66,7 @@ export default function Navbar() {
                 `relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? 'text-primary'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
                 }`
               }
             >
@@ -89,7 +89,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 relative z-50">
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+            className="p-2.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
             aria-label="Toggle theme"
           >
             {dark ? <Sun size={18} /> : <Moon size={18} />}
@@ -97,7 +97,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors md:hidden text-slate-900 dark:text-white"
+            className="p-2.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors md:hidden text-zinc-900 dark:text-white"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -117,7 +117,7 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
             />
             <motion.div
-              className="fixed top-16 left-0 right-0 md:hidden z-40 glass-nav border-b border-slate-200 dark:border-slate-800 max-h-[calc(100vh-64px)] overflow-y-auto"
+              className="fixed top-16 left-0 right-0 md:hidden z-40 glass-nav border-b border-zinc-200 dark:border-zinc-800 max-h-[calc(100vh-64px)] overflow-y-auto"
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
@@ -137,7 +137,7 @@ export default function Navbar() {
                         `block py-3.5 px-4 text-base font-medium rounded-xl transition-all ${
                           isActive
                             ? 'bg-primary/10 text-primary border border-primary/20'
-                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                            : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
                         }`
                       }
                     >

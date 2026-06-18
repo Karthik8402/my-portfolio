@@ -6,8 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import GlowCursor from './components/canvas/GlowCursor';
-import { BackgroundEffects } from './components/BackgroundEffects';
+import CursorGlow from './components/canvas/CursorGlow';
 import { useMobile } from './hooks/useMobile';
 
 const About = lazy(() => import('./pages/About'));
@@ -38,7 +37,7 @@ function PageLoader() {
     <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
       <div className="flex flex-col items-center gap-3">
         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-        <span className="text-sm text-slate-400">Loading...</span>
+        <span className="text-sm text-zinc-400">Loading...</span>
       </div>
     </div>
   );
@@ -70,9 +69,8 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
-        {!isMobile && <GlowCursor />}
-        <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 flex flex-col relative overflow-x-hidden">
-          <BackgroundEffects />
+        {!isMobile && <CursorGlow />}
+        <div className="min-h-screen bg-background-light dark:bg-background-dark text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-300 flex flex-col relative overflow-x-hidden">
           <Navbar />
           <main className="flex-grow pt-16 lg:pt-20">
             <AnimatedRoutes />
