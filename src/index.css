@@ -1,3 +1,5 @@
+@import "./styles/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,10 +7,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   body {
     @apply antialiased font-sans;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   ::selection {
@@ -21,11 +27,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(241, 245, 249, 0.3);
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    background: rgba(9, 9, 11, 0.3);
+    background: var(--color-background);
   }
 
   ::-webkit-scrollbar-thumb {
@@ -40,35 +42,21 @@
 
 @layer components {
   .glass-panel {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(24, 24, 27, 0.55);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-  }
-
-  .dark .glass-panel {
-    background: rgba(24, 24, 27, 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(63, 63, 70, 0.5);
+    border: 1px solid var(--color-border);
   }
 
   .glass-nav {
-    background: rgba(250, 250, 250, 0.75);
+    background: rgba(13, 13, 13, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(228, 228, 231, 0.5);
-  }
-
-  .dark .glass-nav {
-    background: rgba(9, 9, 11, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(63, 63, 70, 0.5);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent-cyan to-accent-purple;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent-cyan to-accent;
   }
 
   .gradient-text-duo {
@@ -76,7 +64,7 @@
   }
 
   .shimmer-text {
-    background: linear-gradient(90deg, #2563EB, #06b6d4, #7c3aed, #2563EB);
+    background: linear-gradient(90deg, #2563EB, #00FFFF, #8B5CF6, #2563EB);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -85,21 +73,32 @@
   }
 
   .shimmer-overlay {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
     background-size: 200% 100%;
     animation: shimmer 2s linear infinite;
   }
 
   .input-field {
-    @apply w-full px-4 py-3.5 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-zinc-900 dark:text-white placeholder:text-zinc-400;
+    @apply w-full px-4 py-3.5 rounded-xl border outline-none transition-all duration-300;
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-border);
+    color: var(--color-foreground);
+  }
+
+  .input-field::placeholder {
+    color: var(--color-muted);
   }
 
   .input-field:focus {
-    @apply translate-y-[-2px] shadow-lg shadow-primary/5;
+    border-color: var(--color-primary);
+    @apply translate-y-[-2px] shadow-lg;
+    box-shadow: 0 0 14px var(--glow-primary);
   }
 
   .section-label {
-    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 dark:bg-primary/5 text-primary text-xs font-medium;
+    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-primary text-xs font-medium;
+    background-color: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.15);
   }
 }
 

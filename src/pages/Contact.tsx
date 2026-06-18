@@ -16,8 +16,7 @@ import Section from '../components/Section';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight, pageTransition } from '../utils/motionVariants';
-import Scene from '../components/canvas/Scene';
-import FloatingGeometry from '../components/canvas/FloatingGeometry';
+import ParticleBackground from '../components/ParticleBackground';
 
 const socialIconMap: Record<string, LucideIcon> = { Github, Linkedin, Twitter };
 
@@ -73,18 +72,11 @@ export default function Contact() {
   };
 
   return (
-    <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
+    <motion.div className="relative isolate" variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta title={`Contact - ${SITE.name}`} description="Get in touch with me" path="/contact" />
+      <ParticleBackground />
 
-      <div className="relative">
-        <Scene
-          className="absolute inset-0 h-[600px] z-0"
-          cameraPosition={[0, 0, 6]}
-        >
-          <ambientLight intensity={0.2} />
-          <directionalLight position={[5, 5, 5]} intensity={0.3} />
-          <FloatingGeometry count={6} />
-        </Scene>
+      <div className="relative z-10">
 
         <Section>
           <motion.div className="mb-12 lg:mb-16" variants={staggerContainer} initial="hidden" animate="visible">
@@ -94,10 +86,10 @@ export default function Contact() {
                 Contact
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
-                <span className="text-zinc-900 dark:text-white">Get In </span>
+                <span className="text-[var(--color-foreground)]">Get In </span>
                 <span className="gradient-text-duo">Touch</span>
               </h1>
-              <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl">
+              <p className="text-lg text-[var(--color-muted)] max-w-2xl">
                 Have a project in mind or just want to say hi? I'm always open to
                 discussing new opportunities and ideas.
               </p>
@@ -115,30 +107,30 @@ export default function Contact() {
               <div className="space-y-6">
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="flex items-center gap-4 group p-4 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+                  className="flex items-center gap-4 group p-4 rounded-xl hover:bg-[var(--color-surface-alt)] transition-colors"
                 >
                   <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
                     <Mail size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-zinc-900 dark:text-white text-sm">Email</h4>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-primary transition-colors">{SITE.email}</p>
+                    <h4 className="font-semibold text-[var(--color-foreground)] text-sm">Email</h4>
+                    <p className="text-sm text-[var(--color-muted)] group-hover:text-primary transition-colors">{SITE.email}</p>
                   </div>
                 </a>
 
-                <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+                <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-[var(--color-surface-alt)] transition-colors">
                   <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan">
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-zinc-900 dark:text-white text-sm">Location</h4>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">{SITE.location}</p>
+                    <h4 className="font-semibold text-[var(--color-foreground)] text-sm">Location</h4>
+                    <p className="text-sm text-[var(--color-muted)]">{SITE.location}</p>
                   </div>
                 </div>
               </div>
 
               <div className="pt-4">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-4">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--color-muted)] mb-4">
                   Social Profiles
                 </h4>
                 <div className="flex flex-wrap gap-3">
@@ -150,7 +142,11 @@ export default function Contact() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-primary dark:hover:border-primary shadow-sm hover:shadow-md transition-all text-zinc-700 dark:text-white text-sm font-medium"
+                        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border hover:border-primary shadow-sm hover:shadow-md transition-all text-[var(--color-foreground)] text-sm font-medium"
+                        style={{
+                          backgroundColor: 'var(--color-surface)',
+                          borderColor: 'var(--color-border)',
+                        }}
                         whileHover={{ y: -2 }}
                       >
                         <IconComponent size={16} className="text-primary" />
@@ -170,14 +166,14 @@ export default function Contact() {
               viewport={{ once: true }}
             >
               <div className="glass-panel p-6 md:p-8 rounded-2xl shadow-soft-lg relative overflow-hidden">
-                <div className="absolute top-6 right-6 opacity-[0.04] pointer-events-none">
+                <div className="absolute top-6 right-6 opacity-[0.04] pointer-events-none text-[var(--color-foreground)]">
                   <Send size={80} />
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">
+                      <label htmlFor="name" className="block text-sm font-medium mb-1.5 text-[var(--color-foreground)]">
                         Name
                       </label>
                       <input
@@ -193,7 +189,7 @@ export default function Contact() {
                       )}
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">
+                      <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-[var(--color-foreground)]">
                         Email
                       </label>
                       <input
@@ -211,7 +207,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">
+                    <label htmlFor="subject" className="block text-sm font-medium mb-1.5 text-[var(--color-foreground)]">
                       Subject
                     </label>
                     <input
@@ -225,7 +221,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-zinc-700 dark:text-zinc-300">
+                    <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-[var(--color-foreground)]">
                       Message
                     </label>
                     <textarea
@@ -244,13 +240,16 @@ export default function Contact() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl font-semibold shadow-lg disabled:opacity-50 transition-all hover:scale-[1.01] active:scale-[0.99]"
-                    whileHover={{ scale: 1.01 }}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white rounded-xl font-semibold shadow-lg disabled:opacity-50 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                    whileHover={{
+                      scale: 1.01,
+                      boxShadow: '0 0 24px var(--glow-primary)',
+                    }}
                     whileTap={{ scale: 0.99 }}
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white/30 dark:border-zinc-900/30 border-t-white dark:border-t-zinc-900 rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         <span>Sending...</span>
                       </>
                     ) : (
@@ -263,7 +262,7 @@ export default function Contact() {
 
                   {isSuccess && (
                     <motion.div
-                      className="flex items-center gap-2 p-3.5 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl text-emerald-600 dark:text-emerald-400 text-sm"
+                      className="flex items-center gap-2 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5, ease: easeOut }}
@@ -275,7 +274,7 @@ export default function Contact() {
 
                   {errorMessage && (
                     <motion.div
-                      className="flex items-center gap-2 p-3.5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl text-red-600 dark:text-red-400 text-sm"
+                      className="flex items-center gap-2 p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5, ease: easeOut }}

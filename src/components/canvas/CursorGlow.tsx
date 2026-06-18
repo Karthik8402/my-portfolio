@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function CursorGlow() {
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: -100, y: -100 });
-  const ringPos = useRef({ x: -100, y: -100 });
+  const dotPos = useRef({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
@@ -15,16 +14,16 @@ export default function CursorGlow() {
 
     const handleMouseMove = (e: MouseEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
-      if (!isVisible) setIsVisible(true);
-
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      if (!isVisible) {
+        setIsVisible(true);
+        // Instant position on first load so it doesn't slide in from off-screen
+        dotPos.current = { x: e.clientX, y: e.clientY };
       }
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const interactive = target.closest('a, button, input, textarea, [role="button"]');
+      const interactive = target.closest('a, button, input, textarea, [role="button"], [class*="cursor-pointer"]');
       setIsHovering(!!interactive);
     };
 
@@ -34,12 +33,13 @@ export default function CursorGlow() {
 
     let raf: number;
     const animate = () => {
-      ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.15;
-      ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.15;
+      // Smooth position lerping
+      dotPos.current.x += (pos.current.x - dotPos.current.x) * 0.25;
+      dotPos.current.y += (pos.current.y - dotPos.current.y) * 0.25;
 
-      if (ringRef.current) {
-        const scale = (isHovering ? 1.8 : 1) * (isClicking ? 0.85 : 1);
-        ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) scale(${scale})`;
+      if (dotRef.current) {
+        const scale = isClicking ? 0.8 : 1.0;
+        dotRef.current.style.transform = `translate(${dotPos.current.x}px, ${dotPos.current.y}px) scale(${scale})`;
       }
 
       raf = requestAnimationFrame(animate);
@@ -68,40 +68,23 @@ export default function CursorGlow() {
   }
 
   return (
-    <>
-      <div
-        ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
-        style={{
-          width: 4,
-          height: 4,
-          marginLeft: -2,
-          marginTop: -2,
-          borderRadius: '50%',
-          backgroundColor: '#2563EB',
-          boxShadow: '0 0 6px rgba(37, 99, 235, 0.5)',
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 0.3s',
-        }}
-        aria-hidden="true"
-      />
-      <div
-        ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9998]"
-        style={{
-          width: 32,
-          height: 32,
-          marginLeft: -16,
-          marginTop: -16,
-          borderRadius: '50%',
-          border: `1px solid rgba(37, 99, 235, ${isHovering ? 0.5 : 0.2})`,
-          backgroundColor: isHovering ? 'rgba(37, 99, 235, 0.04)' : 'transparent',
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 0.3s, border-color 0.3s, background-color 0.3s',
-          backdropFilter: 'blur(2px)',
-        }}
-        aria-hidden="true"
-      />
-    </>
+    <div
+      ref={dotRef}
+      className="fixed top-0 left-0 pointer-events-none z-[9999]"
+      style={{
+        width: isHovering ? 18 : 8,
+        height: isHovering ? 18 : 8,
+        marginLeft: isHovering ? -9 : -4,
+        marginTop: isHovering ? -9 : -4,
+        borderRadius: '50%',
+        backgroundColor: isHovering ? '#00FFFF' : '#2563EB',
+        boxShadow: isHovering
+          ? '0 0 12px #00FFFF, 0 0 24px rgba(0, 255, 255, 0.6)'
+          : '0 0 6px rgba(37, 99, 235, 0.7)',
+        opacity: isVisible ? 1 : 0,
+        transition: 'width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), margin 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease',
+      }}
+      aria-hidden="true"
+    />
   );
 }

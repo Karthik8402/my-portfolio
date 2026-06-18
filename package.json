@@ -12,10 +12,14 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.2.2",
+    "@react-spring/three": "^10.1.1",
+    "@react-spring/web": "^10.1.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@stitches/react": "^1.2.8",
+    "@tsparticles/react": "^4.2.0",
     "framer-motion": "^12.23.24",
+    "gsap": "^3.15.0",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -23,6 +27,7 @@
     "react-hook-form": "^7.66.0",
     "react-router-dom": "^7.9.5",
     "three": "^0.184.0",
+    "tsparticles": "^4.2.0",
     "typewriter-effect": "^2.22.0",
     "zod": "^4.1.12"
   },

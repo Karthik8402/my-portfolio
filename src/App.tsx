@@ -14,15 +14,6 @@ const Projects = lazy(() => import('./pages/Projects'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 
-(function initTheme() {
-  if (typeof window !== 'undefined') {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
-})();
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,7 +25,7 @@ function ScrollToTop() {
 
 function PageLoader() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
+    <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-3">
         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
         <span className="text-sm text-zinc-400">Loading...</span>
@@ -70,7 +61,7 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         {!isMobile && <CursorGlow />}
-        <div className="min-h-screen bg-background-light dark:bg-background-dark text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-300 flex flex-col relative overflow-x-hidden">
+        <div className="min-h-screen text-foreground font-sans flex flex-col relative overflow-x-hidden">
           <Navbar />
           <main className="flex-grow pt-16 lg:pt-20">
             <AnimatedRoutes />

@@ -39,4 +39,5 @@ public/Stitch Template/*
 .gsd
 .gemini
 .agent
-gsd-template
+/gsd-template/*
+/design-system/*

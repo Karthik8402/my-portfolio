@@ -2,13 +2,12 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import Section from '../components/Section';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from '../components/ProjectCard3D';
 import { PROJECTS } from '../data/projects';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 import { staggerContainer, fadeInUp, pageTransition, customEase } from '../utils/motionVariants';
-import Scene from '../components/canvas/Scene';
-import ParticleField3D from '../components/canvas/ParticleField3D';
+import ParticleBackground from '../components/ParticleBackground';
 
 const filterTabs = [
   { key: 'All', label: 'All Projects' },
@@ -35,22 +34,15 @@ export default function Projects() {
   const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6);
 
   return (
-    <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit">
+    <motion.div className="relative isolate" variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta
         title={`Projects - ${SITE.name}`}
         description="A curated collection of my technical work"
         path="/projects"
       />
+      <ParticleBackground />
 
-      <div className="relative pt-16 lg:pt-20">
-        <Scene
-          className="absolute inset-0 h-[400px] z-0"
-          cameraPosition={[0, 0, 5]}
-        >
-          <ambientLight intensity={0.3} />
-          <ParticleField3D count={40} color="#2563EB" speed={0.1} interactive={false} />
-        </Scene>
-
+      <div className="relative z-10 pt-16 lg:pt-20">
         <div className="relative z-10 py-16 lg:py-24 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
             <motion.div variants={staggerContainer} initial="hidden" animate="visible">
@@ -60,12 +52,12 @@ export default function Projects() {
                   My Work
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
-                  <span className="text-zinc-900 dark:text-white">Featured </span>
+                  <span className="text-[var(--color-foreground)]">Featured </span>
                   <span className="gradient-text-duo">Projects</span>
                 </h1>
               </motion.div>
               <motion.div variants={fadeInUp}>
-                <p className="text-base lg:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+                <p className="text-base lg:text-lg text-[var(--color-muted)] max-w-2xl mx-auto">
                   A curated collection of my technical work, ranging from complex full-stack
                   web applications to experimental frontend interfaces.
                 </p>
@@ -75,7 +67,7 @@ export default function Projects() {
         </div>
       </div>
 
-      <Section className="!pt-0">
+      <Section className="relative z-10 !pt-0">
         <motion.div
           className="flex flex-wrap justify-center gap-2 mb-10"
           initial={{ opacity: 0, y: 10 }}
@@ -86,10 +78,10 @@ export default function Projects() {
             <button
               key={tab.key}
               onClick={() => { setActiveFilter(tab.key); setShowAll(false); }}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 border ${
                 activeFilter === tab.key
-                  ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-lg shadow-zinc-900/20 dark:shadow-white/10'
-                  : 'bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary'
+                  ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20'
+                  : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-muted)] hover:border-primary hover:text-primary'
               }`}
             >
               {tab.label}
@@ -129,7 +121,11 @@ export default function Projects() {
           >
             <button
               onClick={() => setShowAll(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl text-sm text-zinc-600 dark:text-zinc-400 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-dashed rounded-xl text-sm transition-all hover:-translate-y-0.5"
+              style={{
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-muted)',
+              }}
             >
               Load More Projects ({filteredProjects.length - 6} remaining)
             </button>
@@ -142,11 +138,11 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <div className="text-4xl mb-4 opacity-20">&#8854;</div>
-            <h3 className="text-lg font-semibold text-zinc-600 dark:text-zinc-400">
+            <div className="text-4xl mb-4 opacity-20 text-[var(--color-foreground)]">&#8854;</div>
+            <h3 className="text-lg font-semibold text-[var(--color-muted)]">
               No projects found
             </h3>
-            <p className="text-sm text-zinc-500 mt-1">
+            <p className="text-sm text-[var(--color-muted)] mt-1">
               Try a different filter or check back soon!
             </p>
           </motion.div>

@@ -1,0 +1,26 @@
+:root {
+  /* Backgrounds */
+  --color-background:    #0D0D0D;   /* Pure near-black canvas */
+  --color-surface:       #18181B;   /* Card / section surface */
+  --color-surface-alt:   #1F1F23;   /* Elevated cards / modals */
+
+  /* Foreground */
+  --color-foreground:    #FAFAFA;   /* Primary text */
+  --color-muted:         #A1A1AA;   /* Secondary text / labels */
+
+  /* Accents */
+  --color-primary:       #2563EB;   /* Primary CTA blue */
+  --color-accent:        #8B5CF6;   /* Violet — 3D glow / hover */
+  --color-accent-cyan:   #00FFFF;   /* Cyan — particle / shader */
+
+  /* Borders */
+  --color-border:        rgba(255,255,255,0.08);
+
+  /* Destructive */
+  --color-destructive:   #DC2626;
+
+  /* 3D Glow tokens */
+  --glow-primary:        rgba(37, 99, 235, 0.35);
+  --glow-accent:         rgba(139, 92, 246, 0.35);
+  --glow-cyan:           rgba(0, 255, 255, 0.25);
+}

@@ -46,25 +46,29 @@ export const SITE = {
         year: "Dec 2025 - Present",
         title: "AI Software Developer Intern",
         institution: "EnviroApps Inc (Remote) — Florida, USA",
-        description: "Built FastAPI components for pharmaceutical data pipelines, resolved microservice issues, and contributed to Dockerized deployments and technical documentation."
+        description: "Built FastAPI components for pharmaceutical data pipelines, resolved microservice issues, and contributed to Dockerized deployments and technical documentation.",
+        icon: "Brain"
       },
       {
         year: "2024 - 2026",
         title: "Master of Computer Applications (MCA)",
         institution: "Sona College of Technology",
-        description: "Pursuing MCA with a current CGPA of 8.3, focused on full-stack development and software engineering."
+        description: "Pursuing MCA with a current CGPA of 8.3, focused on full-stack development and software engineering.",
+        icon: "GraduationCap"
       },
       {
         year: "Nov 2022 - Dec 2023",
         title: "Java Full Stack Developer Training",
         institution: "QSpiders, Chennai",
-        description: "Hands-on training in Java, web development, databases, and full-stack project workflows."
+        description: "Hands-on training in Java, web development, databases, and full-stack project workflows.",
+        icon: "Terminal"
       },
       {
         year: "2019 - 2022",
         title: "B.Sc. Computer Science",
         institution: "Vysya College, Salem",
-        description: "Completed undergraduate studies with a CGPA of 7.4 and a strong foundation in programming and databases."
+        description: "Completed undergraduate studies with a CGPA of 7.4 and a strong foundation in programming and databases.",
+        icon: "BookOpen"
       }
     ]
   }

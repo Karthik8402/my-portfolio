@@ -1,27 +1,19 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
-import { Download, ArrowRight, ChevronDown, Github, Linkedin, Twitter, Sparkles } from 'lucide-react';
+import { Download, ArrowRight, ChevronDown, Github, Linkedin, Twitter } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
-import { staggerContainer, fadeInUp, pageTransition, customEase } from '../utils/motionVariants';
-import Scene from '../components/canvas/Scene';
-import HeroScene from '../components/canvas/HeroScene';
+import { staggerContainer, fadeInUp, pageTransition } from '../utils/motionVariants';
+import HeroCanvas from '../components/HeroCanvas';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const socialIconMap: Record<string, typeof Github> = { Github, Linkedin, Twitter };
-
-const techStack = [
-  { name: 'React', color: 'text-primary' },
-  { name: 'TypeScript', color: 'text-blue-500' },
-  { name: 'Java', color: 'text-orange-500' },
-  { name: 'Python', color: 'text-yellow-500' },
-  { name: 'FastAPI', color: 'text-emerald-500' },
-  { name: 'Tailwind', color: 'text-cyan-400' },
-];
 
 export default function Home() {
   const [firstName, ...restName] = SITE.name.split(' ');
   const lastName = restName.join(' ');
+  const reducedMotion = useReducedMotion();
 
   return (
     <motion.div variants={pageTransition} initial="initial" animate="animate" exit="exit" className="flex-1">
@@ -31,55 +23,60 @@ export default function Home() {
         path="/"
       />
 
-      <div className="min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex items-center justify-center relative overflow-hidden">
-        <Scene
-          className="absolute inset-0 z-0"
-          cameraPosition={[0, 0, 6]}
+      <div
+        id="hero-section"
+        className="min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex items-center justify-center relative overflow-hidden bg-background"
+      >
+        {/* Hero 3D GLSL Canvas - Centered on mobile, positioned on the right side on desktop */}
+        <motion.div
+          className="hero-canvas-container absolute inset-y-0 right-0 z-0 w-full lg:w-[50%] pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: reducedMotion ? 0.3 : 1.4, ease: [0.16, 1, 0.3, 1] }}
         >
-          <HeroScene />
-        </Scene>
+          <HeroCanvas />
+        </motion.div>
 
-        <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-background-light/10 via-transparent to-background-light dark:from-background-dark/10 dark:to-background-dark" />
+        <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-background/10 via-transparent to-background" />
 
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full py-12 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-8">
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
                 className="flex flex-col gap-6"
               >
-                <motion.div variants={fadeInUp}>
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 dark:bg-primary/5 border border-primary/20 text-primary text-sm font-medium">
-                    <Sparkles size={14} />
-                    <span>Available for work</span>
-                    <span className="relative flex h-2 w-2 ml-1">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                <motion.div variants={fadeInUp} className="stagger-item">
+                  <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-wider uppercase shadow-[0_0_15px_rgba(16,185,129,0.05)]">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                     </span>
+                    <span>Available for work</span>
                   </div>
                 </motion.div>
 
-                <motion.div variants={fadeInUp} className="space-y-2">
-                  <h2 className="text-lg md:text-xl font-medium text-zinc-500 dark:text-zinc-400">
+                <motion.div variants={fadeInUp} className="space-y-2 stagger-item">
+                  <span className="text-sm font-mono tracking-widest uppercase text-primary font-bold">
                     Hi, I'm
-                  </h2>
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold tracking-tight leading-none">
-                    <span className="text-zinc-900 dark:text-white">{firstName}</span>{' '}
-                    <span className="block mt-1 shimmer-text">
+                  </span>
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold tracking-tight leading-none text-white">
+                    {firstName}{' '}
+                    <span className="block mt-2 shimmer-text">
                       {lastName || firstName}
                     </span>
                   </h1>
                 </motion.div>
 
-                <motion.div variants={fadeInUp}>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg md:text-xl font-display text-zinc-600 dark:text-zinc-400">
-                    <span className="text-sm font-mono px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                <motion.div variants={fadeInUp} className="stagger-item">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 text-lg md:text-xl font-display text-zinc-400">
+                    <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.05)] uppercase tracking-wider self-start sm:self-auto">
                       {SITE.experience}
                     </span>
-                    <span className="hidden sm:inline text-primary/40">|</span>
-                    <span className="font-semibold text-zinc-800 dark:text-white min-h-[1.5em]">
+                    <span className="hidden sm:inline text-zinc-800">|</span>
+                    <span className="font-semibold text-white min-h-[1.5em] flex items-center">
                       <Typewriter
                         options={{
                           strings: SITE.roles,
@@ -93,117 +90,59 @@ export default function Home() {
                   </div>
                 </motion.div>
 
-                <motion.div variants={fadeInUp}>
-                  <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl leading-relaxed">
+                <motion.div variants={fadeInUp} className="stagger-item">
+                  <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed font-sans font-light">
                     {SITE.hero.subtitle}
                   </p>
                 </motion.div>
 
-                <motion.div variants={fadeInUp}>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {techStack.map((tech) => (
-                      <span
-                        key={tech.name}
-                        className={`inline-flex items-center gap-1 px-3 py-1 text-xs font-mono rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 ${tech.color}`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                        {tech.name}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                <motion.div variants={fadeInUp}>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                <motion.div variants={fadeInUp} className="stagger-item">
+                  <div className="flex flex-col sm:flex-row gap-4 mt-2">
                     <Link
                       to={SITE.hero.ctaPrimary.href}
-                      className="group relative px-8 py-3.5 bg-zinc-900 dark:bg-white rounded-xl font-semibold text-white dark:text-zinc-900 shadow-lg shadow-zinc-900/20 dark:shadow-white/10 overflow-hidden transition-all hover:scale-[1.02] hover:shadow-xl inline-flex items-center justify-center gap-2"
+                      className="group relative px-8 py-4 bg-primary hover:bg-primary/95 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-[1.02] inline-flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.5)]"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-primary-dark to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span className="relative z-10 flex items-center gap-2">
-                        View Projects
-                        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
+                      <span>View Projects</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
                     </Link>
                     <a
                       href={SITE.hero.ctaSecondary.href}
                       download
-                      className="group px-8 py-3.5 rounded-xl font-semibold text-zinc-700 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all flex items-center justify-center gap-2"
+                      className="group px-8 py-4 rounded-xl font-semibold border border-zinc-800 bg-zinc-900/40 text-zinc-300 hover:text-white hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 inline-flex items-center justify-center gap-2"
                     >
-                      <Download size={16} />
+                      <Download size={16} className="text-zinc-400 group-hover:text-white transition-colors duration-300" />
                       Download Resume
                     </a>
                   </div>
                 </motion.div>
 
-                <motion.div variants={fadeInUp}>
-                  <div className="flex items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
-                    <span className="font-medium">Find me on</span>
-                    <div className="flex gap-2">
+                <motion.div variants={fadeInUp} className="stagger-item">
+                  <div className="flex items-center gap-4 text-sm mt-4 text-zinc-400">
+                    <span className="font-mono text-xs uppercase tracking-wider text-zinc-500">Find me on</span>
+                    <div className="flex gap-2.5">
                       {SITE.socials
                         .filter((s: { icon: string }) => s.icon !== 'Mail' && s.icon !== 'Email')
                         .map((social: { icon: string; label: string; href: string }) => {
                           const Icon = socialIconMap[social.icon];
                           return Icon ? (
-                            <a
+                            <motion.a
                               key={social.label}
                               href={social.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-all bg-white dark:bg-zinc-800/50 text-zinc-500 dark:text-zinc-400 hover:bg-primary/5 dark:hover:bg-primary/5 hover:-translate-y-0.5"
+                              className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors duration-300"
+                              whileHover={{ y: -3, scale: 1.05 }}
+                              whileTap={{ scale: 0.97 }}
+                              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                               aria-label={social.label}
                             >
                               <Icon size={16} />
-                            </a>
+                            </motion.a>
                           ) : null;
                         })}
                     </div>
                   </div>
                 </motion.div>
-              </motion.div>
-            </div>
-
-            <div className="hidden lg:block lg:col-span-5 relative">
-              <motion.div
-                className="relative w-full aspect-square max-w-md mx-auto"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: customEase }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-accent-purple/10 to-accent-cyan/20 rounded-full blur-3xl animate-pulse-slow" />
-
-                <div className="relative w-full aspect-square flex items-center justify-center">
-                  <div className="absolute w-72 h-72 border border-zinc-200 dark:border-zinc-700 rounded-2xl rotate-12 opacity-40" />
-                  <div className="absolute w-72 h-72 border border-primary/30 rounded-2xl -rotate-6" />
-                  <div className="relative w-64 h-64 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow-soft-lg overflow-hidden">
-                    <div className="flex items-center gap-1.5 px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                      <span className="ml-2 text-xs font-mono text-zinc-400">hello.js</span>
-                    </div>
-                    <div className="p-4 font-mono text-xs leading-relaxed">
-                      <div className="text-purple-500">const</div>
-                      <div className="text-zinc-800 dark:text-zinc-200">
-                        <span className="text-blue-500">developer</span> = {'{'}
-                      </div>
-                      <div className="pl-3 text-zinc-800 dark:text-zinc-200">
-                        <span className="text-purple-500">name</span>: <span className="text-emerald-500">'{firstName}'</span>,
-                      </div>
-                      <div className="pl-3 text-zinc-800 dark:text-zinc-200">
-                        <span className="text-purple-500">role</span>: <span className="text-emerald-500">'{SITE.roles[0]}'</span>,
-                      </div>
-                      <div className="pl-3 text-zinc-800 dark:text-zinc-200">
-                        <span className="text-purple-500">status</span>: <span className="text-emerald-500">'active'</span>,
-                      </div>
-                      <div className="pl-3 text-zinc-800 dark:text-zinc-200">
-                        <span className="text-purple-500">stack</span>: [<span className="text-blue-400">'React'</span>, <span className="text-blue-400">'Java'</span>, <span className="text-blue-400">'Python'</span>],
-                      </div>
-                      <div className="text-zinc-800 dark:text-zinc-200">{'}'}</div>
-                      <div className="mt-2 text-primary animate-pulse">{'// > ready to build 🚀'}</div>
-                    </div>
-                  </div>
-                </div>
               </motion.div>
             </div>
           </div>
@@ -215,11 +154,8 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={20} className="text-zinc-400 dark:text-zinc-500" />
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}>
+            <ChevronDown size={20} className="text-[var(--color-muted)]" />
           </motion.div>
         </motion.div>
       </div>
