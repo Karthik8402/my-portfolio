@@ -47,7 +47,7 @@ export default function Navbar() {
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                `relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'text-primary'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-surface-alt)]'
@@ -63,6 +63,13 @@ export default function Navbar() {
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
+                  <motion.span
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                    initial={false}
+                    animate={isActive ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    style={{ transformOrigin: 'left' }}
+                  />
                   <span className="relative z-10">{l.label}</span>
                 </>
               )}

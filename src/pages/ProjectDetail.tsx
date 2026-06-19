@@ -5,8 +5,6 @@ import { PROJECTS } from '../data/projects';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 import { pageTransition, fadeInUp, staggerContainer } from '../utils/motionVariants';
-import ParticleBackground from '../components/ParticleBackground';
-
 const techCategories: Record<string, { tags: string[]; color: string }> = {
   Frontend: { tags: ['React', 'TypeScript', 'HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Vite', 'HTML5 Canvas', 'Animations', 'Framer Motion', 'CSS3', 'HTML5', 'Vanilla JavaScript', 'Parallax', 'Flutter', 'Dart', 'Provider', 'Google Fonts'], color: 'border-l-blue-500 bg-blue-950/20' },
   Backend: { tags: ['Flask', 'FastAPI', 'Python', 'Java', 'PHP', 'Node.js', 'AppScript', 'Express', 'MVC Architecture', 'Console Application', 'HashMap', 'Scanner', 'DecimalFormat'], color: 'border-l-green-500 bg-green-950/20' },
@@ -64,8 +62,6 @@ export default function ProjectDetail() {
         description={project.description}
         path={`/projects/${project.id}`}
       />
-      <ParticleBackground />
-
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8 lg:py-12 relative z-10">
           <motion.nav

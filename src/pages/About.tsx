@@ -1,14 +1,12 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Brain, BookOpen, Terminal, Briefcase, GraduationCap, Star, ArrowRight, Download } from 'lucide-react';
+import { Brain, BookOpen, Terminal, Briefcase, GraduationCap, ArrowRight, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Section from '../components/Section';
 import { SITE } from '../data/site';
 import { SKILLS } from '../data/skills';
 import { Meta } from '../seo/Meta';
 import { staggerContainer, fadeInUp, pageTransition, customEase } from '../utils/motionVariants';
-import ParticleBackground from '../components/ParticleBackground';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const timelineIconMap: Record<string, any> = {
   Brain,
@@ -69,16 +67,10 @@ export default function About() {
   return (
     <motion.div className="relative isolate" variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta title={`About - ${SITE.name}`} description={SITE.about.bio} path="/about" />
-      <ParticleBackground />
-
       <Section className="relative z-10">
         {/* Page Header */}
         <motion.div className="mb-12 lg:mb-16" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={fadeInUp}>
-            <div className="section-label mb-4">
-              <Star size={12} />
-              About Me
-            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
               <span className="text-[var(--color-foreground)]">Discover My </span>
               <span className="gradient-text-duo">Journey</span>

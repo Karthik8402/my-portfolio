@@ -7,6 +7,7 @@ const iconMap: Record<string, typeof Github> = { Github, Linkedin, Twitter, Mail
 
 export default function Footer() {
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   const navLinks = [
     { path: '/', label: 'Home' },
@@ -21,9 +22,20 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative z-10 border-t bg-[rgba(13,13,13,0.35)] backdrop-blur-sm"
+      className={`relative z-10 border-t transition-colors duration-300 ${
+        isHome
+          ? 'bg-[rgba(13,13,13,0.35)] backdrop-blur-sm'
+          : 'bg-background'
+      }`}
       style={{ borderColor: 'var(--color-border)' }}
     >
+      <div className="absolute top-0 left-0 right-0 h-px overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 via-primary/20 via-accent-cyan/10 to-transparent bg-[length:200%_100%] animate-shimmer"
+          aria-hidden="true"
+        />
+      </div>
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
@@ -61,7 +73,7 @@ export default function Footer() {
                         : 'text-[var(--color-muted)] hover:text-primary'
                     }`}
                   >
-                    <span className={`h-[1.5px] bg-primary transition-all duration-300 mr-0 ${
+                    <span className={`h-[1.5px] bg-primary transition-all duration-300 ${
                       location.pathname === link.path
                         ? 'w-3 mr-1.5'
                         : 'w-0 group-hover:w-3 group-hover:mr-1.5'

@@ -1,14 +1,11 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
 import Section from '../components/Section';
 import ProjectCard from '../components/ProjectCard3D';
 import { PROJECTS } from '../data/projects';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 import { staggerContainer, fadeInUp, pageTransition, customEase } from '../utils/motionVariants';
-import ParticleBackground from '../components/ParticleBackground';
-
 const filterTabs = [
   { key: 'All', label: 'All Projects' },
   { key: 'Frontend', label: 'Frontend' },
@@ -40,17 +37,11 @@ export default function Projects() {
         description="A curated collection of my technical work"
         path="/projects"
       />
-      <ParticleBackground />
-
       <div className="relative z-10 pt-16 lg:pt-20">
         <div className="relative z-10 py-16 lg:py-24 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
             <motion.div variants={staggerContainer} initial="hidden" animate="visible">
               <motion.div variants={fadeInUp}>
-                <div className="section-label mb-4 justify-center inline-flex">
-                  <Sparkles size={12} />
-                  My Work
-                </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
                   <span className="text-[var(--color-foreground)]">Featured </span>
                   <span className="gradient-text-duo">Projects</span>

@@ -9,15 +9,12 @@ import {
   Twitter,
   Mail,
   MapPin,
-  Sparkles,
   type LucideIcon,
 } from 'lucide-react';
 import Section from '../components/Section';
 import { SITE } from '../data/site';
 import { Meta } from '../seo/Meta';
 import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight, pageTransition } from '../utils/motionVariants';
-import ParticleBackground from '../components/ParticleBackground';
-
 const socialIconMap: Record<string, LucideIcon> = { Github, Linkedin, Twitter };
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -74,17 +71,11 @@ export default function Contact() {
   return (
     <motion.div className="relative isolate" variants={pageTransition} initial="initial" animate="animate" exit="exit">
       <Meta title={`Contact - ${SITE.name}`} description="Get in touch with me" path="/contact" />
-      <ParticleBackground />
-
       <div className="relative z-10">
 
         <Section>
           <motion.div className="mb-12 lg:mb-16" variants={staggerContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeInUp}>
-              <div className="section-label mb-4">
-                <Sparkles size={12} />
-                Contact
-              </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight mb-4">
                 <span className="text-[var(--color-foreground)]">Get In </span>
                 <span className="gradient-text-duo">Touch</span>
@@ -118,13 +109,13 @@ export default function Contact() {
                   </div>
                 </a>
 
-                <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-[var(--color-surface-alt)] transition-colors">
-                  <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan">
+                <div className="flex items-center gap-4 group p-4 rounded-xl hover:bg-[var(--color-surface-alt)] transition-colors">
+                  <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan group-hover:bg-accent-cyan group-hover:text-white transition-all duration-300">
                     <MapPin size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-[var(--color-foreground)] text-sm">Location</h4>
-                    <p className="text-sm text-[var(--color-muted)]">{SITE.location}</p>
+                    <p className="text-sm text-[var(--color-muted)] group-hover:text-accent-cyan transition-colors">{SITE.location}</p>
                   </div>
                 </div>
               </div>

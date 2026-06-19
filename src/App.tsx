@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import CursorGlow from './components/canvas/CursorGlow';
+import ParticleBackground from './components/ParticleBackground';
 import { useMobile } from './hooks/useMobile';
 
 const About = lazy(() => import('./pages/About'));
@@ -53,6 +54,12 @@ function AnimatedRoutes() {
   );
 }
 
+function ParticleLayer() {
+  const location = useLocation();
+  if (location.pathname === '/') return null;
+  return <ParticleBackground />;
+}
+
 export default function App() {
   const isMobile = useMobile();
 
@@ -62,6 +69,7 @@ export default function App() {
         <ScrollToTop />
         {!isMobile && <CursorGlow />}
         <div className="min-h-screen text-foreground font-sans flex flex-col relative overflow-x-hidden">
+          <ParticleLayer />
           <Navbar />
           <main className="flex-grow pt-16 lg:pt-20">
             <AnimatedRoutes />

@@ -19,6 +19,40 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: "quick-knowledge",
+    title: "Quick Knowledge — Intelligent Knowledge Base",
+    description: "Production-minded RAG application for grounded document Q&A with streaming responses, citations, and multi-LLM support.",
+    image: "/knowledge.png",
+    tags: ["React", "TypeScript", "FastAPI", "LangGraph", "Supabase", "RAG", "ChromaDB"],
+    metrics: [
+      "Self-RAG relevance grading",
+      "SSE streaming answers",
+      "Multi-provider LLM toggles"
+    ],
+    links: {
+      live: "https://knowledge.karthikdev.app/",
+      github: "https://github.com/Karthik8402/quick-knowledge"
+    },
+    featured: true,
+    detail: {
+      about: [
+        "Quick Knowledge is a Retrieval-Augmented Generation platform that ingests documents, indexes them into a vector store, and delivers grounded answers with validated citations.",
+        "It supports streaming chat responses, runtime model switching, and secure defaults like rate limiting, CORS controls, and prompt injection detection."
+      ],
+      features: [
+        { icon: "upload_file", title: "Document Ingestion", description: "Uploads PDF, TXT, DOCX, and Markdown files with hash-based deduplication and chunked indexing." },
+        { icon: "stream", title: "Streaming Q&A", description: "Server-Sent Events stream answers in real time for a responsive chat UX." },
+        { icon: "hub", title: "Multi-LLM Support", description: "Switch between Gemini, OpenAI, NVIDIA, and Groq models at runtime." },
+        { icon: "verified", title: "Grounded Responses", description: "Self-RAG grading filters low-relevance chunks and enforces citation validation." }
+      ],
+      challenges: [
+        { problem: "Avoiding hallucinations when retrieval fails.", solution: "Implemented relevance grading and a controlled fallback response when no context passes the threshold." },
+        { problem: "Balancing local dev speed with production scalability.", solution: "Designed pluggable storage and vector backends (ChromaDB for dev, Supabase pgvector for prod)." }
+      ],
+      duration: "2025"
+    }
+  },
+  {
     id: "estar-ai-platform",
     title: "eSTAR AI Platform",
     description: "Enterprise AI-powered audit trail monitoring platform for 21 CFR Part 11 compliance with multi-agent anomaly detection and automated reporting.",
@@ -52,40 +86,7 @@ export const PROJECTS: Project[] = [
       duration: "Dec 2025 - Present"
     }
   },
-  {
-    id: "quick-knowledge",
-    title: "Quick Knowledge — Intelligent Knowledge Base",
-    description: "Production-minded RAG application for grounded document Q&A with streaming responses, citations, and multi-LLM support.",
-    image: "/smart-notes.png",
-    tags: ["React", "TypeScript", "FastAPI", "LangGraph", "Supabase", "RAG", "ChromaDB"],
-    metrics: [
-      "Self-RAG relevance grading",
-      "SSE streaming answers",
-      "Multi-provider LLM toggles"
-    ],
-    links: {
-      live: "",
-      github: ""
-    },
-    featured: true,
-    detail: {
-      about: [
-        "Quick Knowledge is a Retrieval-Augmented Generation platform that ingests documents, indexes them into a vector store, and delivers grounded answers with validated citations.",
-        "It supports streaming chat responses, runtime model switching, and secure defaults like rate limiting, CORS controls, and prompt injection detection."
-      ],
-      features: [
-        { icon: "upload_file", title: "Document Ingestion", description: "Uploads PDF, TXT, DOCX, and Markdown files with hash-based deduplication and chunked indexing." },
-        { icon: "stream", title: "Streaming Q&A", description: "Server-Sent Events stream answers in real time for a responsive chat UX." },
-        { icon: "hub", title: "Multi-LLM Support", description: "Switch between Gemini, OpenAI, NVIDIA, and Groq models at runtime." },
-        { icon: "verified", title: "Grounded Responses", description: "Self-RAG grading filters low-relevance chunks and enforces citation validation." }
-      ],
-      challenges: [
-        { problem: "Avoiding hallucinations when retrieval fails.", solution: "Implemented relevance grading and a controlled fallback response when no context passes the threshold." },
-        { problem: "Balancing local dev speed with production scalability.", solution: "Designed pluggable storage and vector backends (ChromaDB for dev, Supabase pgvector for prod)." }
-      ],
-      duration: "2025"
-    }
-  },
+  
   {
     id: "smart-study-notes",
     title: "Smart Study Notes Generator",
